@@ -1,4 +1,4 @@
-inputs@{ config, pkgs, ... }:
+inputs@{ config, pkgs, lib, ... }:
 {
   home.username = "markiep";
   home.homeDirectory = "/home/markiep";
@@ -6,7 +6,8 @@ inputs@{ config, pkgs, ... }:
   # Note: manage plain files through "filename".text = ''contents''
   home.file = { # <dest> = <source>
     ".profile".source = lib.mkForce ./.profile;
-    ".env".source = ./.env;
+    ".inputrc".source = lib.mkForce ./.inputrc;
+    # Utils
     ".config/git/".source = ./git;
   };
 
@@ -37,7 +38,6 @@ inputs@{ config, pkgs, ... }:
     f3d
   ]);
 
-  # XDG Stuffs {{{
   xdg.userDirs = {
     enable = true;
     desktop = "$HOME/.desktop";
@@ -49,30 +49,6 @@ inputs@{ config, pkgs, ... }:
     templates = "$HOME/.attic/templates";
     publicShare = "$HOME/.attic/public";
   };
-  #}}}
-  # Readline (.inputrc) {{{
-  programs.readline = {
-    enable = true;
-    extraConfig = ''
-      set show-all-if-ambiguous on
-      set completion-ignore-case on
-      set menu-complete-display-prefix on
-
-      "\C-i": menu-complete
-      "\e[Z": menu-complete-backward
-
-      "\C-o": '"\C-k"\C-uy\C-m'
-      "\C-j": '"\C-k"\C-ull\C-m'
-      "\ez": 'cd -\015'
-
-      "\C-l": clear-screen
-      "\C-p": history-search-backward
-      "\C-n": history-search-forward
-      "\C-b": backward-word
-    '';
-  };
-  #}}}
-  # Bash {{{
   programs.bash = {
     enable = true;
 
@@ -91,10 +67,7 @@ inputs@{ config, pkgs, ... }:
       fi
     '';
   };
-  #}}}
-  # GnuPG {{{
   programs.gpg.homedir = "${config.xdg.dataHome}/gnupg";
-  #}}}
 
   home.sessionVariables = {};
 

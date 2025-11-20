@@ -1,12 +1,35 @@
+# Posix compliant? ~/.profile
+. "$HOME/.nix-profile/etc/profile.d/hm-session-vars.sh" &>/dev/null || true
 stty -ixon
-HM_SESSION_VARS="$HOME/.nix-profile/etc/profile.d/hm-session-vars.sh"
-. $HM_SESSION_VARS
-# Directory Shortcuts {{{
+# Environment Variables {{{
 set -a
+# Default prompt
+PS1="[$USER@$HOSTNAME]$ "
+# XDG Base dirs
+XDG_CONFIG_HOME="$DF_WORK_TREE/.config"
+XDG_CACHE_HOME="$HOME/.cache"
+XDG_DATA_HOME="$HOME/.local/share"
+XDG_STATE_HOME="$HOME/.local/state"
+# source XDG User dirs
+. "$XDG_CONFIG_HOME/user-dirs.dirs"
+# paths in the user home dir
+PATH="$HOME/.local/bin:$XDG_CONFIG_HOME/shell/cmds:$PATH"
+# Set default programs
+EDITOR="nvim"
+OPENER="xdg-open"
+PAGER="less"
+CC="/usr/bin/gcc"
+CXX="/usr/bin/g++"
+# Set config dirs
+INPUTRC="$XDG_CONFIG_HOME/inputrc"
+LESSHISTFILE="$XDG_CACHE_HOME/less/history"
+set +a
+#}}}
+# Directory Shortcuts {{{
+set -a # let programs like nvim access shortcuts
 cfg="$XDG_CONFIG_HOME"
 dl="$XDG_DOWNLOAD_DIR"
 hm="$cfg/home-manager"
-alias hm="home-manager"
 # media
 imgs="$HOME/media/imgs"
 vids="$HOME/media/vids"
@@ -17,37 +40,42 @@ src="$HOME/src"
 files="$XDG_DOCUMENTS_DIR"
 # notes
 nt="$files/.notes"
-alias todo="$EDITOR $nt/TODO.md"
 set +a # don't forget to disable auto-export
 # }}}
-# Aliases {{{
-alias sudoe="sudo $EDITOR"
-alias ef="$EDITOR flake.nix"
-alias cdtmp="cd $(mktemp -d)"
-alias submake="make -f submake.mk"
-alias ll="ls -hlA --color=always --group-directories-first"
-alias nsh="nix-shell -p"
-fn_yazi() {
-	local tmp="$(mktemp -t "yazi-cwd.XXXXXX")" cwd
-	yazi "$@" --cwd-file="$tmp"
-	if cwd="$(command cat -- "$tmp")" && [ -n "$cwd" ] && [ "$cwd" != "$PWD" ]; then
-		builtin cd -- "$cwd"
-	fi
-	rm -f -- "$tmp"
-}
-alias y="fn_yazi"
-alias z="zathura"
-# Miniturize prompt for popup terminals
-alias microprompt="PS1='> '"
-alias grep="grep --color=always"
-alias diff="diff --color=always"
-alias info="info --vi-keys"
-# }}}
+# Bash Profile
+if [ -n "$BASH_VERSION" ]; then
+  # Aliases {{{
+  alias o="$OPENER"
+  alias e="$EDITOR"
+  alias sudoe="sudo $EDITOR"
+  alias ef="$EDITOR flake.nix"
+  alias todo="$EDITOR $nt/TODO.md"
+  alias ll="ls -hlA --color=always --group-directories-first"
+  alias cdtmp="cd $(mktemp -d)"
+  alias hm="home-manager"
+  alias nsh="nix-shell -p"
+  alias submake="make -f submake.mk"
+  fn_yazi() {
+    local tmp="$(mktemp -t "yazi-cwd.XXXXXX")" cwd
+    yazi "$@" --cwd-file="$tmp"
+    if cwd="$(command cat -- "$tmp")" && [ -n "$cwd" ] && [ "$cwd" != "$PWD" ]; then
+      builtin cd -- "$cwd"
+    fi
+    rm -f -- "$tmp"
+  }
+  alias y="fn_yazi"
+  alias z="zathura"
+  # Miniture prompt for popup terminals
+  alias microprompt="PS1='> '"
+  alias grep="grep --color=always"
+  alias diff="diff --color=always"
+  alias info="info --vi-keys"
+  # }}}
+fi
 # Integrations {{{
-# source ~/.env
-[ -f .env ] && . .env
+# export secrets
+. "$HOME/.secrets/init.sh" &>/dev/null || true
 # source all files in path .config/<dir>/init.sh
 find "$XDG_CONFIG_HOME" -mindepth 2 -maxdepth 2 -type f -name 'init.sh' | while read -r script; do
     . "$script"
 done
-#}}}
