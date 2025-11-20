@@ -44,6 +44,12 @@ set +a # don't forget to disable auto-export
 # }}}
 # Bash Profile
 if [ -n "$BASH_VERSION" ]; then
+  shopt -s autocd
+  shopt -s direxpand
+  # default prompt
+  export PS1="\n\[\033[1;32m\][\[\e]0;\u@\h: \w\a\]\u@\h:\w]\$\[\033[0m\] "
+  # Keybinds
+  bind -f ~/.inputrc
   # Aliases {{{
   alias o="$OPENER"
   alias e="$EDITOR"
