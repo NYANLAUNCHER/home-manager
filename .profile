@@ -1,7 +1,9 @@
 # Posix compliant? ~/.profile
-. "$HOME/.nix-profile/etc/profile.d/hm-session-vars.sh" &>/dev/null || true
-stty -ixon
+# Home-Manager
+HM_SESSION_VARS="$HOME/.nix-profile/etc/profile.d/hm-session-vars.sh"
+[ -f "$HM_SESSION_VARS" ] && . "$HM_SESSION_VARS"
 # Environment Variables {{{
+stty -ixon
 set -a
 # Default prompt
 PS1="[$USER@$HOSTNAME]$ "
@@ -44,12 +46,14 @@ set +a # don't forget to disable auto-export
 # }}}
 # Bash Profile
 if [ -n "$BASH_VERSION" ]; then
+  # Initialization {{{
   shopt -s autocd
   shopt -s direxpand
   # default prompt
   export PS1="\n\[\033[1;32m\][\[\e]0;\u@\h: \w\a\]\u@\h:\w]\$\[\033[0m\] "
   # Keybinds
   bind -f ~/.inputrc
+  #}}}
   # Aliases {{{
   alias o="$OPENER"
   alias e="$EDITOR"
@@ -80,7 +84,9 @@ if [ -n "$BASH_VERSION" ]; then
 fi
 # Integrations {{{
 # export secrets
+[ -f "$HOME/.secrets/init.sh" ] && \
 . "$HOME/.secrets/init.sh" &>/dev/null || true
+
 # source all files in path .config/<dir>/init.sh
 find "$XDG_CONFIG_HOME" -mindepth 2 -maxdepth 2 -type f -name 'init.sh' | while read -r script; do
     . "$script"

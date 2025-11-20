@@ -6,9 +6,16 @@ inputs@{ config, pkgs, lib, ... }:
   # Note: manage plain files through "filename".text = ''contents''
   home.file = { # <dest> = <source>
     ".profile".source = lib.mkForce ./.profile;
+    ".bashrc".source = lib.mkForce ./.profile;
     ".inputrc".source = lib.mkForce ./.inputrc;
-    # Utils
+    # Configs
+    ".config/ghostty/".source = ./ghostty;
+    ".config/nix/".source = ./nix;
     ".config/git/".source = ./git;
+    ".config/mpv/".source = ./mpv;
+    ".config/mutt/".source = ./mutt;
+    ".config/zathura/".source = ./zathura;
+    ".config/btop/".source = ./btop;
   };
 
   # The home.packages option allows you to install Nix packages into your
@@ -25,8 +32,9 @@ inputs@{ config, pkgs, lib, ... }:
     lazygit
     direnv
     # Utils
-    ytfzf
+    btop
     neomutt
+    ytfzf
     libqalculate
     # Graphical
     ghostty
@@ -48,24 +56,6 @@ inputs@{ config, pkgs, lib, ... }:
     videos = "$HOME/media/vids";
     templates = "$HOME/.attic/templates";
     publicShare = "$HOME/.attic/public";
-  };
-  programs.bash = {
-    enable = true;
-
-    shellOptions = [
-      "autocd"
-      "direxpand"
-    ];
-
-    initExtra = ''
-      # Default Prompt
-      export PS1="\n\[\033[1;32m\][\[\e]0;\u@\h: \w\a\]\u@\h:\w]\$\[\033[0m\] "
-
-      # Fancy prompt (ignore errors)
-      if [ -f "$XDG_CONFIG_HOME/bash/prompt.sh" ]; then
-        source "$XDG_CONFIG_HOME/bash/prompt.sh" &> /dev/null
-      fi
-    '';
   };
   programs.gpg.homedir = "${config.xdg.dataHome}/gnupg";
 

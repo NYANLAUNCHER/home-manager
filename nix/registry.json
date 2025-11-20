@@ -1,0 +1,27 @@
+{
+  "flakes": [
+    {
+      "from": {
+        "id": "templates",
+        "type": "indirect"
+      },
+      "to": {
+        "owner": "NYANLAUNCHER",
+        "repo": "flake-templates",
+        "type": "github"
+      }
+    },
+    {
+      "from": {
+        "id": "nixos-templates",
+        "type": "indirect"
+      },
+      "to": {
+        "owner": "NixOS",
+        "repo": "templates",
+        "type": "github"
+      }
+    }
+  ],
+  "version": 2
+}
