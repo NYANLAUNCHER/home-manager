@@ -1,0 +1,35 @@
+# This is Git's per-user configuration file.
+[include]
+    path = ./credentials.ini
+[user]
+    name = markiep
+    email = purcellmarkie@proton.me
+[init]
+    defaultBranch = main
+[push]
+    default = current 
+[alias]
+    # list all aliases
+    aliases = !git config --list | grep 'alias\\.' | sed 's/alias\\.\\([^=]*\\)=\\(.*\\)/\\1\\ \t => \\2/' | sort
+    cloner = clone --recursive
+    # print the root git directory
+    root = rev-parse --show-toplevel
+    co = checkout
+    st = status
+    br = branch -av
+    brdel = branch -D
+    # Custom Log formats
+    last = log -1 HEAD --stat
+    lg = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative
+	ls = !git ls-tree --full-tree --name-only -r HEAD
+	lst = !git ls-tree --full-tree --name-only -r HEAD | tree --fromfile
+    hist = log --pretty=format:\"%h %ad | %s%d [%an]\" --graph --date=short
+[submodule]
+    ignore = dirty
+[safe]
+    directory = /opt/flutter
+[filter "lfs"]
+    smudge = git-lfs smudge -- %f
+    process = git-lfs filter-process
+    required = true
+    clean = git-lfs clean -- %f
