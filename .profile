@@ -1,37 +1,6 @@
 stty -ixon
-# Environment Variables {{{
-set -a # automatically export variables
-# Default prompt
-PS1="[$USER@$HOSTNAME]$ "
-# XDG Base dirs
-XDG_CONFIG_HOME="$DF_WORK_TREE/.config"
-XDG_CACHE_HOME="$HOME/.cache"
-XDG_DATA_HOME="$HOME/.local/share"
-XDG_STATE_HOME="$HOME/.local/state"
-# source XDG User dirs
-if [ -f "$XDG_CONFIG_HOME/user-dirs.dirs" ]; then
-  . "$XDG_CONFIG_HOME/user-dirs.dirs"
-else
-  XDG_DESKTOP_DIR="$HOME/.desktop"
-  XDG_DOWNLOAD_DIR="$HOME/tmp/"
-  XDG_DOCUMENTS_DIR="$HOME/files/"
-  XDG_MUSIC_DIR="$HOME/media/audio/music"
-  XDG_PICTURES_DIR="$HOME/media/imgs"
-  XDG_VIDEOS_DIR="$HOME/media/vids"
-  XDG_TEMPLATES_DIR="$HOME/.attic/public"
-  XDG_PUBLICSHARE_DIR="$HOME/.attic/templates"
-fi
-# expose local user executables
-PATH="$HOME/.local/bin:$PATH"
-# Set default programs
-EDITOR="nvim";alias e="$EDITOR"
-OPENER="xdg-open";alias o="$OPENER"
-PAGER="less"
-# Set config dirs
-INPUTRC="$XDG_CONFIG_HOME/inputrc"
-LESSHISTFILE="$XDG_CACHE_HOME/less/history"
-set +a # disable auto-export of variables
-#}}}
+HM_SESSION_VARS="$HOME/.nix-profile/etc/profile.d/hm-session-vars.sh"
+. $HM_SESSION_VARS
 # Directory Shortcuts {{{
 set -a
 cfg="$XDG_CONFIG_HOME"

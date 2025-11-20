@@ -3,6 +3,13 @@ inputs@{ config, pkgs, ... }:
   home.username = "markiep";
   home.homeDirectory = "/home/markiep";
 
+  # Note: manage plain files through "filename".text = ''contents''
+  home.file = { # <dest> = <source>
+    ".profile".source = lib.mkForce ./.profile;
+    ".env".source = ./.env;
+    ".config/git/".source = ./git;
+  };
+
   # The home.packages option allows you to install Nix packages into your
   # environment.
   home.packages = (with pkgs; [
@@ -30,7 +37,8 @@ inputs@{ config, pkgs, ... }:
     f3d
   ]);
 
-  programs.userDirs = {
+  # XDG Stuffs {{{
+  xdg.userDirs = {
     enable = true;
     desktop = "$HOME/.desktop";
     download = "$HOME/tmp";
@@ -41,10 +49,11 @@ inputs@{ config, pkgs, ... }:
     templates = "$HOME/.attic/templates";
     publicShare = "$HOME/.attic/public";
   };
-
+  #}}}
+  # Readline (.inputrc) {{{
   programs.readline = {
     enable = true;
-    inputrcExtra = ''
+    extraConfig = ''
       set show-all-if-ambiguous on
       set completion-ignore-case on
       set menu-complete-display-prefix on
@@ -62,7 +71,8 @@ inputs@{ config, pkgs, ... }:
       "\C-b": backward-word
     '';
   };
-
+  #}}}
+  # Bash {{{
   programs.bash = {
     enable = true;
 
@@ -80,14 +90,11 @@ inputs@{ config, pkgs, ... }:
         source "$XDG_CONFIG_HOME/bash/prompt.sh" &> /dev/null
       fi
     '';
-  }
-
-  # Note: manage plain files through "filename".text = ''contents''
-  home.file = { # <dest> = <source>
-    ".profile".source = ./.profile;
-    ".env".source = ./.env;
-    ".config/git/".source = ./git;
   };
+  #}}}
+  # GnuPG {{{
+  programs.gpg.homedir = "${config.xdg.dataHome}/gnupg";
+  #}}}
 
   home.sessionVariables = {};
 
