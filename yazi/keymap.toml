@@ -1,0 +1,71 @@
+# Disable Certain Defaults: {{{
+[[mgr.prepend_keymap]]
+on   = [ "D" ]
+run  = ":"
+#}}}
+
+# Directory Shortcuts
+[[mgr.prepend_keymap]]
+on   = [ "g", "c" ]
+run  = "cd $XDG_CONFIG_HOME"
+desc = "Goto $XDG_CONFIG_HOME"
+[[mgr.prepend_keymap]]
+on   = [ "g", "h" ]
+run  = "cd $XDG_CONFIG_HOME/home-manager"
+desc = "Goto home-manager config"
+[[mgr.prepend_keymap]]
+on   = [ "g", "y" ]
+run  = "cd $XDG_CONFIG_HOME/yazi"
+desc = "Goto yazi config"
+[[mgr.prepend_keymap]]
+on   = [ "g", "n" ]
+run  = "cd $XDG_CONFIG_HOME/nvim"
+desc = "Goto neovim config"
+[[mgr.prepend_keymap]]
+on   = [ "g", "f" ]
+run  = "cd $XDG_DOCUMENTS_DIR"
+desc = "Goto documents"
+[[mgr.prepend_keymap]]
+on   = [ "g", "d" ]
+run  = "cd $XDG_DOWNLOADS_DIR"
+desc = "Goto downloads"
+[[mgr.prepend_keymap]]
+on   = [ "g", "s" ]
+run  = "cd $src"
+desc = "Goto source code"
+[[mgr.prepend_keymap]]
+on   = [ "g", "t" ]
+run  = "cd ~/.local/share/Trash/files"
+desc = "Goto trash"
+[[mgr.prepend_keymap]]
+on = ["u"]
+run = "plugin restore"
+desc = "Restore trashed files"
+#[[manager.prepend_keymap]]
+#on = ["u"]
+#run = "plugin undo"
+#desc = "Undo file operations, i.e. trash, move, copy"
+[[mgr.prepend_keymap]]
+on = ["<C-o>"]
+run = ":" # bash no-op
+desc = "Go back to startup directory"
+
+# Plugins
+[[mgr.prepend_keymap]]
+on   = [ "c", "m" ]
+run  = "plugin chmod"
+desc = "Chmod on selected files"
+[[mgr.prepend_keymap]]
+on  = "M"
+run = "plugin mount"
+desc = "Mount filesystem"
+[[mgr.prepend_keymap]]
+on   = "l"
+run  = "plugin smart-enter"
+desc = "Enter the child directory, or open the file"
+
+# Help
+[[mgr.prepend_keymap]]
+on   = "?"
+run  = "help"
+desc = "Open help menu"

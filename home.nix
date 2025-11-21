@@ -9,13 +9,15 @@ inputs@{ config, pkgs, lib, ... }:
     ".bashrc".source = lib.mkForce ./.profile;
     ".inputrc".source = lib.mkForce ./.inputrc;
     # Configs
+    ".config/nix/".source =     ./nix;
+    ".config/git/".source =     ./git;
+    ".config/nvim/".source =    ./nvim;
+    ".config/yazi/".source =    ./yazi;
     ".config/ghostty/".source = ./ghostty;
-    ".config/nix/".source = ./nix;
-    ".config/git/".source = ./git;
-    ".config/mpv/".source = ./mpv;
-    ".config/mutt/".source = ./mutt;
+    ".config/mpv/".source =     ./mpv;
+    ".config/mutt/".source =    ./mutt;
     ".config/zathura/".source = ./zathura;
-    ".config/btop/".source = ./btop;
+    ".config/btop/".source =    ./btop;
   };
 
   # The home.packages option allows you to install Nix packages into your

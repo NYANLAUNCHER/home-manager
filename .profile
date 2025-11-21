@@ -62,7 +62,21 @@ if [ -n "$BASH_VERSION" ]; then
   alias todo="$EDITOR $nt/TODO.md"
   alias ll="ls -hlA --color=always --group-directories-first"
   alias cdtmp="cd $(mktemp -d)"
-  alias hm="home-manager"
+  ## home-manager
+  alias hms="home-manager switch"
+  # <tab> expansion for 'hm' to 'home-manager'
+  _hm_expand() {
+    local cur="${COMP_WORDS[COMP_CWORD]}"
+
+    # If the user typed exactly "hm", expand it to "home-manager "
+    if [[ "$cur" == "hm" ]]; then
+      COMPREPLY=("home-manager ")
+    else
+      COMPREPLY=()
+    fi
+  }
+  complete -F _hm_expand hm
+  ##
   alias nsh="nix-shell -p"
   alias submake="make -f submake.mk"
   fn_yazi() {
@@ -89,5 +103,5 @@ fi
 
 # source all files in path .config/<dir>/init.sh
 find "$XDG_CONFIG_HOME" -mindepth 2 -maxdepth 2 -type f -name 'init.sh' | while read -r script; do
-    . "$script"
+  . "$script"
 done
