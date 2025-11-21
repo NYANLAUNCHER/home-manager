@@ -1,0 +1,112 @@
+" vim: ft=vim
+" TODO:
+" - fix run.sh
+" - fix erwic/mkerwic.sh
+" - support shell environment variables in vieb cmd prompt
+" - <C-o> previous scroll percentage
+" - have keybinds to select different scroll frames/buffers to scroll
+" - create flake.nix
+
+" Settings
+"set adblocker=update
+set downloadmethod=confirm
+set searchengine="https://search.brave.com/search?q=%s"
+" go through tabs from left to right
+set tabnewposition=left
+set tabclosefocus=right
+set tabreopenposition=previous
+set replacespecial=always
+set suggestcommands=15
+set followlabelposition=insidetopleft
+set pointerposlocalid=url
+set timeout=true
+set timeoutlen=6000
+
+set permissionmediadevices=allowfull
+set permissionmicrophone=ask
+set permissioncamera=ask
+
+" Commands
+" use 'command!' to overwrite any existing cmds
+command! mpv <:!mpv "<useCurrentUrl>">
+command! session-init <toCommandMode>
+" stores sessions in "$XDG_DATA_DIR/vieb/sessions/<name>"
+" if empty will just use "$XDG_DATA_DIR/vieb/"
+command! session-load <toCommandMode>
+
+" Mappings
+map <C-[> <toNormalMode><:nohlsearch>
+nmap ,v <:mpv>
+" Readline-Style Mappings {{{
+map <C-m> <Enter>
+" Cmd Mode
+cmap <C-n> <nextSuggestion>
+cmap <C-p> <prevSuggestion>
+cmap <C-a> <Home>
+cmap <C-e> <End>
+cmap <A-f> <C-Right>
+cmap <A-b> <C-Left>
+cmap <C-h> <BS>
+cmap <C-b> <Left>
+cmap <C-f> <Right>
+cmap <C-k> <S-End><BS>
+cmap <C-u> <S-Home><BS>
+cmap <C-w> <C-S-Left><BS>
+" Explore Mode
+emap <C-n> <nextSuggestion>
+emap <C-p> <prevSuggestion>
+emap <C-a> <Home>
+emap <C-e> <End>
+emap <A-f> <C-Right>
+emap <A-b> <C-Left>
+emap <C-h> <BS>
+emap <C-b> <Left>
+emap <C-f> <Right>
+emap <C-k> <S-End><BS>
+emap <C-u> <S-Home><BS>
+emap <C-w> <C-S-Left><BS>
+" Insert Mode
+imap <C-n> <nextSuggestion>
+imap <C-p> <nextSuggestion>
+imap <C-a> <Home>
+imap <C-e> <End>
+imap <A-f> <C-Right>
+imap <A-b> <C-Left>
+imap <C-h> <BS>
+imap <C-b> <Left>
+imap <C-f> <Right>
+imap <C-k> <S-End><BS>
+imap <C-u> <S-Home><BS>
+imap <C-w> <C-S-Left><BS>
+" Search Mode
+smap <C-n> <nextSuggestion>
+smap <C-p> <prevSuggestion>
+smap <C-a> <Home>
+smap <C-e> <End>
+smap <A-f> <C-Right>
+smap <A-b> <C-Left>
+smap <C-h> <BS>
+smap <C-b> <Left>
+smap <C-f> <Right>
+smap <C-k> <S-End><BS>
+smap <C-u> <S-Home><BS>
+smap <C-w> <C-S-Left><BS>
+" }}}
+" Tabs & Windows {{{
+nmap e <toExploreMode><End>
+"nmap <C-s> <toExploreMode>site:<useCurrentDomain>
+"nmap <C-S> <toExploreMode>site:<useCurrentUrl>
+nmap t <:tabnew>
+nmap T <openNewTabWithCurrentUrl><CR>
+nmap E <openNewTabWithCurrentUrl>
+nmap P <:tabnew><openFromClipboard>
+" }}}
+" Pointer Mode {{{
+pmap <C-m> <Enter>
+pmap <CR> <p.leftClick>
+pmap <CR> <p.rightClick>
+pmap H <scrollLeft>
+pmap L <scrollRight>
+pmap c<Any> <p.storePos> "'Capture' position
+pmap '<Any> <p.restorePos>
+" }}}
