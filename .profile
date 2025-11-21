@@ -63,19 +63,8 @@ if [ -n "$BASH_VERSION" ]; then
   alias ll="ls -hlA --color=always --group-directories-first"
   alias cdtmp="cd $(mktemp -d)"
   ## home-manager
+  alias hm="home-manager"
   alias hms="home-manager switch"
-  # <tab> expansion for 'hm' to 'home-manager'
-  _hm_expand() {
-    local cur="${COMP_WORDS[COMP_CWORD]}"
-
-    # If the user typed exactly "hm", expand it to "home-manager "
-    if [[ "$cur" == "hm" ]]; then
-      COMPREPLY=("home-manager ")
-    else
-      COMPREPLY=()
-    fi
-  }
-  complete -F _hm_expand hm
   ##
   alias nsh="nix-shell -p"
   alias submake="make -f submake.mk"
