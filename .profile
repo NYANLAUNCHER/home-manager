@@ -1,6 +1,6 @@
 # Posix compliant? ~/.profile
 # Home-Manager
-HM_SESSION_VARS="$HOME/.nix-profile/etc/profile.d/hm-session-vars.sh"
+export HM_SESSION_VARS="$HOME/.nix-profile/etc/profile.d/hm-session-vars.sh"
 [ -f "$HM_SESSION_VARS" ] && . "$HM_SESSION_VARS"
 # Environment Variables {{{
 stty -ixon
@@ -41,7 +41,7 @@ src="$HOME/src"
 # documents
 files="$XDG_DOCUMENTS_DIR"
 # notes
-nt="$files/.notes"
+nt="$HOME/notes"
 set +a # don't forget to disable auto-export
 # }}}
 # Bash Profile
