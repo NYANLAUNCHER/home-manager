@@ -3,6 +3,7 @@ inputs@{ config, pkgs, lib, ... }:
   home.username = "markiep";
   home.homeDirectory = "/home/markiep";
 
+  home.sessionVariables = {};
   # Note: manage plain files through "filename".text = ''contents''
   home.file = { # <dest> = <source>
     ".profile".source = lib.mkForce ./.profile;
@@ -13,6 +14,7 @@ inputs@{ config, pkgs, lib, ... }:
     ".config/git/".source =     ./git;
     ".config/nvim/".source =    ./nvim;
     ".config/yazi/".source =    ./yazi;
+    ".config/vieb/".source =    ./vieb;
     ".config/ghostty/".source = ./ghostty;
     ".config/mpv/".source =     ./mpv;
     ".config/mutt/".source =    ./mutt;
@@ -23,23 +25,21 @@ inputs@{ config, pkgs, lib, ... }:
   # The home.packages option allows you to install Nix packages into your
   # environment.
   home.packages = (with pkgs; [
-    (pkgs.writeShellScriptBin "my-hello" ''
-      echo "Hello, ${config.home.username}!"
-    '')
     # Dev
+    ghostty
     neovim
     yazi
     git
-    gh
     lazygit
+    gh
     direnv
+    checkbashisms
     # Utils
     btop
     neomutt
     ytfzf
     libqalculate
     # Graphical
-    ghostty
     brave
     #vieb
     mpv
@@ -59,9 +59,8 @@ inputs@{ config, pkgs, lib, ... }:
     templates = "$HOME/.attic/templates";
     publicShare = "$HOME/.attic/public";
   };
-  programs.gpg.homedir = "${config.xdg.dataHome}/gnupg";
 
-  home.sessionVariables = {};
+  programs.gpg.homedir = "${config.xdg.dataHome}/gnupg";
 
   # This value determines the Home Manager release that your configuration is
   # compatible with. This helps avoid breakage when a new Home Manager release

@@ -5,6 +5,7 @@ export HM_SESSION_VARS="$HOME/.nix-profile/etc/profile.d/hm-session-vars.sh"
 # Environment Variables {{{
 stty -ixon
 set -a
+HISTFILE="$HOME/.local/state/.sh_history"
 # Default prompt
 PS1="[$USER@$HOSTNAME]$ "
 # XDG Base dirs
@@ -44,7 +45,7 @@ files="$XDG_DOCUMENTS_DIR"
 nt="$HOME/notes"
 set +a # don't forget to disable auto-export
 # }}}
-# Bash Profile
+# Bash Config
 if [ -n "$BASH_VERSION" ]; then
   # Initialization {{{
   shopt -s autocd
