@@ -28,6 +28,7 @@ inputs@{ config, pkgs, lib, ... }:
     # Dev
     ghostty
     neovim
+    helix
     yazi
     git
     lazygit

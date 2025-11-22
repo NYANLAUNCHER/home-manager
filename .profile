@@ -58,16 +58,17 @@ if [ -n "$BASH_VERSION" ]; then
   alias e="$EDITOR"
   alias sudoe="sudo $EDITOR"
   fn_edit_flake() { # search upwards for flake.nix
+    [[ -f "flake.nix" ]] && $EDITOR "$@" -- "flake.nix"; return 0
     local dir="$PWD"
-    # don't search past $HOME or /
-    while [[ "$(realpath $dir)" != "$HOME" ]] && [[ "$(realpath $dir)" != "/" ]]; do
+    while [[ ! -d "$(realpath $dir/.git)" ]] && [[ "$(realpath $dir)" != "/" ]]; do
+      dir="$dir/.." # continue upwards
       if [[ -f "$dir/flake.nix" ]]; then
         [[ ! -z "$@" ]] && echo "$EDITOR "$(realpath $dir)/flake.nix" -- "$@""
-        $EDITOR "$dir/flake.nix" -- "$@"
-        return 0 # terminate loop
-      fi; dir="$dir/.." # continue upwards
+        $EDITOR "$@" -- "$dir/flake.nix"
+        return 0 # exit function
+      fi
     done
-    echo "Upward search of flake.nix was inconclusive."
+    echo "Upward search for flake.nix was inconclusive."
     return 1
   }
   alias ef="fn_edit_flake"
