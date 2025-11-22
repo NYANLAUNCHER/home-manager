@@ -32,6 +32,7 @@ inputs@{ config, pkgs, lib, ... }:
     git
     lazygit
     gh
+    file
     direnv
     checkbashisms
     # Utils
