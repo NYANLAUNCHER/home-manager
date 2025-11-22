@@ -1,3 +1,6 @@
+local M={}
+
+M.setup = function()
 -- Bootstrap lazy.nvim
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 if not (vim.uv or vim.loop).fs_stat(lazypath) then
@@ -21,13 +24,27 @@ vim.opt.rtp:prepend(lazypath)
 vim.g.mapleader = " "
 vim.g.maplocalleader = "\\"
 
+--vim.api.nvim_create_autocmd({"BufRead"}, {
+vim.api.nvim_create_autocmd({"FileType"}, {
+  group = vim.api.nvim_create_augroup("FtConfig", { clear = true }),
+  pattern = "*",
+  callback = function()
+    local ft = vim.bo.filetype
+    local ok, _ = pcall(require, "config.ft." .. ft)
+  end,
+})
+
 -- Setup lazy.nvim
-require("lazy").setup({
+require('lazy').setup({
+  lockfile = vim.fn.stdpath("config") .. "/lua/plugins/lazy-lock.json",
   spec = {
-    { import = "plugins" }, -- looks for `plugins` module in lua dir
+    { import = 'plugins' },
   },
   install = { colorscheme = { "nordic" } },
   checker = { enabled = false },
   change_detection = { notify = false },
   browser = nil,
 })
+end
+
+return M

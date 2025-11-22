@@ -1,4 +1,4 @@
-local u = require('hex.utils')
+local u = require('hex.util')
 local augroup_hex_editor = vim.api.nvim_create_augroup('hex_editor', { clear = true })
 
 local M = {}
@@ -93,7 +93,6 @@ M.setup = function(args)
   vim.api.nvim_create_user_command('HexToggle', M.toggle, {})
 
   setup_auto_cmds()
-  print("hi from hex")
 end
 
 return M

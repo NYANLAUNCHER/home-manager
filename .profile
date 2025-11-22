@@ -57,7 +57,20 @@ if [ -n "$BASH_VERSION" ]; then
   alias o="$OPENER"
   alias e="$EDITOR"
   alias sudoe="sudo $EDITOR"
-  alias ef="$EDITOR flake.nix"
+  fn_edit_flake() { # search upwards for flake.nix
+    local dir="$PWD"
+    # don't search past $HOME or /
+    while [[ "$(realpath $dir)" != "$HOME" ]] && [[ "$(realpath $dir)" != "/" ]]; do
+      if [[ -f "$dir/flake.nix" ]]; then
+        [[ ! -z "$@" ]] && echo "$EDITOR "$(realpath $dir)/flake.nix" -- "$@""
+        $EDITOR "$dir/flake.nix" -- "$@"
+        return 0 # terminate loop
+      fi; dir="$dir/.." # continue upwards
+    done
+    echo "Upward search of flake.nix was inconclusive."
+    return 1
+  }
+  alias ef="fn_edit_flake"
   alias todo="$EDITOR $nt/TODO.md"
   alias ll="ls -hlA --color=always --group-directories-first"
   alias cdtmp="cd $(mktemp -d)"

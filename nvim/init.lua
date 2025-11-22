@@ -1,5 +1,5 @@
-local _ = require("config.lazy")
-local u = require("config.util")
+local _ = require('config').setup() -- initialize [lazy.nvim](https://github.com/folke/lazy.nvim)
+local u = require('config.util')
 
 -- Options: (:help lua-guide-options) {{{
 vim.cmd("filetype plugin indent on")
@@ -32,9 +32,9 @@ vim.opt.incsearch=true
 vim.opt.showmatch=true
 -- Text Stuffs
 vim.opt.virtualedit:append("block")
-vim.opt.tabstop=4
-vim.opt.softtabstop=4
-vim.opt.shiftwidth=4
+vim.opt.tabstop=2
+vim.opt.softtabstop=2
+vim.opt.shiftwidth=2
 vim.opt.expandtab=true
 vim.opt.smarttab=true
 vim.opt.autoindent=true
@@ -50,7 +50,6 @@ vim.opt.writebackup=false
 vim.opt.undodir=vim.fn.stdpath("data") .. "/undo"
 vim.opt.undofile=true
 --}}}
-
 -- Keymaps: {{{
 local keymap = vim.keymap.set
 local delkey = vim.keymap.del
@@ -107,7 +106,6 @@ keymap({"n", "v"}, "<leader>P", "\"+P")
 keymap("n", "<C-[>", ":nohlsearch<CR>:diffupdate<CR><C-L>", { noremap = true, silent = true })
 keymap("n", "<space><space>", function() PingCursor() end)
 --}}}
-
 -- Commands, Functions, & and Augroups: {{{
 vim.cmd([[
 com! Q q!
