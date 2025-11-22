@@ -21,8 +21,6 @@ PATH="$HOME/.local/bin:$XDG_CONFIG_HOME/shell/cmds:$PATH"
 EDITOR="nvim"
 OPENER="xdg-open"
 PAGER="less"
-CC="/usr/bin/gcc"
-CXX="/usr/bin/g++"
 # Set config dirs
 INPUTRC="$XDG_CONFIG_HOME/inputrc"
 LESSHISTFILE="$XDG_CACHE_HOME/less/history"
