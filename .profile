@@ -70,15 +70,15 @@ if [ -n "$BASH_VERSION" ]; then
   fn_edit_flake() { # search upwards for flake.nix
     [[ -f "flake.nix" ]] && $EDITOR "$@" -- "flake.nix" && return 0
     local dir="$PWD"
-    while [[ ! -d "$(realpath $dir/.git)" ]] && [[ "$(realpath $dir)" != "/" ]]; do
+    while [[ ! -d "$(realpath -s $dir/.git)" ]] && [[ "$(realpath -s $dir)" != "/" ]]; do
       dir="$dir/.." # continue upwards
       if [[ -f "$dir/flake.nix" ]]; then
-        [[ ! -z "$@" ]] && echo "$EDITOR "$(realpath $dir)/flake.nix" -- "$@""
+        [[ ! -z "$@" ]] && echo "$EDITOR "$(realpath -s $dir)/flake.nix" -- "$@""
         $EDITOR "$@" -- "$dir/flake.nix"
         return 0 # exit function
       fi
     done
-    echo "Abandoned search for flake.nix @ $(realpath $dir)"
+    echo "Abandoned search for flake.nix @ $(realpath -s $dir)"
     return 1
   }
   alias ef="fn_edit_flake"
