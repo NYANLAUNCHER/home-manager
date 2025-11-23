@@ -30,7 +30,7 @@ set +a
 set -a # let programs like nvim access shortcuts
 cfg="$XDG_CONFIG_HOME"
 dl="$XDG_DOWNLOAD_DIR"
-hm="$cfg/home-manager"
+hm="$XDG_CONFIG_HOME/home-manager"
 # media
 imgs="$HOME/media/imgs"
 vids="$HOME/media/vids"
@@ -41,6 +41,7 @@ src="$HOME/src"
 files="$XDG_DOCUMENTS_DIR"
 # notes
 nt="$HOME/notes"
+todo="$nt/TODO.md"
 set +a # don't forget to disable auto-export
 # }}}
 # Bash Config
@@ -81,7 +82,7 @@ if [ -n "$BASH_VERSION" ]; then
     return 1
   }
   alias ef="fn_edit_flake"
-  alias todo="$EDITOR $nt/TODO.md"
+  alias todo="$EDITOR $todo"
   alias ll="ls -hlA --color=always --group-directories-first"
   alias cdtmp="cd $(mktemp -d)"
   ## home-manager
