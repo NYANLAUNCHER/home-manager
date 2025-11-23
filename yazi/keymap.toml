@@ -27,7 +27,7 @@ run  = "cd $XDG_DOCUMENTS_DIR"
 desc = "Goto documents"
 [[mgr.prepend_keymap]]
 on   = [ "g", "d" ]
-run  = "cd $XDG_DOWNLOADS_DIR"
+run  = "cd $XDG_DOWNLOAD_DIR"
 desc = "Goto downloads"
 [[mgr.prepend_keymap]]
 on   = [ "g", "s" ]
