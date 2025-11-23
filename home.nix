@@ -11,12 +11,12 @@ inputs@{ config, pkgs, lib, ... }:
     ".inputrc".source = lib.mkForce ./.inputrc;
     # Configs
     ".config/nix/".source =     ./nix;
-    ".config/git/".source =     ./git;
-    ".config/nvim/".source =    ./nvim;
+    #".config/nvim/".source =    ./nvim;
     #".config/helix/".source =   ./helix;
     #".config/yazi/".source =    ./yazi;
-    ".config/vieb/".source =    ./vieb;
+    ".config/git/".source =     ./git;
     ".config/ghostty/".source = ./ghostty;
+    ".config/vieb/".source =    ./vieb;
     ".config/mpv/".source =     ./mpv;
     ".config/mutt/".source =    ./mutt;
     ".config/zathura/".source = ./zathura;
@@ -47,10 +47,17 @@ inputs@{ config, pkgs, lib, ... }:
     #vieb
     mpv
     nsxiv
-    zathura
     f3d
   ]);
+  programs.gpg.homedir = "${config.xdg.dataHome}/gnupg";
+  programs.zathura.enable = true;
 
+  xdg.mimeApps = {
+    enable = true;
+    defaultApplications = {
+      "application/pdf" = [ "zathura.desktop" ];
+    };
+  };
   xdg.userDirs = {
     enable = true;
     desktop = "$HOME/.desktop";
@@ -62,8 +69,6 @@ inputs@{ config, pkgs, lib, ... }:
     templates = "$HOME/.attic/templates";
     publicShare = "$HOME/.attic/public";
   };
-
-  programs.gpg.homedir = "${config.xdg.dataHome}/gnupg";
 
   # This value determines the Home Manager release that your configuration is
   # compatible with. This helps avoid breakage when a new Home Manager release

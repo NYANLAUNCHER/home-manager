@@ -1,6 +1,8 @@
-local _ = require('config').setup() -- initialize [lazy.nvim](https://github.com/folke/lazy.nvim)
+local c = require('config').setup() -- initialize [lazy.nvim](https://github.com/folke/lazy.nvim)
 local u = require('config.util')
+local d = require('config.debug')
 
+-- Stand-Alone Config:
 -- Options: (:help lua-guide-options) {{{
 vim.cmd("filetype plugin indent on")
 vim.cmd("packadd! matchit")
@@ -12,6 +14,9 @@ vim.opt.timeoutlen=800
 vim.opt.splitbelow=true
 vim.opt.splitright=true
 vim.opt.mouse=""
+-- Command
+vim.opt.wildmenu = true
+vim.opt.wildmode = "longest:full,full"
 -- Navigation
 vim.opt.scrolloff=8
 vim.opt.sidescrolloff=6
@@ -63,9 +68,12 @@ keymap("t", "<C-[>", "<C-\\><C-n>")
 keymap("n", "J", "<C-e>")
 keymap("n", "K", "<C-y>")
 
--- (Readline) Insert Mode Bindings
+-- Command Mode Bindings
+keymap("c", "<C-a>", "<HOME>")-- goto start of text
+keymap("c", "<C-e>", "<END>")-- goto end of line
+
+-- Insert Mode Bindings
 --- movement
-keymap("i", "<C-j>", "<Cr>")-- newline
 keymap("i", "<C-a>", "<Esc>^i")-- goto start of text
 keymap("i", "<C-e>", "<Esc>$a")-- goto end of line
 keymap("i", "<C-f>", "<C-right>")-- skip to end of word
