@@ -13,7 +13,8 @@ inputs@{ config, pkgs, lib, ... }:
     ".config/nix/".source =     ./nix;
     ".config/git/".source =     ./git;
     ".config/nvim/".source =    ./nvim;
-    ".config/yazi/".source =    ./yazi;
+    #".config/helix/".source =   ./helix;
+    #".config/yazi/".source =    ./yazi;
     ".config/vieb/".source =    ./vieb;
     ".config/ghostty/".source = ./ghostty;
     ".config/mpv/".source =     ./mpv;

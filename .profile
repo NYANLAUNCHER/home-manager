@@ -9,7 +9,7 @@ HISTFILE="$HOME/.local/state/.sh_history"
 # Default prompt
 PS1="[$USER@$HOSTNAME]$ "
 # XDG Base dirs
-XDG_CONFIG_HOME="$DF_WORK_TREE/.config"
+XDG_CONFIG_HOME="$HOME/.config"
 XDG_CACHE_HOME="$HOME/.cache"
 XDG_DATA_HOME="$HOME/.local/share"
 XDG_STATE_HOME="$HOME/.local/state"
@@ -55,7 +55,18 @@ if [ -n "$BASH_VERSION" ]; then
   #}}}
   # Aliases {{{
   alias o="$OPENER"
-  alias e="$EDITOR"
+  fn_edit() {
+    case $EDITOR in
+      "nvim")
+        # search for Session.vim if no args are given
+        if [ -f "Session.vim" ] && [ -z "$@" ]; then
+          $EDITOR -S "Session.vim"; return 0
+        fi
+      ;;
+    esac
+    $EDITOR "$@"
+  }
+  alias e="fn_edit"
   alias sudoe="sudo $EDITOR"
   fn_edit_flake() { # search upwards for flake.nix
     [[ -f "flake.nix" ]] && $EDITOR "$@" -- "flake.nix" && return 0
@@ -68,7 +79,7 @@ if [ -n "$BASH_VERSION" ]; then
         return 0 # exit function
       fi
     done
-    echo "Upward search for flake.nix was inconclusive."
+    echo "Abandoned search for flake.nix @ $(realpath $dir)"
     return 1
   }
   alias ef="fn_edit_flake"
