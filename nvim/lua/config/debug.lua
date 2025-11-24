@@ -7,9 +7,6 @@ local M={
   }
 }
 
--- User Commands
-vim.api.nvim_create_user_command("ExportKeymaps", function() d.keymap:export() end, {})
-
 -- Export keymaps to txt file
 -- @param opts.filepath (string) defaults to ~/.config/nvim/keymaps_export.txt
 function M.keymap:export()
@@ -47,4 +44,7 @@ function M.keymap:export()
   print("Keymaps exported to " .. filepath)
 end
 
+
+-- User Commands
+vim.api.nvim_create_user_command("ExportKeymaps", function() M.keymap:export() end, {})
 return M

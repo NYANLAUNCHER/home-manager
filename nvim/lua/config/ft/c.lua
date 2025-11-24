@@ -30,6 +30,7 @@ local M={
   }
 }
 vim.lsp.config(M.lsp.name, M.lsp.cfg)
+vim.lsp.enable(M.lsp.name)
 require('dap').configurations.c = { M.dap }
 
 return M
