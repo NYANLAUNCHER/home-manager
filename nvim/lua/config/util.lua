@@ -1,16 +1,26 @@
--- @module util
--- @alias M
+-- config.util
 local M={}
+local _M={}-- Hidden members
+-- meta method to convert list of string/numbers into string
+_M.m_list_tostring = {
+  __tostring = function(t)
+    local s = ""
+    for k,v in pairs(t) do
+      s = s..tostring(v)
+    end
+    return s
+  end
+}
 
--- Serialize a table
+-- Serialize table into string
 -- @param tbl (table) The table to be converted.
 -- @return: Returns a string representation of the table.
-function M.tableToString(tbl)
+function M.serialize_table(tbl)
   local result = "{"
   for k, v in pairs(tbl) do
     result = result .. tostring(k) .. "="
     if type(v) == "table" then
-      result = result .. table_to_string(v)
+      result = result .. M.serialize_table(v)
     else
       result = result .. tostring(v)
     end
@@ -18,24 +28,20 @@ function M.tableToString(tbl)
   end
   return result .. "}"
 end
-
--- list of binary filetypes
-M.binary_ft = {
-}
-
--- @param bufnr (int) the buffer number to check
-function M.is_buf_binary(bufnr)
-  local ft=vim.filetype.match({buf = bufnr or 0})
-  if M.binary_ft[ft] then
-      return true
+-- List all files in a directory (non-recursively)
+--[[
+function M.list_files(directory)
+  local i, t = 0, {}
+  local pfile = assert(io.popen(("find '%s' -maxdepth 1 -print0"):format(directory), 'r'):read('*a'))
+  local s = pfile:read('*a')
+  pfile:close()
+  for filename in s:gmatch('[^\0]+') do
+    i = i+1
+    t[i] = filename
+    print(tostring(filename))
   end
-  return false
+  return t
 end
+]]
 
--- `vim.api` Aliases: {{{
--- Functions:
-M.get_curr_buf = function(...) vim.api.nvim_get_current_buf(...) end
-M.get_bufname = function(...) vim.api.nvim_buf_get_name(...) end
--- Variables
---}}}
 return M

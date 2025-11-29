@@ -1,53 +1,52 @@
-local c = require('config').setup() -- initialize [lazy.nvim](https://github.com/folke/lazy.nvim)
-local u = require('config.util')
-local d = require('config.debug')
+local _ = require('config').setup()
 local keymap = vim.keymap.set
-local delkey = function(mode, lhs)
-  vim.keymap.set(mode, lhs, '<nop>', { noremap=true, silent=true })
-end
+local delkey = function(mode, lhs) vim.keymap.set(mode, lhs, '<nop>', { noremap=true, silent=true }) end
 
--- LSP Config {{{
-delkey('n', 'H')
--- Global mappings.
--- See `:help vim.diagnostic.*` for documentation on any of the below functions
-keymap('n', '<space>e', vim.diagnostic.open_float)
-keymap('n', '[d', vim.diagnostic.goto_prev)
-keymap('n', ']d', vim.diagnostic.goto_next)
-keymap('n', '<space>q', vim.diagnostic.setloclist)
+-- LSP Config: {{{
+  vim.lsp.config("*", {
+    root_markers = { ".git", "Makefile", ".editorconfig" },
+  })
+  -- Keymaps:
+  -- unmap some hideous defaults first
+  delkey('n', 'H')
+  delkey('n', '<C-e>')
+  delkey('n', '<C-q>')
+  -- See `:help vim.diagnostic.*` for documentation on any of the below functions
+  vim.diagnostic.config({ virtual_text = true })
+  keymap('n', '<C-e>', function() vim.diagnostic.open_float()                 end)
+  keymap('n', '[d',    function() vim.diagnostic.jump({count=1, float=true})  end)
+  keymap('n', ']d',    function() vim.diagnostic.jump({count=-1, float=true}) end)
+  keymap('n', '<C-q>', function() vim.diagnostic.setloclist()                 end)
+  -- only apply these after lsp is attached
+  vim.api.nvim_create_autocmd('LspAttach', {
+    group = vim.api.nvim_create_augroup('UserLspConfig', {}),
+    callback = function(ev)
+      -- Enable completion triggered by <c-x><c-o>
+      vim.bo[ev.buf].omnifunc = 'v:lua.vim.lsp.omnifunc'
 
--- Use LspAttach autocommand to only map the following keys
--- after the language server attaches to the current buffer
-vim.api.nvim_create_autocmd('LspAttach', {
-  group = vim.api.nvim_create_augroup('UserLspConfig', {}),
-  callback = function(ev)
-    -- Enable completion triggered by <c-x><c-o>
-    vim.bo[ev.buf].omnifunc = 'v:lua.vim.lsp.omnifunc'
-
-    -- Buffer local mappings.
-    -- See `:help vim.lsp.*` for documentation on any of the below functions
-    local opts = { buffer = ev.buf }
-    keymap('n', 'gD', vim.lsp.buf.declaration, opts)
-    keymap('n', 'gd', vim.lsp.buf.definition, opts)
-    keymap('n', 'H', vim.lsp.buf.hover, opts)
-    keymap('n', 'gi', vim.lsp.buf.implementation, opts)
-    keymap('n', '<C-k>', vim.lsp.buf.signature_help, opts)
-    keymap('n', '<space>wa', vim.lsp.buf.add_workspace_folder, opts)
-    keymap('n', '<space>wr', vim.lsp.buf.remove_workspace_folder, opts)
-    keymap('n', '<space>wl', function()
-      print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
-    end, opts)
-    keymap('n', '<space>D', vim.lsp.buf.type_definition, opts)
-    keymap('n', '<space>rn', vim.lsp.buf.rename, opts)
-    keymap({ 'n', 'v' }, '<space>ca', vim.lsp.buf.code_action, opts)
-    keymap('n', 'gr', vim.lsp.buf.references, opts)
-    keymap('n', '<space>f', function()
-      vim.lsp.buf.format { async = true }
-    end, opts)
-  end,
-})
+      -- Buffer local mappings.
+      -- See `:help vim.lsp.*` for documentation on any of the below functions
+      local opts = { buffer = ev.buf }
+      keymap('n', 'gD', vim.lsp.buf.declaration, opts)
+      keymap('n', 'gd', vim.lsp.buf.definition, opts)
+      keymap('n', 'H', vim.lsp.buf.hover, opts)
+      keymap('n', 'gi', vim.lsp.buf.implementation, opts)
+      keymap('n', '<A-h>', vim.lsp.buf.signature_help, opts)
+      keymap('n', '<space>wa', vim.lsp.buf.add_workspace_folder, opts)
+      keymap('n', '<space>wr', vim.lsp.buf.remove_workspace_folder, opts)
+      keymap('n', '<space>wl', function()
+        print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
+      end, opts)
+      keymap('n', '<space>D', vim.lsp.buf.type_definition, opts)
+      keymap('n', '<space>rn', vim.lsp.buf.rename, opts)
+      keymap({ 'n', 'v' }, '<space>ca', vim.lsp.buf.code_action, opts)
+      keymap('n', 'gr', vim.lsp.buf.references, opts)
+      keymap('n', '<space>f', function()
+        vim.lsp.buf.format { async = true }
+      end, opts)
+    end,
+  })
 --}}}
-
--- Stand-Alone Config:
 -- Options: (:help lua-guide-options) {{{
 vim.cmd("filetype plugin indent on")
 vim.cmd("packadd! matchit")
@@ -101,6 +100,10 @@ vim.opt.undodir=vim.fn.stdpath("data") .. "/undo"
 vim.opt.undofile=true
 --}}}
 -- Keymaps: {{{
+-- Delete Keys:
+delkey('n', '<C-y>') --> K
+delkey('n', '<C-e>') --> J
+
 -- set the leader key
 vim.g.leader=" "
 
@@ -181,6 +184,14 @@ vim.api.nvim_create_autocmd("TermClose", {
   end
 })
 
+vim.cmd("com! TrimTrailingWhitespace lua TrimTrailingWhitespace()")
+vim.cmd("com! Ttw TrimTrailingWhitespace")
+function TrimTrailingWhitespace()
+  local curpos = vim.api.nvim_win_get_cursor(0)
+  vim.cmd([[keeppatterns %s/\\s\\+$//e]])
+  vim.api.nvim_win_set_cursor(0, curpos)
+end
+
 function PingCursor()
   -- Enable highlighting
   vim.opt.cursorline = true
@@ -220,3 +231,4 @@ function ToggleBufferMaximized()
   end
 end
 --}}}
+

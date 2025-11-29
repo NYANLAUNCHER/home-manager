@@ -15,15 +15,11 @@ return {
     -- only use <C-n> & <C-p> to request & navigate completion menu
     -- completion will automatically finish when you start typing again
     -- <C-[> or <ESC> will abort completion
-    -- when typing ending pair, it'll jump to it (if it exists) when,
-    --- it is the next char or comes after (only) whitespace
     cmp.setup {
       mapping = cmp.mapping.preset.insert({
-        ['<C-b>'] = cmp.mapping.scroll_docs(-4),
-        ['<C-f>'] = cmp.mapping.scroll_docs(4),
         ['<C-Space>'] = cmp.mapping.complete(),
         ['<C-e>'] = cmp.mapping.abort(),
-        ['<CR>'] = cmp.mapping.confirm({ select = true }), -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
+        ['<CR>'] = cmp.mapping.confirm({ select = false }), -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
       }),
       sources = {
         { name = 'nvim_lsp' },

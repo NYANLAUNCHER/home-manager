@@ -1,50 +1,65 @@
 local M={}
+M.util=require('config.util')
+local u=M.util
 
 M.setup = function()
--- Bootstrap lazy.nvim
-local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
-if not (vim.uv or vim.loop).fs_stat(lazypath) then
-  local lazyrepo = "https://github.com/folke/lazy.nvim.git"
-  local out = vim.fn.system({ "git", "clone", "--filter=blob:none", "--branch=stable", lazyrepo, lazypath })
-  if vim.v.shell_error ~= 0 then
-    vim.api.nvim_echo({
-      { "Failed to clone lazy.nvim:\n", "ErrorMsg" },
-      { out, "WarningMsg" },
-      { "\nPress any key to exit..." },
-    }, true, {})
-    vim.fn.getchar()
-    os.exit(1)
+  -- Bootstrap lazy.nvim
+  local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
+  if not (vim.uv or vim.loop).fs_stat(lazypath) then
+    local lazyrepo = "https://github.com/folke/lazy.nvim.git"
+    local out = vim.fn.system({ "git", "clone", "--filter=blob:none", "--branch=stable", lazyrepo, lazypath })
+    if vim.v.shell_error ~= 0 then
+      vim.api.nvim_echo({
+        { "Failed to clone lazy.nvim:\n", "ErrorMsg" },
+        { out, "WarningMsg" },
+        { "\nPress any key to exit..." },
+      }, true, {})
+      vim.fn.getchar()
+      os.exit(1)
+    end
   end
-end
-vim.opt.rtp:prepend(lazypath)
+  vim.opt.rtp:prepend(lazypath)
 
--- Make sure to setup `mapleader` and `maplocalleader` before
--- loading lazy.nvim so that mappings are correct.
--- This is also a good place to setup other settings (vim.opt)
-vim.g.mapleader = " "
-vim.g.maplocalleader = "\\"
+  -- Make sure to setup `mapleader` and `maplocalleader` before
+  -- loading lazy.nvim so that mappings are correct.
+  -- This is also a good place to setup other settings (vim.opt)
+  vim.g.mapleader = " "
+  vim.g.maplocalleader = "\\"
 
---vim.api.nvim_create_autocmd({"BufRead"}, {
-vim.api.nvim_create_autocmd({"FileType"}, {
-  group = vim.api.nvim_create_augroup("FtConfig", { clear = true }),
-  pattern = "*",
-  callback = function()
-    local ft = vim.bo.filetype
-    local ok, _ = pcall(require, "config.ft." .. ft)
-  end,
-})
+  -- Setup lazy.nvim
+  require('lazy').setup({
+    lockfile = vim.fn.stdpath("config") .. "/lua/plugins/lazy-lock.json",
+    spec = {
+      { import = 'plugins' },
+    },
+    install = { colorscheme = { "nordic" } },
+    checker = { enabled = false },
+    change_detection = { notify = false },
+    browser = nil,
+  })
 
--- Setup lazy.nvim
-require('lazy').setup({
-  lockfile = vim.fn.stdpath("config") .. "/lua/plugins/lazy-lock.json",
-  spec = {
-    { import = 'plugins' },
-  },
-  install = { colorscheme = { "nordic" } },
-  checker = { enabled = false },
-  change_detection = { notify = false },
-  browser = nil,
-})
+  local function run_on_each_file(dir, callback)
+    -- Expand "~" or relative paths
+    dir = vim.fn.expand(dir)
+
+    -- Read directory entries
+    local files = vim.fn.readdir(dir)
+
+    for _, file in ipairs(files) do
+      local full_path = dir .. "/" .. file
+
+      -- Skip if it's not a file
+      if vim.fn.isdirectory(full_path) == 0 then
+        -- Remove extension
+        local name_without_ext = file:match("^(.*)%.") or file  -- handles files with no extension
+        callback(name_without_ext)
+      end
+    end
+  end
+  -- run all lsp configs in ~/.config/nvim/lsp/
+  run_on_each_file(vim.fn.stdpath("config").."/lsp", function(name)
+    vim.lsp.enable(name)
+  end)
 end
 
 return M

@@ -1,4 +1,12 @@
 return {
+  -- Local Plugins
+  {
+    "hex",
+    dir = vim.fn.stdpath("config").."/lua/hex",
+    config = function()
+      require('hex').setup()
+    end
+  },
   -- Colorscheme
   {
     "AlexvZyl/nordic.nvim",
@@ -8,6 +16,8 @@ return {
         require('nordic').load()
     end
   },
+  -- LSP Config
+  { 'neovim/nvim-lspconfig' },
   -- Text Stuffs
   {
     "kylechui/nvim-surround",
@@ -56,13 +66,6 @@ return {
         indent = { char = '┊' },
         scope = { enabled = false }
       })
-    end
-  },
-  {
-    "hex",
-    dir = vim.fn.stdpath("config").."/lua/hex",
-    config = function()
-      require('hex').setup({})
     end
   },
   -- File Organization

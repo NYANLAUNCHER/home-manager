@@ -19,8 +19,12 @@ run  = "cd $XDG_CONFIG_HOME/yazi"
 desc = "Goto yazi config"
 [[mgr.prepend_keymap]]
 on   = [ "g", "n" ]
-run  = "cd $XDG_CONFIG_HOME/nvim"
-desc = "Goto neovim config"
+run  = "cd $XDG_CONFIG_HOME/notes"
+desc = "Goto notes"
+[[mgr.prepend_keymap]]
+on   = [ "g", "m" ]
+run  = "cd $XDG_CONFIG_HOME/media"
+desc = "Goto media"
 [[mgr.prepend_keymap]]
 on   = [ "g", "f" ]
 run  = "cd $XDG_DOCUMENTS_DIR"
@@ -47,8 +51,8 @@ desc = "Restore trashed files"
 #desc = "Undo file operations, i.e. trash, move, copy"
 [[mgr.prepend_keymap]]
 on = ["<C-o>"]
-run = ":" # bash no-op
-desc = "Go back to startup directory"
+run = "cd $HOME"
+desc = "Go to home directory."
 
 # Plugins
 [[mgr.prepend_keymap]]

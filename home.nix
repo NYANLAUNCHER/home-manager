@@ -28,11 +28,16 @@ inputs@{ config, pkgs, lib, ... }:
   home.packages = (with pkgs; [
     # Dev
     ghostty
-    lua-language-server
-    ccls
-    rust-analyzer
-    nil
     neovim
+    lua
+    lua-language-server
+    rustc
+    cargo
+    rust-analyzer
+    gcc
+    ccls
+    nil
+    glsl_analyzer
     helix
     yazi
     git

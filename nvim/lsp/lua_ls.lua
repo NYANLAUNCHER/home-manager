@@ -1,8 +1,4 @@
-vim.bo.tabstop=2
-vim.bo.softtabstop=2
-vim.bo.shiftwidth=2
-
-vim.lsp.config('lua_ls', {
+return {
   on_init = function(client)
     if client.workspace_folders then
       local path = client.workspace_folders[1].name
@@ -49,5 +45,4 @@ vim.lsp.config('lua_ls', {
   settings = {
     Lua = {}
   }
-})
-vim.lsp.enable("lua_ls")
+}
