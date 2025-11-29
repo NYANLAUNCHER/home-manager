@@ -51,7 +51,7 @@ if [ -n "$BASH_VERSION" ]; then
   shopt -s direxpand
   # prompt
   PS1HOST="\u@\h"
-  [ ! -s "$IN_NIX_SHELL" ] && PS1HOST="nix-shell"
+  [ ! -z "$IN_NIX_SHELL" ] && PS1HOST="nix-shell"
   export PS1="\n\[\033[1;32m\][\[\e]0;$PS1HOST: \w\a\]\u@\h:\w]\$\[\033[0m\] "
   #}}}
   # Aliases {{{
