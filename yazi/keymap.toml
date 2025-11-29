@@ -6,6 +6,10 @@ run  = ":"
 
 # Directory Shortcuts
 [[mgr.prepend_keymap]]
+on = ["~"]
+run = "cd $HOME"
+desc = "Go to home directory."
+[[mgr.prepend_keymap]]
 on   = [ "g", "c" ]
 run  = "cd $XDG_CONFIG_HOME"
 desc = "Goto $XDG_CONFIG_HOME"
@@ -19,11 +23,11 @@ run  = "cd $XDG_CONFIG_HOME/yazi"
 desc = "Goto yazi config"
 [[mgr.prepend_keymap]]
 on   = [ "g", "n" ]
-run  = "cd $XDG_CONFIG_HOME/notes"
+run  = "cd $HOME/notes"
 desc = "Goto notes"
 [[mgr.prepend_keymap]]
 on   = [ "g", "m" ]
-run  = "cd $XDG_CONFIG_HOME/media"
+run  = "cd $HOME/media"
 desc = "Goto media"
 [[mgr.prepend_keymap]]
 on   = [ "g", "f" ]
@@ -39,7 +43,7 @@ run  = "cd $src"
 desc = "Goto source code"
 [[mgr.prepend_keymap]]
 on   = [ "g", "t" ]
-run  = "cd ~/.local/share/Trash/files"
+run  = "cd $HOME/.local/share/Trash/files"
 desc = "Goto trash"
 [[mgr.prepend_keymap]]
 on = ["u"]
@@ -49,10 +53,6 @@ desc = "Restore trashed files"
 #on = ["u"]
 #run = "plugin undo"
 #desc = "Undo file operations, i.e. trash, move, copy"
-[[mgr.prepend_keymap]]
-on = ["<C-o>"]
-run = "cd $HOME"
-desc = "Go to home directory."
 
 # Plugins
 [[mgr.prepend_keymap]]
