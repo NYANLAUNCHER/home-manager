@@ -11,5 +11,5 @@ inputs@{ config, pkgs, lib, ... }:
     rust-analyzer
     gcc ccls
     glsl_analyzer
-  ])
+  ]);
 }
