@@ -12,10 +12,15 @@ _M.m_list_tostring = {
   end
 }
 
+---@param root_markers string[]
+M.root_path = function(root_markers)
+  return root_markers
+end
+
 -- Serialize table into string
--- @param tbl (table) The table to be converted.
--- @return: Returns a string representation of the table.
-function M.serialize_table(tbl)
+---@param tbl table The table to serialize
+---@return string
+M.serialize_table = function(tbl)
   local result = "{"
   for k, v in pairs(tbl) do
     result = result .. tostring(k) .. "="

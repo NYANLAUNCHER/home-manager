@@ -1,4 +1,5 @@
 local _ = require('config').setup()
+local u = require('config.util')
 local keymap = vim.keymap.set
 local delkey = function(mode, lhs) vim.keymap.set(mode, lhs, '<nop>', { noremap=true, silent=true }) end
 
@@ -86,13 +87,15 @@ vim.opt.incsearch=true
 vim.opt.showmatch=true
 -- Text Stuffs
 vim.opt.virtualedit:append('block')
+vim.opt.autoindent=true
+vim.opt.shiftround=true
 vim.opt.tabstop=2
 vim.opt.softtabstop=2
 vim.opt.shiftwidth=2
 vim.opt.expandtab=true
 vim.opt.smarttab=true
-vim.opt.autoindent=true
-vim.opt.shiftround=true
+-- colorize hardtabs and trailing spaces
+vim.api.nvim_set_hl(0, 'TabHighlight', { bg = '#a6a6a6', fg = 'white' })
 -- Files
 vim.opt.autochdir=true
 vim.opt.exrc=true

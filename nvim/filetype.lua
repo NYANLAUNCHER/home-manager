@@ -26,8 +26,6 @@ vim.filetype.add({
     zon = "zig",
     -- Javascript (sucks)
     cps = "javascript",-- fusion 360 post processor
-    -- Misc.
-    buildconf = "make",
   },
   pattern = {
   },

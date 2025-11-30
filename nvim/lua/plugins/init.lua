@@ -1,33 +1,29 @@
 return {
   -- Local Plugins
-  {
-    "hex",
-    dir = vim.fn.stdpath("config").."/lua/hex",
+  {'hex',
+    dir = vim.fn.stdpath('config')..'/lua/hex',
     config = function()
       require('hex').setup()
     end
   },
   -- Colorscheme
-  {
-    "AlexvZyl/nordic.nvim",
-    name = "nordic",
+  {'AlexvZyl/nordic.nvim',
+    name = 'nordic',
     priority = 1000,
     config = function()
         require('nordic').load()
     end
   },
   -- LSP Config
-  { 'neovim/nvim-lspconfig' },
+  {'neovim/nvim-lspconfig' },
   -- Text Stuffs
-  {
-    "kylechui/nvim-surround",
-    event = "VeryLazy",
+  {'kylechui/nvim-surround',
+    event = 'VeryLazy',
     config = function()
-      require("nvim-surround").setup({ })
+      require('nvim-surround').setup({ })
     end
   },
-  {
-  'andymass/vim-matchup',
+  {'andymass/vim-matchup',
     init = function()
       -- modify your configuration vars here
       vim.g.matchup_treesitter_stopline = 500
@@ -40,17 +36,8 @@ return {
         }
       })
     end,
-    -- or use the `opts` mechanism built into `lazy.nvim`. It calls
-    -- `require('match-up').setup` under the hood
-    ---@type matchup.Config
-    opts = {
-      treesitter = {
-        stopline = 500,
-      }
-    }
   },
-  {
-    "unblevable/quick-scope",
+  {'unblevable/quick-scope',
     config = function()
       vim.g.qs_enable = 0
       -- note:
@@ -58,8 +45,7 @@ return {
       vim.g.qs_hightlight_on_keys = {'f', 'F', 't', 'T'}
     end
   },
-  {
-    "lukas-reineke/indent-blankline.nvim",
+  {'lukas-reineke/indent-blankline.nvim',
     main = 'ibl',
     config = function()
       require'ibl'.setup({
@@ -69,7 +55,7 @@ return {
     end
   },
   -- File Organization
-  {"nvim-tree/nvim-tree.lua",
+  {'nvim-tree/nvim-tree.lua',
     config = function()
       vim.g.loaded_netrw = 1
       vim.g.loaded_netrwPlugin = 1
@@ -79,7 +65,7 @@ return {
           width = 30,
         },
         filters = {
-          --git_ignored = true,
+          git_ignored = false,
         },
       })
     end
