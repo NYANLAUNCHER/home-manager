@@ -13,6 +13,8 @@ inputs@{ config, pkgs, lib, ... }:
     ".profile".source = lib.mkForce ./.profile;
     ".bashrc".source = lib.mkForce ./.bashrc;
     ".inputrc".source = lib.mkForce ./.inputrc;
+    #".zshrc".source = lib.mkForce ./.zshrc;
+    #".zshenv".source = lib.mkForce ./.zshenv;
     # Configs
     ".config/nix/".source =     ./nix;
     #".config/nvim/".source =    ./nvim;

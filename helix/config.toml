@@ -20,6 +20,9 @@ C-h = "jump_view_left"
 C-j = "jump_view_down"
 C-k = "jump_view_up"
 C-l = "jump_view_right"
+# alternative to 'vgld'
+D = ["ensure_selections_forward", "extend_to_line_end", "delete_selection"]
 
 [keys.select]
 0 = "goto_line_start"
+
