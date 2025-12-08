@@ -15,7 +15,6 @@ inputs@{ config, pkgs, lib, ... }:
     ".inputrc".source = lib.mkForce ./.inputrc;
     #".zshrc".source = lib.mkForce ./.zshrc;
     #".zshenv".source = lib.mkForce ./.zshenv;
-    # Configs
     ".config/nix/".source =     ./nix;
     #".config/nvim/".source =    ./nvim;
     #".config/helix/".source =   ./helix;
@@ -55,7 +54,6 @@ inputs@{ config, pkgs, lib, ... }:
     nsxiv
     f3d
   ]);
-  programs.zsh.enable = true;
   programs.gpg.homedir = "${config.xdg.dataHome}/gnupg";
   programs.zathura.enable = true;
 
