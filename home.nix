@@ -11,15 +11,16 @@ inputs@{ config, pkgs, lib, ... }:
   # Note: manage plain files through "filename".text = ''contents''
   home.file = { # <dest> = <source>
     ".profile".source = lib.mkForce ./.profile;
-    ".bashrc".source = lib.mkForce ./.profile;
+    ".bashrc".source = lib.mkForce ./.bashrc;
     ".inputrc".source = lib.mkForce ./.inputrc;
     # Configs
     ".config/nix/".source =     ./nix;
     #".config/nvim/".source =    ./nvim;
     #".config/helix/".source =   ./helix;
     #".config/yazi/".source =    ./yazi;
-    ".config/git/".source =     ./git;
+    #".config/zellij/".source =    ./zellij;
     ".config/ghostty/".source = ./ghostty;
+    ".config/git/".source =     ./git;
     ".config/vieb/".source =    ./vieb;
     ".config/mpv/".source =     ./mpv;
     ".config/mutt/".source =    ./mutt;
@@ -52,15 +53,10 @@ inputs@{ config, pkgs, lib, ... }:
     nsxiv
     f3d
   ]);
+  programs.zsh.enable = true;
   programs.gpg.homedir = "${config.xdg.dataHome}/gnupg";
   programs.zathura.enable = true;
 
-  xdg.mimeApps = {
-    enable = true;
-    defaultApplications = {
-      "application/pdf" = [ "zathura.desktop" ];
-    };
-  };
   xdg.userDirs = {
     enable = true;
     desktop = "$HOME/.desktop";

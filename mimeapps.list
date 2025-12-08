@@ -1,0 +1,8 @@
+[Added Associations]
+image/png=nsxiv.desktop;
+
+[Default Applications]
+application/pdf=zathura.desktop
+image/png=nsxiv.desktop
+
+[Removed Associations]
