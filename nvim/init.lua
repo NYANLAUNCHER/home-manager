@@ -173,6 +173,7 @@ vim.cmd([[
 com! Q q!
 com! Qa qa!
 com! W w!
+com! MKS
 com! Reload source $MYVIMRC
 ]])
 

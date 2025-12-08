@@ -1,4 +1,3 @@
-# Posix compliant? ~/.profile
 # Home-Manager
 export HM_SESSION_VARS="$HOME/.nix-profile/etc/profile.d/hm-session-vars.sh"
 [ -f "$HM_SESSION_VARS" ] && . "$HM_SESSION_VARS"
@@ -18,7 +17,7 @@ XDG_STATE_HOME="$HOME/.local/state"
 # paths in the user home dir
 PATH="$HOME/.local/bin:$XDG_CONFIG_HOME/shell/cmds:$PATH"
 # Set default programs
-EDITOR="nvim"
+EDITOR="hx"
 OPENER="xdg-open"
 PAGER="less"
 # Set config dirs
@@ -50,6 +49,7 @@ if [ -n "$BASH_VERSION" ]; then
   shopt -s autocd
   shopt -s direxpand
   # prompt
+  PS1HOST="\u@\h"
   export PS1="\n\[\033[1;32m\][\[\e]0;\u@\h: \w\a\]\u@\h:\w]\$\[\033[0m\] "
   #}}}
   # Aliases {{{

@@ -33,6 +33,7 @@ M.serialize_table = function(tbl)
   end
   return result .. "}"
 end
+
 -- List all files in a directory (non-recursively)
 --[[
 function M.list_files(directory)

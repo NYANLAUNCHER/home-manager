@@ -39,6 +39,12 @@ return {
     })
   end,
   settings = {
-    Lua = {}
+    Lua = {
+      diagnostics = {
+        disable = {
+          "undefined-global"
+        }
+      }
+    }
   }
 }
