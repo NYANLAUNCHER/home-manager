@@ -11,6 +11,7 @@ inputs@{ config, pkgs, lib, ... }:
   # Note: manage plain files through "filename".text = ''contents''
   home.file = { # <dest> = <source>
     ".profile".source = lib.mkForce ./.profile;
+    ".inputrc".source = lib.mkForce ./.inputrc;
     ".zshenv".source = lib.mkForce ./.zshenv;
     #".zshrc".source = lib.mkForce ./.zshrc;
     #".config/zsh".source = lib.mkForce ./zsh;
