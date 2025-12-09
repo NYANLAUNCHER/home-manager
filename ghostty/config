@@ -2,7 +2,7 @@
 # all available config options and their default values.
 # see also: https://ghostty.org/docs/config.
 config-file = theme/nordic
-shell-integration = bash
+shell-integration = zsh
 
 gtk-titlebar-hide-when-maximized = true
 
