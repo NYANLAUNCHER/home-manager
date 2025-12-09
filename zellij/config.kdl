@@ -150,18 +150,15 @@ keybinds {
 //   - quit
 on_force_close "quit"
 // Request simplified ui (without arrow fonts) of plugins
-simplified_ui true
-// Choose the path to the default shell that zellij will use for opening new panes
-// Default: $SHELL
-//default_shell "fish"
-// remove pane frame
+//simplified_ui true
+// Remove pane frame
 pane_frames false
 // Choose the theme that is specified in the themes section.
 // Default: default
 theme "default"
 // The name of the default layout to load on startup
 // Default: "default"
-default_layout "compact"
+//default_layout "compact"
 // On certain configurations, or terminals mouse_mode can interfere with copying text.
 mouse_mode true
 // 100_000 should never exceed 6MB per shell pane, unless the lines are very long
@@ -171,25 +168,18 @@ scroll_buffer_size 100000
 // OSC 52 ANSI control sequence (used on default without this option).
 //copy_command "xclip -selection clipboard" // x11
 //copy_command "wl-copy"                    // wayland
-//copy_command "pbcopy"                     // osx
 // Choose the destination for copied text (x11/wayland only), if copy_command not set
 // Options:
 //   - system (default)
 //   - primary
 //copy_clipboard "primary"
-// Is automatic copy (and clear) of selection when releasing mouse enabled?
-// Default true
-//copy_on_select false
 
-// Path to the default editor to use to edit pane scrollbuffer
-// Default: $EDITOR or $VISUAL
-//scrollback_editor "/usr/bin/vim"
 // When attaching to an existing session with other users,
 // should the session be mirrored (true)
 // or should each user have their own cursor (false)
 // Default: false
 //mirror_session true
 // The folder in which Zellij will look for layouts
-//layout_dir /path/to/my/layout_dir
+//layout_dir "$XDG_CONFIG_HOME/zellij/layouts"
 // The folder in which Zellij will look for themes
-//theme_dir "/path/to/my/theme_dir"
+//theme_dir "$XDG_CONFIG_HOME/zellij/themes"
