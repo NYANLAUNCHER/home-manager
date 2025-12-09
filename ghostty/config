@@ -1,7 +1,7 @@
 # Run `ghostty +show-config --default --docs` to view a list of
 # all available config options and their default values.
 # see also: https://ghostty.org/docs/config.
-config-file = theme/nordic
+config-file = themes/nordic
 shell-integration = zsh
 
 gtk-titlebar-hide-when-maximized = true

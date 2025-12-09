@@ -1,6 +1,10 @@
-export ZSH="$HOME/.oh-my-zsh"
+export ZSH_CUSTOM="$XDG_CONFIG_HOME/zsh"
+export ZSH="$ZSH_CUSTOM/.oh-my-zsh"
 ZSH_THEME="robbyrussell"
-plugins=(git)
+plugins=(
+  git
+  zsh-helix-mode
+)
 source $ZSH/oh-my-zsh.sh
 
 typeset -U path cdpath fpath manpath
@@ -13,8 +17,8 @@ HELPDIR="/nix/store/bk68yr5826s9gxvljz03ch4jlz863x05-zsh-5.9/share/zsh/$ZSH_VERS
 autoload -U compinit && compinit
 # History options should be set in .zshrc and after oh-my-zsh sourcing.
 # See https://github.com/nix-community/home-manager/issues/177.
-HISTSIZE="10000"
-SAVEHIST="10000"
+HISTSIZE="5000"
+SAVEHIST="5000"
 
 HISTFILE="/home/markiep/.local/state/.zsh_history"
 mkdir -p "$(dirname "$HISTFILE")"
@@ -42,16 +46,17 @@ unset opt disabled_opts
 
 # Keybinds
 ll_widget() {
-  BUFFER="ll" # ls alias defined below
+  BUFFER="ll" # ls alias, defined below
   zle accept-line
 }
 y_widget() {
-  BUFFER="y" # yazi alias defined below
+  BUFFER="y" # yazi alias, defined below
   zle accept-line
 }
 zle -N ll_widget
 bindkey '^J' ll_widget
 zle -N y_widget
+bindkey "^M" accept-line
 bindkey '^O' y_widget
 bindkey '^B' backward-word
 bindkey '^F' forward-word
@@ -101,9 +106,14 @@ fn_yazi() {
   rm -f -- "$tmp"
 }
 alias y="fn_yazi"
-alias z="zathura"
+alias z="zellij"
+alias h="head"
+alias t="tail"
 # Miniture prompt for popup terminals
 alias microprompt="PS1='> '"
 alias grep="grep --color=always"
 alias diff="diff --color=always"
 alias info="info --vi-keys"
+
+# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
+[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh

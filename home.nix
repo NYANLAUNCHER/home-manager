@@ -11,10 +11,9 @@ inputs@{ config, pkgs, lib, ... }:
   # Note: manage plain files through "filename".text = ''contents''
   home.file = { # <dest> = <source>
     ".profile".source = lib.mkForce ./.profile;
-    ".bashrc".source = lib.mkForce ./.bashrc;
-    ".inputrc".source = lib.mkForce ./.inputrc;
     ".zshenv".source = lib.mkForce ./.zshenv;
     #".zshrc".source = lib.mkForce ./.zshrc;
+    #".config/zsh".source = lib.mkForce ./zsh;
     ".config/nix/".source =     ./nix;
     #".config/nvim/".source =    ./nvim;
     #".config/helix/".source =   ./helix;

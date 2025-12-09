@@ -27,6 +27,7 @@ export INPUTRC="$HOME/.inputrc"
 export LESSHISTFILE="$XDG_CACHE_HOME/less/history"
 
 # Directory Shortcuts:
+set -a
 cfg="$XDG_CONFIG_HOME"
 dl="$XDG_DOWNLOAD_DIR"
 hm="$XDG_CONFIG_HOME/home-manager"
@@ -41,3 +42,4 @@ files="$XDG_DOCUMENTS_DIR"
 # notes
 nt="$HOME/notes"
 todo="$nt/TODO.md"
+set +a
