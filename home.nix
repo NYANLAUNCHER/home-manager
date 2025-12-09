@@ -13,20 +13,19 @@ inputs@{ config, pkgs, lib, ... }:
     ".profile".source = lib.mkForce ./.profile;
     ".bashrc".source = lib.mkForce ./.bashrc;
     ".inputrc".source = lib.mkForce ./.inputrc;
+    ".zshenv".source = lib.mkForce ./.zshenv;
     #".zshrc".source = lib.mkForce ./.zshrc;
-    #".zshenv".source = lib.mkForce ./.zshenv;
     ".config/nix/".source =     ./nix;
     #".config/nvim/".source =    ./nvim;
     #".config/helix/".source =   ./helix;
     #".config/yazi/".source =    ./yazi;
-    #".config/zellij/".source =    ./zellij;
+    #".config/zellij/".source =  ./zellij;
     ".config/ghostty/".source = ./ghostty;
     ".config/git/".source =     ./git;
     ".config/vieb/".source =    ./vieb;
     ".config/mpv/".source =     ./mpv;
     ".config/mutt/".source =    ./mutt;
     ".config/zathura/".source = ./zathura;
-    ".config/btop/".source =    ./btop;
   };
 
   # The home.packages option allows you to install Nix packages into your

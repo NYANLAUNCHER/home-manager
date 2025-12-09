@@ -13,4 +13,4 @@ window-padding-x = 2
 font-family = JetBrainsMono Nerd Font Mono
 
 keybind = ctrl+i=text:\t
-keybind = ctrl+m=text:\n
+#keybind = ctrlm=text:\n

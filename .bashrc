@@ -1,6 +1,7 @@
 shopt -s autocd
 shopt -s direxpand
 export PS1="\n\[\033[1;32m\][\[\e]0;\u@\h: \w\a\]\u@\h:\w]\$\[\033[0m\] "
+export HISTFILE="$HOME/.local/state/.bash_history"
 # Aliases:
 alias o="$OPENER"
 fn_edit() {
