@@ -64,15 +64,15 @@ bindkey '^F' forward-word
 # Aliases
 alias o="$OPENER"
 fn_edit() {
-  case $EDITOR in
-    "nvim")
-      # search for Session.vim if no args are given
-      if [ -f "Session.vim" ] && [ -z "$@" ]; then
-        $EDITOR -S "Session.vim"; return 0
-      fi
-    ;;
-  esac
+if [ -z "$@" ]; then # insert default arguments
+  if [ "$EDITOR" = "nvim" ] && [ -f "Session.vim" ]; then
+    $EDITOR -S "Session.vim"
+  else
+    $EDITOR ./
+  fi
+else
   $EDITOR "$@"
+fi
 }
 alias e="fn_edit"
 alias sudoe="sudo $EDITOR"

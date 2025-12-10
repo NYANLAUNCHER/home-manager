@@ -1,5 +1,10 @@
 local dap=require('dap')
-local exe=os.getenv('build')..'/bin/'..os.getenv('pname')
+local build_dir=os.getenv('build')
+local pname=os.getenv('pname')
+local exe=nil
+if exe and pname then
+  exe=build_dir..'/bin/'..pname
+end
 
 -- Configure GDB
 dap.adapters.gdb = {

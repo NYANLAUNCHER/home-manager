@@ -19,7 +19,7 @@ export XDG_STATE_HOME="$HOME/.local/state"
 # add paths in the user home dir
 export PATH="$HOME/.local/bin:$PATH"
 # Set default programs
-export EDITOR="hx"
+export EDITOR="nvim"
 export OPENER="xdg-open"
 export PAGER="less"
 # Set config dirs

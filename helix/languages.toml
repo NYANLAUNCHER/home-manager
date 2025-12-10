@@ -1,0 +1,13 @@
+[language-server.ccls]
+command = "ccls"
+
+[[language]]
+name = "c"
+file-types  = ["c", "h"]
+roots = [".ccls", "compile_commands.json"]
+language-servers = ["ccls"]
+
+[[language]]
+name = "cpp"
+roots = [".ccls", "compile_commands.json"]
+language-servers = ["ccls"]
