@@ -1,44 +1,4 @@
 return {
---[[
-{'hrsh7th/nvim-cmp',
-  dependencies = {
-    'hrsh7th/cmp-nvim-lsp',
-    'hrsh7th/cmp-path',
-    'hrsh7th/cmp-buffer',
-    -- Css
-    'roginfarrer/cmp-css-variables',
-    'Jezda1337/nvim-html-css',
-  },
-  config = function()
-    local cmp = require('cmp')
-    -- TODO:
-    -- only use <C-n> & <C-p> to request & navigate completion menu
-    -- completion will automatically finish when you start typing again
-    -- <C-[> or <ESC> will abort completion
-    cmp.setup {
-      mapping = cmp.mapping.preset.insert({
-        ['<C-Space>'] = cmp.mapping.complete(),
-        ['<C-e>'] = cmp.mapping.abort(),
-        ['<CR>'] = cmp.mapping.confirm({ select = false }), -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
-      }),
-      sources = {
-        { name = 'nvim_lsp' },
-        { name = 'path' },
-        { name = 'buffer' },
-        { name = 'css-variables' },
-        { name = 'nvim-html-css' },
-      },
-    }
-    local capabilities = require('cmp_nvim_lsp').default_capabilities()
-    local servers = vim.lsp.get_clients()
-    for _, server in pairs(servers) do
-      require('lspconfig')[server].setup {
-        capabilities = capabilities,
-      }
-    end
-  end
-},
---]]
 {'saghen/blink.cmp',
   -- optional: provides snippets for the snippet source
   dependencies = { 'rafamadriz/friendly-snippets' },
@@ -65,8 +25,9 @@ return {
     -- C-k: Toggle signature help (if signature.enabled = true)
     --
     -- See :h blink-cmp-config-keymap for defining your own keymap
-    --keymap = { preset = 'default' },
     keymap = {
+      preset = 'default',
+      ['<C-m>'] = { 'accept' },
       ['<A-h>'] = { 'show_signature' },
     },
 
@@ -138,13 +99,6 @@ return {
           :replace_map_cr(function(_) return '<C-c>2xi<CR><C-c>O' end)
       }
     end
-
-    --local cmp_autopairs = require'nvim-autopairs.completion.cmp'
-    --local cmp_status_ok, cmp = pcall(require, 'cmp')
-    --if not cmp_status_ok then
-    --  return
-    --end
-    --cmp.event:on('confirm_don', cmp_autopairs.on_confirm_done {map_char = {tex = ''}})
   end
 },
 }
