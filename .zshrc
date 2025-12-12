@@ -4,6 +4,7 @@ ZSH_THEME="robbyrussell"
 plugins=(
   git
   zsh-helix-mode
+  globalias
 )
 source $ZSH/oh-my-zsh.sh
 

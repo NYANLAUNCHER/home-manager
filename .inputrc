@@ -4,6 +4,7 @@ set menu-complete-display-prefix on
 
 "\C-i": menu-complete
 "\e[Z": menu-complete-backward
+#TAB: alias-expand-line
 
 "\C-o": '\C-k\C-uy\C-m'
 "\C-.": '\C-k\C-uz\C-m'
