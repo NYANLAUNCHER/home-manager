@@ -16,6 +16,11 @@ return {
   },
   -- LSP Config
   {'neovim/nvim-lspconfig' },
+  {'nvimdev/lspsaga.nvim',
+    config = function()
+        require('lspsaga').setup({})
+    end
+  },
   -- Text Stuffs
   {'kylechui/nvim-surround',
     event = 'VeryLazy',
