@@ -11,6 +11,7 @@
 [alias]
     # list all aliases
     aliases = !git config --list | grep 'alias\\.' | sed 's/alias\\.\\([^=]*\\)=\\(.*\\)/\\1\\ \t => \\2/' | sort
+    cm = commit
     co = checkout
     st = status
     br = branch -av

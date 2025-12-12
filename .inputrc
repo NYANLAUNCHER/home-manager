@@ -6,6 +6,7 @@ set menu-complete-display-prefix on
 "\e[Z": menu-complete-backward
 
 "\C-o": '\C-k\C-uy\C-m'
+"\C-.": '\C-k\C-uz\C-m'
 "\C-j": '\C-k\C-ull\C-m'
 "\ez": 'cd -\015'
 

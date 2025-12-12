@@ -21,10 +21,10 @@ inputs@{ config, pkgs, lib, ... }:
     ".config/nix/".source =     ./nix;
     ".config/ghostty/".source = ./ghostty;
     ".config/git/".source =     ./git;
-    ".config/vieb/".source =    ./vieb;
     ".config/mpv/".source =     ./mpv;
-    ".config/mutt/".source =    ./mutt;
     ".config/zathura/".source = ./zathura;
+    ".config/mutt/".source =    ./mutt;
+    ".config/vieb/".source =    ./vieb;
   };
 
   # The home.packages option allows you to install Nix packages into your
