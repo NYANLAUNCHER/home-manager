@@ -50,7 +50,7 @@ fn_yazi() {
   rm -f -- "$tmp"
 }
 alias y="fn_yazi"
-alias z="zathura"
+alias z="zellij"
 # Miniture prompt for popup terminals
 alias microprompt="PS1='> '"
 alias grep="grep --color=always"
