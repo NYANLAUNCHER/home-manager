@@ -12,6 +12,7 @@ inputs@{ config, pkgs, lib, ... }:
   home.file = { # <dest> = <source>
     ".profile".source = lib.mkForce ./.profile;
     ".inputrc".source = lib.mkForce ./.inputrc;
+    ".bashrc".source = lib.mkForce ./.bashrc;
     ".zshenv".source = lib.mkForce ./.zshenv;
     #".zshrc".source = lib.mkForce ./.zshrc;
     #".config/zsh".source = lib.mkForce ./zsh;
