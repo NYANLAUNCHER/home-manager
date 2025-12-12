@@ -15,11 +15,10 @@ inputs@{ config, pkgs, lib, ... }:
     ".zshenv".source = lib.mkForce ./.zshenv;
     #".zshrc".source = lib.mkForce ./.zshrc;
     #".config/zsh".source = lib.mkForce ./zsh;
-    ".config/nix/".source =     ./nix;
     #".config/nvim/".source =    ./nvim;
-    #".config/helix/".source =   ./helix;
     #".config/yazi/".source =    ./yazi;
     #".config/zellij/".source =  ./zellij;
+    ".config/nix/".source =     ./nix;
     ".config/ghostty/".source = ./ghostty;
     ".config/git/".source =     ./git;
     ".config/vieb/".source =    ./vieb;
@@ -32,8 +31,9 @@ inputs@{ config, pkgs, lib, ... }:
   # environment.
   home.packages = (with pkgs; [
     # Dev
+    xclip
     ghostty
-    helix
+    zellij
     yazi
     git
     lazygit
