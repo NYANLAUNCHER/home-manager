@@ -27,7 +27,7 @@ return {
     -- See :h blink-cmp-config-keymap for defining your own keymap
     keymap = {
       preset = 'default',
-      ['<C-m>'] = { 'accept' },
+      ['<C-m>'] = { 'accept', 'fallback' },
       ['<A-h>'] = { 'show_signature' },
     },
 

@@ -1,8 +1,11 @@
 # Run `ghostty +show-config --default --docs` to view a list of
 # all available config options and their default values.
 # see also: https://ghostty.org/docs/config.
-config-file = themes/nordic
 shell-integration = zsh
+# Theme:
+config-file = themes/nordic
+# Zellij Integration:
+config-file = zellij.conf
 
 gtk-titlebar-hide-when-maximized = true
 
@@ -13,4 +16,3 @@ window-padding-x = 2
 font-family = JetBrainsMono Nerd Font Mono
 
 keybind = ctrl+i=text:\t
-#keybind = ctrlm=text:\n
