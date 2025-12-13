@@ -37,7 +37,7 @@ local delkey = function(mode, lhs) vim.keymap.set(mode, lhs, '<nop>', { noremap=
       keymap('n', 'gd', vim.lsp.buf.definition, opts)
       keymap('n', 'H', vim.lsp.buf.hover, opts)
       keymap('n', 'gi', vim.lsp.buf.implementation, opts)
-      keymap('n', '<A-h>', vim.lsp.buf.signature_help, opts)
+      keymap('n', '<C-s>', vim.lsp.buf.signature_help, opts)
       keymap('n', '<space>wa', vim.lsp.buf.add_workspace_folder, opts)
       keymap('n', '<space>wr', vim.lsp.buf.remove_workspace_folder, opts)
       keymap('n', '<space>wl', function()
