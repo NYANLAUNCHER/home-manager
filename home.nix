@@ -19,6 +19,7 @@ inputs@{ config, pkgs, lib, ... }:
     #".config/nvim/".source =    ./nvim;
     #".config/yazi/".source =    ./yazi;
     #".config/zellij/".source =  ./zellij;
+    ".config/qutebrowser/".source = ./qutebrowser;
     ".config/nix/".source =     ./nix;
     ".config/ghostty/".source = ./ghostty;
     ".config/git/".source =     ./git;
@@ -34,6 +35,7 @@ inputs@{ config, pkgs, lib, ... }:
     # Dev
     xclip
     ghostty
+    qutebrowser
     zellij
     yazi
     git
