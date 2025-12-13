@@ -104,7 +104,7 @@ interceptor.register(filter_yt)
 
 c.scrolling.bar = "when-searching"
 
-c.colors.webpage.darkmode.enabled = False
+c.colors.webpage.darkmode.enabled = True
 def toggle_darkmode():
     if (c.colors.webpage.darkmode.enabled == False):
         c.colors.webpage.darkmode.enabled == True
