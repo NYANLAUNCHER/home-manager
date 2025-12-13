@@ -20,7 +20,6 @@ return {
       ['<C-p>'] = { 'show', 'select_prev' },
       ['<C-y>'] = { 'accept' },
       ['<C-e>'] = { 'cancel' },
-      --['<C-s>'] = { 'show_signature' },
     },
     cmdline = {
       keymap = {
