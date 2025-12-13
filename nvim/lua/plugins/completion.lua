@@ -22,13 +22,15 @@ return {
     -- C-k: Toggle signature help (if signature.enabled = true)
     keymap = {-- see :h blink-cmp-config-keymap
       preset = 'default',
-      ['<Tab>'] = { 'show', 'accept' },
+      ['<Tab>'] = { 'show' },
+      ['<C-m>'] = { 'accept' },
       ['<A-h>'] = { 'show_signature' },
     },
     cmdline = {
       keymap = {
         -- recommended, as the default keymap will only show and select the next item
         ['<Tab>'] = { 'show', 'accept' },
+        ['<C-m>'] = { 'accept_and_enter' },
       },
       completion = {
         menu = { auto_show = true },
