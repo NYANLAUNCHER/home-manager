@@ -17,12 +17,19 @@ keybinds {
     bind "Alt s" { SwitchToMode "scroll"; }
     bind "Alt m" { SwitchToMode "move"; }
     bind "Alt n" { NewPane; }
-    bind "Alt Left" { MoveFocusOrTab "Left"; }
-    bind "Alt Right" { MoveFocusOrTab "Right"; }
-    bind "Alt Up" { MoveFocus "Up"; }
-    bind "Alt Down" { MoveFocus "Down"; }
+    // pane movements
+    bind "Alt Left"  { MoveFocus "Left"; }
+    bind "Alt Right" { MoveFocus "Right"; }
+    bind "Alt Up"    { MoveFocus "Up"; }
+    bind "Alt Down"  { MoveFocus "Down"; }
     bind "Alt +" { Resize "Increase"; }
     bind "Alt -" { Resize "Decrease"; }
+    // relative movements
+    bind "Alt h" { GoToPreviousTab; }
+    bind "Alt l" { GoToNextTab; }
+    bind "Alt j" { MoveTab "Left"; }
+    bind "Alt k" { MoveTab "Right"; }
+    // absolute tab movements
     bind "Alt 1" { GoToTab 1; }
     bind "Alt 2" { GoToTab 2; }
     bind "Alt 3" { GoToTab 3; }
@@ -52,15 +59,15 @@ keybinds {
   }
   tab clear-defaults=true {
     bind "Enter" "Esc" "Space" { SwitchToMode "normal"; }
-    bind "h" "Left" { GoToPreviousTab; }
-    bind "l" "Right" { GoToNextTab; }
     bind "n" { NewTab; }
     bind "x" { CloseTab; }
     bind "s" { ToggleActiveSyncTab; }
-    bind "Alt h" { MoveFocus "Left"; }
-    bind "Alt l" { MoveFocus "Right"; }
-    bind "Alt j" { MoveFocus "Down"; }
-    bind "Alt k" { MoveFocus "Up"; }
+    // relative movements
+    bind "h" "Left" { GoToPreviousTab; }
+    bind "l" "Right" { GoToNextTab; }
+    bind "j" { MoveTab "Left"; }
+    bind "k" { MoveTab "Right"; }
+    // absolute movements
     bind "1" { GoToTab 1; }
     bind "2" { GoToTab 2; }
     bind "3" { GoToTab 3; }
