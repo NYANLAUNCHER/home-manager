@@ -25,6 +25,7 @@ keybinds {
     bind "Alt +" { Resize "Increase"; }
     bind "Alt -" { Resize "Decrease"; }
     // relative movements
+    bind "Alt Tab" { ToggleTab; }
     bind "Alt h" { GoToPreviousTab; }
     bind "Alt l" { GoToNextTab; }
     bind "Alt j" { MoveTab "Left"; }
