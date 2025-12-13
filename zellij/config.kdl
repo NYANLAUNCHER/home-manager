@@ -3,6 +3,8 @@
 // ############################################################
 // Run `zellij setup --check` for troubleshooting and inspecting
 // current config locations and features that are enabled.
+theme "nord"
+layout_dir "./layouts"
 keybinds {
   normal clear-defaults=true {
     bind "Alt q" { Quit; }
@@ -152,11 +154,7 @@ keybinds {
   renametab clear-defaults=true {}
   tmux clear-defaults=true {}
 }
-theme "nord"
-// The folder in which Zellij will look for layouts
-//layout_dir "$XDG_CONFIG_HOME/zellij/layouts"
 // The name of the default layout to load on startup
-// Default: "default"
 //default_layout "compact"
 
 // When attaching to an existing session with other users,
