@@ -30,7 +30,7 @@ return {
       keymap = {
         -- recommended, as the default keymap will only show and select the next item
         ['<Tab>'] = { 'show', 'accept' },
-        ['<C-m>'] = { 'accept_and_enter' },
+        ['<C-m>'] = { 'accept_and_enter', 'fallback' },
       },
       completion = {
         menu = { auto_show = true },
