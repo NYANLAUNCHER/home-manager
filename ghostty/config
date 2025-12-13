@@ -4,15 +4,15 @@
 shell-integration = zsh
 # Theme:
 config-file = themes/nordic
-# Zellij Integration:
-config-file = zellij.conf
-
+# Styling
 gtk-titlebar-hide-when-maximized = true
-
 background-opacity = 0.85
 background-blur = 50
 window-padding-x = 2
-
+# Fonts
 font-family = JetBrainsMono Nerd Font Mono
-
+# Keybinds
 keybind = ctrl+i=text:\t
+
+# Zellij Integration:
+config-file = zellij.conf
