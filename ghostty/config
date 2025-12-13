@@ -5,6 +5,7 @@ shell-integration = zsh
 # Theme:
 config-file = themes/nordic
 # Styling
+maximize = true
 gtk-titlebar-hide-when-maximized = true
 background-opacity = 0.85
 background-blur = 50
