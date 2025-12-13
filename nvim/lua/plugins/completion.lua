@@ -16,16 +16,16 @@ return {
     -- see :h blink-cmp-config-keymap
     keymap = {
       preset = 'none',
-      ['<C-n>'] = { 'show', 'select_next' },
-      ['<C-p>'] = { 'show', 'select_prev' },
+      ['<C-n>'] = { 'show_and_insert', 'select_next' },
+      ['<C-p>'] = { 'show_and_insert', 'select_prev' },
       ['<C-y>'] = { 'accept' },
       ['<C-e>'] = { 'cancel' },
     },
     cmdline = {
       keymap = {
         -- recommended, as the default keymap will only show and select the next item
-        ['<C-n>'] = { 'show', 'select_next' },
-        ['<C-p>'] = { 'show', 'select_prev' },
+        ['<C-n>'] = { 'show_and_insert', 'select_next' },
+        ['<C-p>'] = { 'show_and_insert', 'select_prev' },
         ['<C-y>'] = { 'accept' },
         ['<C-e>'] = { 'cancel' },
         ['<Left>'] = { 'fallback' },
@@ -39,8 +39,10 @@ return {
 
     appearance = { nerd_font_variant = 'mono' },
 
-    -- (Default) Only show the documentation popup when manually triggered
-    completion = { documentation = { auto_show = false } },
+    completion = {
+      menu = { auto_show = false },
+      documentation = { auto_show = false }
+    },
 
     -- Default list of enabled providers defined so that you can extend it
     -- elsewhere in your config, without redefining it, due to `opts_extend`

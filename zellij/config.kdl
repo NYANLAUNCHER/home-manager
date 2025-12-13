@@ -4,7 +4,7 @@
 // Run `zellij setup --check` for troubleshooting and inspecting
 // current config locations and features that are enabled.
 theme "nord"
-layout_dir "./layouts"
+layout_dir "$XDG_CONFIG_HOME/zellij/layouts"
 keybinds {
   normal clear-defaults=true {
     bind "Alt q" { Quit; }

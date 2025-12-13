@@ -1,0 +1,8 @@
+// Open five tabs for easy access with left hand
+layout {
+  tab { pane }
+  tab { pane }
+  tab { pane }
+  tab { pane }
+  tab { pane }
+}
