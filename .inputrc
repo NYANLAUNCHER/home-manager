@@ -6,9 +6,9 @@ set menu-complete-display-prefix on
 "\e[Z": menu-complete-backward
 #TAB: alias-expand-line
 
-"\C-o": '\C-k\C-uy\C-m'
-"\C-.": '\C-k\C-uz\C-m'
-"\C-j": '\C-k\C-ull\C-m'
+#"\C-z": '\C-k\C-uz\C-m' # zellij alias
+"\C-o": '\C-k\C-uy\C-m' # yazi alias
+"\C-j": '\C-k\C-ull\C-m' # ls alias
 "\ez": 'cd -\015'
 
 "\C-l": clear-screen

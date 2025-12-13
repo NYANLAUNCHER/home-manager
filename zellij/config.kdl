@@ -1,16 +1,6 @@
 // ############################################################
 // ###   ###  Alt-centered configuration for Zellij  ###   ####
 // ############################################################
-// - 1 prefix key (Alt) for most common actions in normal mode
-// - Less common actions require switching mode or are removed
-// - Press escape, enter or space to switch back to normal mode
-// - Press Alt-q for quitting and Alt-d for detaching
-//
-// To access other modes from normal mode press
-// 1. Alt-r for resize, 2. Alt-p for pane,
-// 3. .. move, 4. .. tab, 5. .. scroll,
-// 6. in scroll mode s to type text, 7. enter to search.
-//
 // Run `zellij setup --check` for troubleshooting and inspecting
 // current config locations and features that are enabled.
 keybinds {
@@ -30,6 +20,16 @@ keybinds {
     bind "Alt Down" { MoveFocus "Down"; }
     bind "Alt +" { Resize "Increase"; }
     bind "Alt -" { Resize "Decrease"; }
+    bind "Alt 1" { GoToTab 1; }
+    bind "Alt 2" { GoToTab 2; }
+    bind "Alt 3" { GoToTab 3; }
+    bind "Alt 4" { GoToTab 4; }
+    bind "Alt 5" { GoToTab 5; }
+    bind "Alt 6" { GoToTab 6; }
+    bind "Alt 7" { GoToTab 7; }
+    bind "Alt 8" { GoToTab 8; }
+    bind "Alt 9" { GoToTab 9; }
+    bind "Alt 0" { GoToTab 10; }
   }
   pane clear-defaults=true {
     bind "Enter" "Esc" "Space" { SwitchToMode "normal"; }
@@ -67,6 +67,7 @@ keybinds {
     bind "7" { GoToTab 7; }
     bind "8" { GoToTab 8; }
     bind "9" { GoToTab 9; }
+    bind "0" { GoToTab 10; }
     bind "Tab" { ToggleTab; }
   }
   session clear-defaults=true {
