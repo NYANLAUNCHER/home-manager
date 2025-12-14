@@ -39,6 +39,7 @@ c.aliases = {
     "sd": "session-delete",
     "sl": "session-load",
     "so": "config-source",
+    "toggle-darkmode": "config-cycle colors.webpage.darkmode.enabled",
 }
 
 # Auto save settings
@@ -105,12 +106,6 @@ interceptor.register(filter_yt)
 c.scrolling.bar = "when-searching"
 
 c.colors.webpage.darkmode.enabled = True
-def toggle_darkmode():
-    if (c.colors.webpage.darkmode.enabled == False):
-        c.colors.webpage.darkmode.enabled == True
-    else:
-        c.colors.webpage.darkmode.enabled == False
-#config.bind("", toggle_darkmode())
 
 # Which cookies to accept. With QtWebEngine, this setting also controls
 # other features with tracking capabilities similar to those of cookies;
@@ -244,6 +239,9 @@ config.bind("j", "scroll-page   0    0.1")
 config.bind("k", "scroll-page   0   -0.1")
 config.bind("h", "scroll-page  0.1    0")
 config.bind("l", "scroll-page -0.1    0")
+
+config.bind("J", "tab-prev")
+config.bind("K", "tab-next")
 
 config.bind("<Ctrl-h>", "home")
 # '-s' add space to end
