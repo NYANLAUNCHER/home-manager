@@ -13,9 +13,16 @@ return {
   ---@module 'blink.cmp'
   ---@type blink.cmp.Config
   opts = {
+    appearance = { nerd_font_variant = 'mono' },
+    completion = {
+      menu = { auto_show = true },
+      documentation = { auto_show = false }
+    },
+
     -- see :h blink-cmp-config-keymap
     keymap = {
       preset = 'none',
+      ['<C-i>'] = { 'show', 'accept' },
       ['<C-n>'] = { 'show_and_insert', 'select_next' },
       ['<C-p>'] = { 'show_and_insert', 'select_prev' },
       ['<C-y>'] = { 'accept' },
@@ -24,6 +31,7 @@ return {
     cmdline = {
       keymap = {
         -- recommended, as the default keymap will only show and select the next item
+        ['<C-i>'] = { 'show', 'accept' },
         ['<C-n>'] = { 'show_and_insert', 'select_next' },
         ['<C-p>'] = { 'show_and_insert', 'select_prev' },
         ['<C-y>'] = { 'accept' },
@@ -35,13 +43,6 @@ return {
         menu = { auto_show = false },
         ghost_text = { enabled = true };
       },
-    },
-
-    appearance = { nerd_font_variant = 'mono' },
-
-    completion = {
-      menu = { auto_show = false },
-      documentation = { auto_show = false }
     },
 
     -- Default list of enabled providers defined so that you can extend it
