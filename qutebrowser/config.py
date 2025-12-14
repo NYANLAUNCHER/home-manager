@@ -288,8 +288,8 @@ config.bind("-", "zoom-out")
 config.bind("=", "zoom-in")
 config.bind("+", "zoom")
 #config.bind("gM", "")# move a tab to <index> starting from the end
-config.bind("<Ctrl-j>", "tab-move +")
-config.bind("<Ctrl-k>", "tab-move -")
+config.bind("<Ctrl-j>", "tab-move -")
+config.bind("<Ctrl-k>", "tab-move +")
 
 ## Insert mode bindings
 config.bind("<Ctrl-m>", "fake-key <Enter>",              mode="insert")
