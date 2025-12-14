@@ -37,29 +37,6 @@ M.setup = function()
     change_detection = { notify = false },
     browser = nil,
   })
-
-  local function run_on_each_file(dir, callback)
-    -- Expand "~" or relative paths
-    dir = vim.fn.expand(dir)
-
-    -- Read directory entries
-    local files = vim.fn.readdir(dir)
-
-    for _, file in ipairs(files) do
-      local full_path = dir .. "/" .. file
-
-      -- Skip if it's not a file
-      if vim.fn.isdirectory(full_path) == 0 then
-        -- Remove extension
-        local name_without_ext = file:match("^(.*)%.") or file  -- handles files with no extension
-        callback(name_without_ext)
-      end
-    end
-  end
-  -- run all lsp configs in ~/.config/nvim/lsp/
-  run_on_each_file(vim.fn.stdpath("config").."/lsp", function(name)
-    vim.lsp.enable(name)
-  end)
 end
 
 return M

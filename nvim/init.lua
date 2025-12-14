@@ -7,10 +7,7 @@ local delkey = function(mode, lhs) vim.keymap.set(mode, lhs, '<nop>', { noremap=
   vim.lsp.config('*', {
     root_markers = { '.git/', 'Makefile', '.editorconfig' },
     -- :h lsp-root_dir()
-    --root_dir = function(bufnr, on_dir)
-    --  -- fallback to the directory of the current buffer
-    --  return vim.fn.expand("%:p:h")
-    --end
+    --root_dir = function() end
   })
   -- Keymaps:
   -- unmap some hideous defaults first
