@@ -14,7 +14,9 @@ keybinds {
     bind "Alt r" { SwitchToMode "resize"; }
     bind "Alt t" { SwitchToMode "tab"; }
     bind "Alt o" { SwitchToMode "session"; }
-    bind "Alt s" { SwitchToMode "scroll"; }
+    bind "Alt s" { SwitchToMode "scroll"; }// "scroll" AKA "search" mode
+    bind "Ctrl Up" { ScrollUp; }
+    bind "Ctrl Down" { ScrollDown; }
     bind "Alt m" { SwitchToMode "move"; }
     bind "Alt n" { NewPane; }
     // pane movements
@@ -120,6 +122,7 @@ keybinds {
     bind "Alt j" { MoveFocus "Down"; }
     bind "Alt k" { MoveFocus "Up"; }
   }
+  // "scroll" AKA "search" mode
   scroll clear-defaults=true {
     bind "e" { EditScrollback; SwitchToMode "normal"; }
     bind "Enter" "Esc" { SwitchToMode "normal"; }
