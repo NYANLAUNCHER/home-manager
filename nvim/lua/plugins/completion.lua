@@ -22,7 +22,7 @@ return {
     -- see :h blink-cmp-config-keymap
     keymap = {
       preset = 'none',
-      ['<C-i>'] = { 'show', 'accept' },
+      ['<C-i>'] = { 'show_and_insert', 'accept' },
       ['<C-n>'] = { 'show_and_insert', 'select_next' },
       ['<C-p>'] = { 'show_and_insert', 'select_prev' },
       ['<C-y>'] = { 'accept' },
@@ -31,7 +31,7 @@ return {
     cmdline = {
       keymap = {
         -- recommended, as the default keymap will only show and select the next item
-        ['<C-i>'] = { 'show', 'accept' },
+        ['<C-i>'] = { 'show_and_insert', 'accept' },
         ['<C-n>'] = { 'show_and_insert', 'select_next' },
         ['<C-p>'] = { 'show_and_insert', 'select_prev' },
         ['<C-y>'] = { 'accept' },
