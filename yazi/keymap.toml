@@ -14,14 +14,6 @@ on   = [ "g", "c" ]
 run  = "cd $XDG_CONFIG_HOME"
 desc = "Goto $XDG_CONFIG_HOME"
 [[mgr.prepend_keymap]]
-on   = [ "g", "s" ]
-run  = "cd $src"
-desc = "Goto source code"
-[[mgr.prepend_keymap]]
-on   = [ "g", "l" ]
-run  = "cd $HOME/.local"
-desc = "Goto ~/.local"
-[[mgr.prepend_keymap]]
 on   = [ "g", "h" ]
 run  = "cd $XDG_CONFIG_HOME/home-manager"
 desc = "Goto home-manager config"
