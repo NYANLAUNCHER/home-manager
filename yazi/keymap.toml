@@ -26,6 +26,14 @@ on   = [ "g", "h" ]
 run  = "cd $XDG_CONFIG_HOME/home-manager"
 desc = "Goto home-manager config"
 [[mgr.prepend_keymap]]
+on   = [ "g", "s" ]
+run  = "cd $src"
+desc = "Goto source code"
+[[mgr.prepend_keymap]]
+on   = [ "g", "l" ]
+run  = "cd $HOME/.local"
+desc = "Goto ~/.local"
+[[mgr.prepend_keymap]]
 on   = [ "g", "y" ]
 run  = "cd $XDG_CONFIG_HOME/yazi"
 desc = "Goto yazi config"
