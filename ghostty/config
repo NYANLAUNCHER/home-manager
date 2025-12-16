@@ -12,8 +12,6 @@ background-blur = 50
 window-padding-x = 2
 # Fonts
 font-family = JetBrainsMono Nerd Font Mono
-# Keybinds
-keybind = ctrl+i=text:\t
 
 # Zellij Integration:
 config-file = zellij.conf

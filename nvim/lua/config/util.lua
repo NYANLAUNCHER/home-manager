@@ -4,7 +4,7 @@ local _M={}-- Hidden members
 -- meta method to convert list of string/numbers into string
 _M.m_list_tostring = {
   __tostring = function(t)
-    local s = ""
+    local s = ''
     for k,v in pairs(t) do
       s = s..tostring(v)
     end
@@ -21,33 +21,50 @@ end
 ---@param tbl table The table to serialize
 ---@return string
 M.serialize_table = function(tbl)
-  local result = "{"
-  for k, v in pairs(tbl) do
-    result = result .. tostring(k) .. "="
-    if type(v) == "table" then
-      result = result .. M.serialize_table(v)
-    else
-      result = result .. tostring(v)
-    end
-    result = result .. ", "
+  if type(tbl) ~= 'table' then
+    return ''
   end
-  return result .. "}"
+  local ifs='\n'
+  local indent='  '
+  local elems=0 -- get number of elements in the table
+  for _ in pairs(tbl) do elems=elems+1 end
+
+  local result = '{'..ifs
+  local c=0
+  for k, v in pairs(tbl) do
+    c=c+1
+    if type(k) == 'string' then
+      k = '\''..k..'\''
+    end
+    k = '['..tostring(k)..']'
+    result = result..indent..k..'='
+    if type(v) == 'table' then
+      result = result..M.serialize_table(v)
+    else
+      result = result..tostring(v)
+    end
+    if (c~=elems) then
+      result = result..','..ifs
+    end
+  end
+  return result..'\n}'
 end
 
--- List all files in a directory (non-recursively)
---[[
-function M.list_files(directory)
-  local i, t = 0, {}
-  local pfile = assert(io.popen(("find '%s' -maxdepth 1 -print0"):format(directory), 'r'):read('*a'))
-  local s = pfile:read('*a')
-  pfile:close()
-  for filename in s:gmatch('[^\0]+') do
-    i = i+1
-    t[i] = filename
-    print(tostring(filename))
+M.run_on_each_file = function(dir, callback)
+  -- Expand '~' or relative paths
+  dir = vim.fn.expand(dir)
+
+  -- Read directory entries
+  local files = vim.fn.readdir(dir)
+
+  for _, file in ipairs(files) do
+    local full_path = dir .. '/' .. file
+
+    -- Skip if it's not a file
+    if vim.fn.isdirectory(full_path) == 0 then
+      callback(dir, file)
+    end
   end
-  return t
 end
-]]
 
 return M

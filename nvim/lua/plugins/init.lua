@@ -15,7 +15,7 @@ return {
     end
   },
   -- LSP Config
-  {'neovim/nvim-lspconfig' },
+  {'neovim/nvim-lspconfig'},
   {'nvimdev/lspsaga.nvim',
     config = function()
       require('lspsaga').setup({

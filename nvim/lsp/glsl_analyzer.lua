@@ -1,2 +1,3 @@
 return {
+  filetypes = {'glsl'},
 }
