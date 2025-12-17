@@ -4,11 +4,7 @@ local keymap = vim.keymap.set
 local delkey = function(mode, lhs) vim.keymap.set(mode, lhs, '<nop>', { noremap=true, silent=true }) end
 
 -- LSP Config: {{{
-  vim.lsp.config('*', {
-    root_markers = { '.git/', 'Makefile', '.editorconfig' },
-    -- :h lsp-root_dir()
-    --root_dir = function() end
-  })
+  vim.lsp.config('*', {})
   -- Keymaps:
   -- unmap some hideous defaults first
   delkey('n', 'H')
@@ -74,7 +70,7 @@ vim.opt.signcolumn='yes'
 vim.opt.foldcolumn='auto'
 vim.opt.foldmethod='marker'
 vim.opt.colorcolumn='100'
-vim.opt.cmdheight=2
+vim.opt.cmdheight=1
 -- Search
 vim.opt.magic=true
 vim.opt.smartcase=true

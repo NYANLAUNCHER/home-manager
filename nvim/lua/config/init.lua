@@ -38,19 +38,19 @@ M.setup = function()
   })
 
   -- enable lsp configs in $XDG_CONFIG_HOME/nvim/lsp/ based on filetype
-  M.util.run_on_each_file(vim.fn.stdpath("config").."/lsp", function(dir, file)
-    local lsp_name = file:match("^(.*)%.") or file -- remove file extention (i.e. *.lua)
-    local config=dofile(dir..'/'..file)
-    local filetypes=config.filetypes
-    if filetypes then
-      vim.api.nvim_create_autocmd('FileType', {
-        pattern=filetypes,
-        callback=function()
-          vim.lsp.enable(lsp_name)
-        end
-      })
-    end
-  end)
+  --M.util.run_on_each_file(vim.fn.stdpath("config").."/lsp", function(dir, file)
+  --  local lsp_name = file:match("^(.*)%.") or file -- remove file extention (i.e. *.lua)
+  --  local config=dofile(dir..'/'..file)
+  --  local filetypes=config.filetypes
+  --  if filetypes then
+  --    vim.api.nvim_create_autocmd('FileType', {
+  --      pattern=filetypes,
+  --      callback=function()
+  --        vim.lsp.enable(lsp_name)
+  --      end
+  --    })
+  --  end
+  --end)
 end
 
 return M
