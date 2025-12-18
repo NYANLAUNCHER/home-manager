@@ -1,6 +1,6 @@
 return {
-  --filetypes = { 'c', 'cpp', 'cuda' },
-  --root_markers = { '.ccls', 'compile_commands.json' },
+  filetypes = { 'c', 'cpp', 'cuda' },
+  root_markers = { '.ccls', 'compile_commands.json' },
   init_options = {
     compilationDatabaseDirectory = 'build',
     index = {

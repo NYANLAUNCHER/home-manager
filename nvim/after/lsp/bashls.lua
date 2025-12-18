@@ -1,5 +1,5 @@
 return {
-  --filetypes = { 'sh', 'bash', 'make' },
+  filetypes = { 'sh', 'bash', 'zsh' },
   settings = {
     bashIde = {
       includeAllWorkspaceSymbols = true,

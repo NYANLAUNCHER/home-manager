@@ -50,6 +50,14 @@ M.serialize_table = function(tbl)
   return result..'\n}'
 end
 
+M.is_dir = function(path)
+  local stat = vim.uv.fs_stat(path)
+  if stat and stat.type == 'directory' then
+    return true
+  end
+  return false
+end
+
 M.run_on_each_file = function(dir, callback)
   -- Expand '~' or relative paths
   dir = vim.fn.expand(dir)

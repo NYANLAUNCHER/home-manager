@@ -1,7 +1,6 @@
-inputs@{ config, pkgs, lib, ... }:
+inputs@{ config, pkgs, lib, username, homeDirectory, ... }:
 {
-  home.username = "markiep";
-  home.homeDirectory = "/home/markiep";
+  home = {inherit username homeDirectory;};
 
   imports = [
     ./nvim/home.nix
@@ -14,8 +13,8 @@ inputs@{ config, pkgs, lib, ... }:
     ".inputrc".source = lib.mkForce ./.inputrc;
     ".bashrc".source = lib.mkForce ./.bashrc;
     ".zshenv".source = lib.mkForce ./.zshenv;
-    #".zshrc".source = lib.mkForce ./.zshrc;
-    #".config/zsh".source = lib.mkForce ./zsh;
+    ".zshrc".source = lib.mkForce ./.zshrc;
+    ".config/zsh".source = lib.mkForce ./zsh;
     #".config/nvim/".source =    ./nvim;
     #".config/yazi/".source =    ./yazi;
     #".config/zellij/".source =  ./zellij;

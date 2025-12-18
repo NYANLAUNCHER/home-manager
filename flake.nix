@@ -1,6 +1,4 @@
 {
-  description = "Home Manager configuration of markiep";
-
   inputs = {
     # Specify the source of Home Manager and Nixpkgs.
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
@@ -14,11 +12,13 @@
     let
       system = "x86_64-linux";
       pkgs = nixpkgs.legacyPackages.${system};
+      username = "markiep";
+      homeDirectory = "/home/${username}";
     in {
-      homeConfigurations."markiep" = home-manager.lib.homeManagerConfiguration {
+      homeConfigurations.${username} = home-manager.lib.homeManagerConfiguration {
         inherit pkgs;
+        extraSpecialArgs = {inherit username homeDirectory;};
         modules = [ ./home.nix ];
-        #extraSpecialArgs = {};
       };
     };
 }
