@@ -1,4 +1,5 @@
-local dap=require('dap')
+local ok,dap=pcall(require, 'dap')
+if not ok then return {} end -- configuration wont be ran if dap isnt installed
 local build_dir=os.getenv('build')
 local pname=os.getenv('pname')
 local exe=nil

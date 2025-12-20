@@ -56,4 +56,7 @@ alias z="zellij"
 alias microprompt="PS1='> '"
 alias grep="grep --color=always"
 alias diff="diff --color=always"
-alias info="info --vi-keys"
+fn_nviminfo () {
+    nvim -R -M -c "Info $1 $2" +only
+}
+alias info="fn_nviminfo"

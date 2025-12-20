@@ -114,7 +114,10 @@ alias t="tail"
 alias microprompt="PS1='> '"
 alias grep="grep --color=always"
 alias diff="diff --color=always"
-alias info="info --vi-keys"
+fn_nviminfo () {
+    nvim -R -M -c "Info $1 $2" +only
+}
+alias info="fn_nviminfo"
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh

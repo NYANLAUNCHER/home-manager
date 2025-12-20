@@ -14,6 +14,8 @@ return {
         require('nordic').load()
     end
   },
+  -- Help
+  {'HiPhish/info.vim'},
   -- LSP Config
   {'neovim/nvim-lspconfig'},
   {'nvimdev/lspsaga.nvim',

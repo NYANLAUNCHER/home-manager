@@ -52,6 +52,7 @@ M.setup = function()
     end
     return cwd
   end
+
   -- enable lsp configs in $XDG_CONFIG_HOME/nvim/lsp/ based on filetype
   local f = function(dir, file)
     local lsp_name = file:match("^(.*)%.") or file -- remove file extention (i.e. *.lua)
