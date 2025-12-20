@@ -14,7 +14,7 @@ inputs@{ config, pkgs, lib, username, homeDirectory, ... }:
     ".bashrc".source = lib.mkForce ./.bashrc;
     ".zshenv".source = lib.mkForce ./.zshenv;
     ".zshrc".source = lib.mkForce ./.zshrc;
-    ".config/zsh".source = lib.mkForce ./zsh;
+    #".config/zsh".source = lib.mkForce ./zsh;
     #".config/nvim/".source =    ./nvim;
     #".config/yazi/".source =    ./yazi;
     #".config/zellij/".source =  ./zellij;

@@ -4,13 +4,6 @@ set menu-complete-display-prefix on
 
 "\C-i": menu-complete
 "\e[Z": menu-complete-backward
-#TAB: alias-expand-line
-
-#"\C-z": '\C-k\C-uz\C-m' # zellij alias
-"\C-o": '\C-k\C-uy\C-m' # yazi alias
-"\C-j": '\C-k\C-ull\C-m' # ls alias
-"\ez": 'cd -\015'
-
 "\C-l": clear-screen
 "\C-p": history-search-backward
 "\C-n": history-search-forward

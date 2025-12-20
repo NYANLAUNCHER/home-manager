@@ -34,14 +34,26 @@ fn_edit_flake() { # search upwards for flake.nix
 }
 alias ef="fn_edit_flake"
 alias todo="$EDITOR $todo"
-alias ll="ls -hlA --color=always --group-directories-first"
+fn_ll() { # GNU readline integration for ll
+  local saved_line=$READLINE_LINE
+  local saved_point=$READLINE_POINT
+  ls -hlA --color=always --group-directories-first "$@"
+  echo
+  READLINE_LINE=$saved_line
+  READLINE_POINT=$saved_point
+}
+bind -x '"\C-j": "fn_ll"'
+alias ll="fn_ll"
 alias cdtmp="cd $(mktemp -d)"
-## home-manager
-alias hm="home-manager"
-alias hms="home-manager switch"
-##
+## Nix & Home-Manager
 alias nsh="nix-shell -p"
-alias submake="make -f submake.mk"
+alias hm="home-manager"
+fn_hms() {
+  home-manager switch "$@"
+  source "$BASH_SOURCE"
+}
+alias hms="fn_hms"
+##
 fn_yazi() {
   local tmp="$(mktemp -t "yazi-cwd.XXXXXX")" cwd
   yazi "$@" --cwd-file="$tmp"
@@ -50,13 +62,21 @@ fn_yazi() {
   fi
   rm -f -- "$tmp"
 }
+fn_yazi_readline() { # GNU readline integration for yazi
+  local saved_line=$READLINE_LINE
+  local saved_point=$READLINE_POINT
+  fn_yazi
+  READLINE_LINE=$saved_line
+  READLINE_POINT=$saved_point
+}
+bind -x '"\C-o": "fn_yazi_readline"'
 alias y="fn_yazi"
 alias z="zellij"
 # Miniture prompt for popup terminals
 alias microprompt="PS1='> '"
 alias grep="grep --color=always"
 alias diff="diff --color=always"
-fn_nviminfo () {
+fn_nvim_info () { # open info & man pages in neovim
     nvim -R -M -c "Info $1 $2" +only
 }
-alias info="fn_nviminfo"
+alias info="fn_nvim_info"

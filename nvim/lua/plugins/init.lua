@@ -1,8 +1,10 @@
+local delkey = function(mode, lhs) vim.keymap.set(mode, lhs, '<nop>', { noremap=true, silent=true }) end
+local keymap = vim.keymap.set
 return {
   -- Local Plugins
   {'hex',
     dir = vim.fn.stdpath('config')..'/lua/hex',
-    config = function()
+    config=function()
       require('hex').setup()
     end
   },
@@ -10,16 +12,32 @@ return {
   {'AlexvZyl/nordic.nvim',
     name = 'nordic',
     priority = 1000,
-    config = function()
+    config=function()
         require('nordic').load()
     end
   },
-  -- Help
-  {'HiPhish/info.vim'},
+  -- Info & Man pages
+  {'HiPhish/info.vim',--from: "https://gitlab.com/HiPhish/info.vim"
+    config=function()
+      -- info page keybinds
+      vim.api.nvim_create_autocmd({'FileType'}, {
+        pattern='info',
+        callback=function()
+          keymap('n', 'gu', '<Plug>(infoup)')
+        end
+      })
+      -- man page keybinds
+      vim.api.nvim_create_autocmd({'FileType'}, {
+        pattern='man',
+        callback=function()
+        end
+      })
+    end,
+  },
   -- LSP Config
   {'neovim/nvim-lspconfig'},
   {'nvimdev/lspsaga.nvim',
-    config = function()
+    config=function()
       require('lspsaga').setup({
         symbol_in_winbar = {
           enable = true
@@ -30,17 +48,12 @@ return {
   -- Text Stuffs
   {'kylechui/nvim-surround',
     event = 'VeryLazy',
-    config = function()
-      require('nvim-surround').setup({ })
+    config=function()
+      require('nvim-surround').setup({})
     end
   },
   {'andymass/vim-matchup',
-    init = function()
-      -- modify your configuration vars here
-      vim.g.matchup_treesitter_stopline = 500
-
-      -- or call the setup function provided as a helper. It defines the
-      -- configuration vars for you
+    init=function()
       require('match-up').setup({
         treesitter = {
           stopline = 500
@@ -48,17 +61,25 @@ return {
       })
     end,
   },
-  {'unblevable/quick-scope',
-    config = function()
-      vim.g.qs_enable = 0
-      -- note:
-      -- use ';' to redo last line-search command
-      vim.g.qs_hightlight_on_keys = {'f', 'F', 't', 'T'}
-    end
+  {'https://codeberg.org/andyg/leap.nvim',
+    dependencies={'tpope/vim-repeat'},
+    config=function()
+      delkey({'n','x','o'}, 's')
+      keymap({'n','x','o'}, 's', function ()
+        require('leap').leap({
+          backward=false,
+        })
+      end)
+      keymap('n', 'S', function ()
+        require('leap').leap({
+          backward=true,
+        })
+      end)
+    end,
   },
   {'lukas-reineke/indent-blankline.nvim',
     main = 'ibl',
-    config = function()
+    config=function()
       require'ibl'.setup({
         indent = { char = '┊' },
         scope = { enabled = false }
@@ -67,7 +88,7 @@ return {
   },
   -- File Organization
   {'nvim-tree/nvim-tree.lua',
-    config = function()
+    config=function()
       vim.g.loaded_netrw = 1
       vim.g.loaded_netrwPlugin = 1
       vim.opt.termguicolors = true

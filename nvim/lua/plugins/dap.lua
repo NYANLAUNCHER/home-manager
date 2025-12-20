@@ -4,9 +4,10 @@ return {
     local dap = require('dap')
     local widgets = require('dap.ui.widgets')
     vim.keymap.set('n', '<Leader>c', function() dap.continue() end)
-    vim.keymap.set('n', '<Leader>O', function() dap.step_over() end)
+    vim.keymap.set('n', '<Leader>o', function() dap.step_over() end)
     vim.keymap.set('n', '<Leader>s', function() dap.step_into() end)
-    vim.keymap.set('n', '<Leader>o', function() dap.step_out() end)
+    vim.keymap.set('n', '<Leader>O', function() dap.step_out() end)
+    -- debugging session setup
     vim.keymap.set('n', '<Leader>b', function() dap.toggle_breakpoint() end)
     vim.keymap.set('n', '<Leader>B', function() dap.set_breakpoint() end)
     vim.keymap.set('n', '<Leader>lp', function() dap.set_breakpoint(nil, nil, vim.fn.input('Log point message: ')) end)

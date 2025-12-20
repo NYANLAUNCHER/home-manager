@@ -2,7 +2,6 @@ local _ = require('config').setup()
 local u = require('config.util')
 local keymap = vim.keymap.set
 local delkey = function(mode, lhs) vim.keymap.set(mode, lhs, '<nop>', { noremap=true, silent=true }) end
---root_dir = vim.lsp.util.root_pattern(root_markers);
 
 -- LSP Config: {{{
   -- Keymaps:
