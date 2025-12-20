@@ -82,11 +82,11 @@ M.setup = function()
   end
   local dir = vim.fn.stdpath("config").."/lsp"
   if M.util.is_dir(dir) then
-    M.util.run_on_each_file(dir, function(...) f(...) end)
+    M.util.run_on_each_file(dir, f)
   end
   dir = vim.fn.stdpath("config").."/after/lsp"
   if M.util.is_dir(dir) then
-    M.util.run_on_each_file(dir, function(...) f(...) end)
+    M.util.run_on_each_file(dir, f)
   end
 end
 
