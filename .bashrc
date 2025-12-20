@@ -34,13 +34,9 @@ fn_edit_flake() { # search upwards for flake.nix
 }
 alias ef="fn_edit_flake"
 alias todo="$EDITOR $todo"
-fn_ll() { # GNU readline integration for ll
-  local saved_line=$READLINE_LINE
-  local saved_point=$READLINE_POINT
+fn_ll() {
   ls -hlA --color=always --group-directories-first "$@"
   echo
-  READLINE_LINE=$saved_line
-  READLINE_POINT=$saved_point
 }
 bind -x '"\C-j": "fn_ll"'
 alias ll="fn_ll"
@@ -62,15 +58,8 @@ fn_yazi() {
   fi
   rm -f -- "$tmp"
 }
-fn_yazi_readline() { # GNU readline integration for yazi
-  local saved_line=$READLINE_LINE
-  local saved_point=$READLINE_POINT
-  fn_yazi
-  READLINE_LINE=$saved_line
-  READLINE_POINT=$saved_point
-}
-bind -x '"\C-o": "fn_yazi_readline"'
 alias y="fn_yazi"
+bind '"\C-o": "\C-e\C-uy\C-m"'
 alias z="zellij"
 # Miniture prompt for popup terminals
 alias microprompt="PS1='> '"

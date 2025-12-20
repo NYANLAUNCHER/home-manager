@@ -167,6 +167,9 @@ com! Qa qa!
 com! W w!
 com! Mks mks!
 com! Reload source $MYVIMRC
+cnoreabbrev rel Reload
+cnoreabbrev i Info
+cnoreabbrev man Man
 ]])
 
 vim.api.nvim_create_autocmd('BufWinLeave', {

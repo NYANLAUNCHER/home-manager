@@ -17,16 +17,21 @@ return {
     end
   },
   -- Info & Man pages
-  {'HiPhish/info.vim',--from: "https://gitlab.com/HiPhish/info.vim"
+  {'https://gitlab.com/HiPhish/info.vim',
     config=function()
-      -- info page keybinds
+      -- info page config & keybinds
       vim.api.nvim_create_autocmd({'FileType'}, {
         pattern='info',
         callback=function()
-          keymap('n', 'gu', '<Plug>(infoup)')
+          keymap('n', 'gu',   '<Plug>(InfoUp)')
+          keymap('n', 'gn',   '<Plug>(InfoNext)')
+          keymap('n', 'gp',   '<Plug>(InfoPrev)')
+          keymap('n', 'gm',   '<Plug>(InfoMenu)')
+          keymap('n', 'gd',   '<Plug>(InfoFollow)')
+          keymap('n', '<Cr>', '<Plug>(InfoFollow)')
         end
       })
-      -- man page keybinds
+      -- man page config & keybinds
       vim.api.nvim_create_autocmd({'FileType'}, {
         pattern='man',
         callback=function()
