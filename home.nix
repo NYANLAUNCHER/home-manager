@@ -15,11 +15,12 @@ inputs@{ config, pkgs, lib, username, homeDirectory, ... }:
     ".zshenv".source = lib.mkForce ./.zshenv;
     ".zshrc".source = lib.mkForce ./.zshrc;
     #".config/zsh".source = lib.mkForce ./zsh;
-    #".config/nvim/".source =    ./nvim;
-    #".config/yazi/".source =    ./yazi;
-    #".config/zellij/".source =  ./zellij;
+    #".config/nvim/".source =   ./nvim;
+    #".config/yazi/".source =   ./yazi;
+    #".config/zellij/".source = ./zellij;
     #".config/qutebrowser/".source = ./qutebrowser;
     ".config/nix/".source =     ./nix;
+    ".config/helix/".source =   ./helix;
     ".config/ghostty/".source = ./ghostty;
     ".config/git/".source =     ./git;
     ".config/mpv/".source =     ./mpv;

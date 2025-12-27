@@ -14,13 +14,13 @@
     cm = commit
     co = checkout
     st = status
-    br = branch -av
-    brdel = branch -D
+    br = branch
+    lsbr = branch -av
     # Custom Log formats
     last = log -1 HEAD --stat
     lg = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative
-	ls = !git ls-tree --full-tree --name-only -r HEAD
-	lst = !git ls-tree --full-tree --name-only -r HEAD | tree --fromfile
+    ls = !git ls-tree --full-tree --name-only -r HEAD
+    lst = !git ls-tree --full-tree --name-only -r HEAD | tree --fromfile
     hist = log --pretty=format:\"%h %ad | %s%d [%an]\" --graph --date=short
 [submodule]
     ignore = dirty

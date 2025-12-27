@@ -50,6 +50,14 @@ M.serialize_table = function(tbl)
   return result..'\n}'
 end
 
+M.is_file = function(path)
+  local stat = vim.uv.fs_stat(path)
+  if stat and stat.type == 'file' then
+    return true
+  end
+  return false
+end
+
 M.is_dir = function(path)
   local stat = vim.uv.fs_stat(path)
   if stat and stat.type == 'directory' then

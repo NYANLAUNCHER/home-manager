@@ -24,7 +24,7 @@ local delkey = function(mode, lhs) vim.keymap.set(mode, lhs, '<nop>', { noremap=
 
       -- Buffer local mappings.
       -- See `:help vim.lsp.*` for documentation on any of the below functions
-      local opts = { buffer = ev.buf }
+      local opts = { buffer = ev.buf }--keymap opts
       keymap('n', 'gD', vim.lsp.buf.declaration, opts)
       keymap('n', 'gd', vim.lsp.buf.definition, opts)
       keymap('n', 'H', vim.lsp.buf.hover, opts)
@@ -136,10 +136,10 @@ keymap('n', '<C-k>', '<C-w>k')
 keymap('n', '<C-l>', '<C-w>l')
 
 -- Resize Buffers
-keymap('n', '<C-Up>', ':resize -2<CR>')
-keymap('n', '<C-Down>', ':resize +2<CR>')
-keymap('n', '<C-Left>', ':vertical resize -2<CR>')
+keymap('n', '<C-Up>', ':resize +2<CR>')
+keymap('n', '<C-Down>', ':resize -2<CR>')
 keymap('n', '<C-Right>', ':vertical resize +2<CR>')
+keymap('n', '<C-Left>', ':vertical resize -2<CR>')
 
 -- Toggle Buffer Maximized
 keymap('n', '<C-w>m', function() ToggleBufferMaximized() end, {silent = true})
@@ -160,7 +160,7 @@ keymap({'n', 'v'}, '<leader>P', '\'+P')
 keymap('n', '<C-[>', ':nohlsearch<CR>:diffupdate<CR><C-L>', { noremap = true, silent = true })
 keymap('n', '<space><space>', function() PingCursor() end)
 --}}}
--- Commands, Functions, & and Augroups: {{{
+-- Commands, Functions, & Autocmds: {{{
 vim.cmd([[
 com! Q q!
 com! Qa qa!
@@ -172,6 +172,7 @@ cnoreabbrev i Info
 cnoreabbrev man Man
 ]])
 
+-- Autocmds and Augroups
 vim.api.nvim_create_autocmd('BufWinLeave', {
   pattern = '*',
   callback = function()
@@ -187,7 +188,28 @@ vim.api.nvim_create_autocmd('TermClose', {
     vim.api.nvim_buf_delete(0, { force=true })
   end
 })
+--[[
+local ag_Session = vim.api.nvim_create_augroup('Session', {})
+vim.api.nvim_create_autocmd({'VimEnter'}, {
+  group=ag_Session,
+  pattern={'Session.vim'},
+  callback=function()
+    vim.cmd("so %")
+  end
+})
+vim.api.nvim_create_autocmd({'VimLeave'}, {
+  group=ag_Session,
+  pattern={'*'},
+  callback=function()
+    local dir = vim.fn.expand('%:h')
+    if u.is_file(dir.."/Session.vim") then
+      print(dir.."/Session.vim")
+    end
+  end
+})
+--]]
 
+-- Functions
 vim.cmd('com! TrimTrailingWhitespace lua TrimTrailingWhitespace()')
 vim.cmd('com! Ttw TrimTrailingWhitespace')
 function TrimTrailingWhitespace()

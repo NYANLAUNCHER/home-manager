@@ -15,8 +15,8 @@ keybinds {
     bind "Alt t" { SwitchToMode "tab"; }
     bind "Alt o" { SwitchToMode "session"; }
     bind "Alt s" { SwitchToMode "scroll"; }// "scroll" AKA "search" mode
-    bind "Ctrl Up" { ScrollUp; }
-    bind "Ctrl Down" { ScrollDown; }
+    bind "Ctrl Shift Up" { ScrollUp; }
+    bind "Ctrl Shift Down" { ScrollDown; }
     bind "Alt m" { SwitchToMode "move"; }
     bind "Alt n" { NewPane; }
     // pane movements
