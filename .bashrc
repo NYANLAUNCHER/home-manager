@@ -64,6 +64,7 @@ alias z="zellij"
 # Miniture prompt for popup terminals
 alias microprompt="PS1='> '"
 alias grep="grep --color=always"
+alias rga="rga --line-number"
 alias diff="diff --color=always"
 fn_nvim_info () { # open info & man pages in neovim
     nvim -R -M -c "Info $1 $2" +only
