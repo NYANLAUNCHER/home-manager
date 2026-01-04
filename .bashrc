@@ -40,10 +40,7 @@ fn_ll() {
 }
 bind -x '"\C-j": "fn_ll"'
 alias ll="fn_ll"
-__cd_prev() {
-    cd - >/dev/null || return
-}
-bind -x '"\ez":"__cd_prev"'
+bind '"\ez": "\C-e\C-ucd -\C-m"'
 alias cdtmp="cd $(mktemp -d)"
 ## Nix & Home-Manager
 alias nsh="nix-shell -p"
