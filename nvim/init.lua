@@ -167,9 +167,10 @@ com! Qa qa!
 com! W w!
 com! Mks mks!
 com! Reload source $MYVIMRC
-com! Vs vs
-com! Sp sp
+cnoreabbrev Vs vs
+cnoreabbrev Sp sp
 cnoreabbrev rel Reload
+" Note: HiPhish/info.vim falls back on man if not info page provided
 cnoreabbrev i Info
 cnoreabbrev man Man
 ]])
