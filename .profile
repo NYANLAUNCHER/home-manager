@@ -25,7 +25,8 @@ export PAGER="less"
 # Set config dirs
 export INPUTRC="$HOME/.inputrc"
 export LESSHISTFILE="$XDG_CACHE_HOME/less/history"
-
+# Integrations
+export LUA_PATH="$LUA_PATH;./?.lua;./?/init.lua"
 # Directory Shortcuts:
 set -a
 cfg="$XDG_CONFIG_HOME"
