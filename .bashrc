@@ -40,8 +40,11 @@ fn_ll() {
 }
 bind -x '"\C-j": "fn_ll"'
 alias ll="fn_ll"
+# <A-z>  ->  cd -
 bind '"\ez": "\C-e\C-ucd -\C-m"'
 alias cdtmp="cd $(mktemp -d)"
+## Rust
+alias cargo-docs="cargo doc --no-deps --open"
 ## Nix & Home-Manager
 alias nsh="nix-shell -p"
 alias hm="home-manager"

@@ -95,6 +95,9 @@ alias ef="fn_edit_flake"
 alias todo="$EDITOR $todo"
 alias ll="ls -hlA --color=always --group-directories-first"
 alias cdtmp="cd $(mktemp -d)"
+## Rust
+alias cargo-docs="cargo doc --no-deps --open"
+## Nix & Home-Manager
 alias hm="home-manager"
 alias hms="home-manager switch"
 alias nsh="nix-shell -p"

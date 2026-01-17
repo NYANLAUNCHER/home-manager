@@ -27,8 +27,9 @@ return {
           keymap('n', 'gn',   '<Plug>(InfoNext)')
           keymap('n', 'gp',   '<Plug>(InfoPrev)')
           keymap('n', 'gm',   '<Plug>(InfoMenu)')
-          keymap('n', 'gd',   '<Plug>(InfoFollow)')
+          keymap('n', 'gt',   '<Plug>(InfoGoto)')
           keymap('n', '<Cr>', '<Plug>(InfoFollow)')
+          --keymap('n', 'gd',   ':call <SNR>15_xRefUnderCursor()<CR><Space>', {noremap=true})
         end
       })
       -- man page config & keybinds

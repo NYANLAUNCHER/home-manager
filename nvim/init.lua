@@ -110,6 +110,9 @@ vim.g.leader=' '
 -- ESC terminal mode
 keymap('t', '<C-[>', '<C-\\><C-n>')
 
+-- Follow tags
+keymap('n', 'gd', '<C-]>', {noremap=true})
+
 -- Scroll Buffer
 keymap('n', 'J', '<C-e>')
 keymap('n', 'K', '<C-y>')
