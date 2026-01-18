@@ -62,7 +62,6 @@ fn_yazi() {
     builtin cd -- "$cwd"
   fi
   rm -f -- "$tmp"
-  echo "$YAZI_START_DIR"
 }
 alias y="fn_yazi"
 bind '"\C-o": "\C-e\C-uy\C-m"'
