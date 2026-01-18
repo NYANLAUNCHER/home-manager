@@ -55,12 +55,14 @@ fn_hms() {
 alias hms="fn_hms"
 ##
 fn_yazi() {
+  YAZI_START_DIR="$(pwd)"
   local tmp="$(mktemp -t "yazi-cwd.XXXXXX")" cwd
   yazi "$@" --cwd-file="$tmp"
   if cwd="$(command cat -- "$tmp")" && [ -n "$cwd" ] && [ "$cwd" != "$PWD" ]; then
     builtin cd -- "$cwd"
   fi
   rm -f -- "$tmp"
+  echo "$YAZI_START_DIR"
 }
 alias y="fn_yazi"
 bind '"\C-o": "\C-e\C-uy\C-m"'

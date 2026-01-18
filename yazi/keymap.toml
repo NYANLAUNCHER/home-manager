@@ -56,7 +56,17 @@ desc = "Restore trashed files"
 #[[manager.prepend_keymap]]
 #on = ["u"]
 #run = "plugin undo"
-#desc = "Undo file operations, i.e. trash, move, copy"
+#desc = "Undo file operations: trash, move, copy"
+[[mgr.prepend_keymap]]
+on = ["<C-o>"]
+run = "cd $YAZI_START_DIR"
+desc = "Go back to startup directory"
+
+# Util
+[[mgr.prepend_keymap]]
+on = ["e"]
+run = "open --editor"
+desc = "Open file in text editor."
 
 # Plugins
 [[mgr.prepend_keymap]]

@@ -9,6 +9,11 @@ sort_sensitive = false
 sort_dir_first = true
 scrolloff = 2
 
+[open]
+prepend_rules = [
+  { url="*.txt", use="edit" }
+]
+
 # git plugin
 [[plugin.prepend_fetchers]]
 id   = "git"
