@@ -170,6 +170,7 @@ com! Qa qa!
 com! W w!
 com! Mks mks!
 com! Reload source $MYVIMRC
+cnoreabbrev Wq wq
 cnoreabbrev Vs vs
 cnoreabbrev Sp sp
 cnoreabbrev rel Reload
