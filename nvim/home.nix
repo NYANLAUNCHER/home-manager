@@ -13,7 +13,8 @@ inputs@{ config, pkgs, lib, ... }:
     taplo
     # C/C++
     gcc ccls
-    # GLSL
+    # Shaders
     glsl_analyzer
+    wgsl-analyzer
   ]);
 }
