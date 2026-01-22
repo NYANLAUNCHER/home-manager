@@ -16,6 +16,8 @@ vim.filetype.add({
     frag = "glsl", -- fragment shader
     comp = "glsl", -- compute shader
     glsl = "glsl",
+    -- WGSL
+    wesl = "wgsl",
     -- GCode
     gcode = "gcode",
     ngc = "gcode",

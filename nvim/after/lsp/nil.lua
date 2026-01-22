@@ -1,3 +1,3 @@
 return {
-  --filetypes={'nix'},
+  filetypes={'nix'},
 }
