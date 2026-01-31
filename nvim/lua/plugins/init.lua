@@ -13,7 +13,7 @@ return {
     name = 'nordic',
     priority = 1000,
     config=function()
-        require('nordic').load()
+      require('nordic').load()
     end
   },
   -- Info & Man pages
@@ -48,6 +48,9 @@ return {
         symbol_in_winbar = {
           enable = true
         },
+        light_bulb = {
+          enable = false
+        }
       })
     end
   },
