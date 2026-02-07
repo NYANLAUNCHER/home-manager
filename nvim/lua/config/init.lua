@@ -53,38 +53,12 @@ M.setup = function()
     return cwd
   end
 
-  -- enable lsp configs in $XDG_CONFIG_HOME/nvim/lsp/ based on filetype
+  -- Enable all LSP servers in ~/.config/nvim/after/lsp/
   local f = function(dir, file)
-    local lsp_name = file:match("^(.*)%.") or file -- remove file extention (i.e. *.lua)
-    local ok,config=pcall(dofile, (dir..'/'..file))
-    if not ok then return end
-    local filetypes=config.filetypes or {}
-    if filetypes then
-      vim.api.nvim_create_autocmd('FileType', {
-        pattern=filetypes,
-        callback=function()
-          local markers = {'.git', 'flake.nix'}
-          if config.root_markers then
-            for i,v in ipairs(config.root_markers) do
-              markers[#markers+i]=v
-            end
-            --table.move(markers, 1, #markers, #config.root_markers + 1, config.root_markers)
-          else
-            config.root_markers = markers
-          end
-          --print('filetypes = '..M.util.serialize_table(filetypes))
-          --print(M.util.serialize_table(config.root_markers))
-          vim.lsp.config(lsp_name, config)
-          vim.lsp.enable(lsp_name)
-        end
-      })
-    end
+    local lsp_name = file:match("^(.*)%.") or file
+    vim.lsp.enable(lsp_name)
   end
-  local dir = vim.fn.stdpath("config").."/lsp"
-  if M.util.is_dir(dir) then
-    M.util.run_on_each_file(dir, f)
-  end
-  dir = vim.fn.stdpath("config").."/after/lsp"
+  local dir = vim.fn.stdpath("config")..'/after/lsp'
   if M.util.is_dir(dir) then
     M.util.run_on_each_file(dir, f)
   end

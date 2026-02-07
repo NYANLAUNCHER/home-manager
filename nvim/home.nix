@@ -6,6 +6,8 @@ inputs@{ config, pkgs, lib, ... }:
     bash-language-server
     # Lua
     lua lua-language-server
+    # Julia
+    julia-bin
     # Rust
     rustc
     cargo
