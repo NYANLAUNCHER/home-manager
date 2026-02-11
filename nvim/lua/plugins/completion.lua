@@ -23,10 +23,10 @@ return {
     },
     cmdline = {
       keymap = {
+        preset = 'none',
         ['<C-y>'] = { 'show_and_insert', 'accept' },
         ['<C-n>'] = { 'show_and_insert', 'select_next' },
         ['<C-p>'] = { 'show_and_insert', 'select_prev' },
-        ['<C-e>'] = { 'cancel' },
         ['<Left>'] = { 'fallback' },
         ['<Right>'] = { 'fallback' },
       },

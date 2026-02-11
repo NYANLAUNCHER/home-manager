@@ -70,6 +70,8 @@ vim.opt.foldcolumn='auto'
 vim.opt.foldmethod='marker'
 vim.opt.colorcolumn='100'
 vim.opt.cmdheight=1
+-- Session
+vim.opt.sessionoptions = 'blank,sesdir,folds,help,tabpages,winsize,terminal'
 -- Search
 vim.opt.magic=true
 vim.opt.smartcase=true
