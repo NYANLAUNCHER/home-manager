@@ -93,6 +93,7 @@ vim.api.nvim_set_hl(0, 'TabHighlight', { bg = '#a6a6a6', fg = 'white' })
 -- Files
 vim.opt.autochdir=true
 vim.opt.exrc=true
+vim.opt.secure=true
 vim.opt.hidden=true
 vim.opt.autoread=true
 vim.opt.swapfile=false
