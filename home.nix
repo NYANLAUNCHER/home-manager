@@ -1,4 +1,4 @@
-inputs@{ config, pkgs, lib, username, homeDirectory, ... }:
+{ config, pkgs, lib, username, homeDirectory, ... }:
 {
   home = {inherit username homeDirectory;};
 
@@ -14,18 +14,15 @@ inputs@{ config, pkgs, lib, username, homeDirectory, ... }:
     ".bashrc".source = lib.mkForce ./.bashrc;
     ".zshenv".source = lib.mkForce ./.zshenv;
     ".zshrc".source = lib.mkForce ./.zshrc;
-    #".config/zsh".source = lib.mkForce ./zsh;
+    ".config/zsh".source = lib.mkForce ./zsh;
     #".config/nvim/".source =   ./nvim;
-    #".config/yazi/".source =   ./yazi;
-    #".config/zellij/".source = ./zellij;
-    #".config/qutebrowser/".source = ./qutebrowser;
+    ".config/yazi/".source =   ./yazi;
+    ".config/zellij/".source = ./zellij;
     ".config/nix/".source =     ./nix;
-    ".config/helix/".source =   ./helix;
     ".config/ghostty/".source = ./ghostty;
     ".config/git/".source =     ./git;
     ".config/mpv/".source =     ./mpv;
     ".config/zathura/".source = ./zathura;
-    ".config/mutt/".source =    ./mutt;
     ".config/vieb/".source =    ./vieb;
   };
 
@@ -46,8 +43,7 @@ inputs@{ config, pkgs, lib, username, homeDirectory, ... }:
     checkbashisms
     # Utils
     btop
-    neomutt
-    ytfzf
+    tree
     libqalculate
     # Graphical
     brave
