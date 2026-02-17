@@ -1,96 +1,57 @@
 {
-  description = "My portable Neovim development environment.";
+  description = "My deterministic* neovim config.";
 
   inputs = {
+    flake-parts.url = "github:hercules-ci/flake-parts";
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
-    flake-utils.url = "github:numtide/flake-utils";
   };
 
-  outputs = {
-    self,
-    nixpkgs,
-    flake-utils,
-  }:
-  flake-utils.lib.eachDefaultSystem (
-    system: let
-      pkgs = import nixpkgs { inherit system; };
-      nvimRuntimeDeps = with pkgs; [
-        neovim
-        # Utils
-        ripgrep
-        fd
-        git
-        # Nix
-        nil
-        # Lua
-        stylua
-        lua-language-server
-        # C/C++
-        libgcc
-        gdb
-        ccls
-        # Rust
-        rustc
-        cargo
-        rust-analyzer
-      ];
+  outputs = inputs@{ flake-parts, ... }:
+    flake-parts.lib.mkFlake { inherit inputs; } {
+      imports = [ ];
+      systems = [ "x86_64-linux" "aarch64-linux" ];
+      perSystem = { config, self', inputs', pkgs, system, ... }:
+      let 
+        # The base-level packages I might need in a minimal environment
+        base-pkgs = (with pkgs; [
+          neovim
+          xxd
+          # Lua
+          lua lua-language-server
+          # C/C++
+          gcc ccls
+          # Nix
+          nil
+        ]);
+      in {
+        # Per-system attributes can be defined here. The self' and inputs'
+        # module parameters provide easy access to attributes of the same
+        # system.
 
-      nvimConfigPath = "/share/nvim";
-
-      # This wrapper simply executes the neovim binary, relying on Nix's environment
-      # mechanism for XDG_CONFIG_HOME and PATH inheritance.
-      simpleNvimWrapper = pkgs.writeScriptBin "nvim" "exec ${pkgs.neovim}/bin/nvim \"\$@\"";
-
-      myNvim = pkgs.stdenv.mkDerivation {
-        pname = "nvim-flake";
-        version = "1.0.0";
-        src = pkgs.lib.cleanSource ./.;
-        buildInputs = [ simpleNvimWrapper ];
-
-        env = {
-          # Directs Neovim to look for config in the immutable store path.
-          XDG_CONFIG_HOME = "$out/share";
-          # Sets data directory outside of the Nix store for cache and plugins.
-          XDG_DATA_HOME = "$HOME/.local/share/nvim-global-data";
-          # Sets PATH so LSPs, formatters, and tools are available to Neovim.
-          PATH = pkgs.lib.makeBinPath nvimRuntimeDeps;
+        packages.base = pkgs.symlinkJoin {
+          name = "nyanlauncher-neovim-base";
+          paths = base-pkgs;
         };
 
-        installPhase = ''
-          mkdir -p $out/bin $out${nvimConfigPath}
-          # Copy the nvim config directory from the source subdirectory
-          cp -r $src/* $out${nvimConfigPath}/
-          cp ${simpleNvimWrapper}/bin/nvim $out/bin/
-        '';
+        # Equivalent to  inputs'.nixpkgs.legacyPackages.hello;
+        packages.default = pkgs.symlinkJoin {
+          name = "nyanlauncher-neovim";
+          paths = base-pkgs ++ (with pkgs; [
+            # Julia
+            julia-bin
+            # Rust
+            rustc
+            cargo
+            rust-analyzer
+            taplo
+            # Shaders
+            glsl_analyzer
+            wgsl-analyzer
+            # Shell Script
+            bash-language-server
+          ]);
+        };
       };
-    in
-    {
-      packages.default = myNvim;
-      apps.nvim = {
-        type = "app";
-        program = "${myNvim}/bin/nvim";
-      };
-
-      devShells.default = pkgs.mkShell {
-        packages = nvimRuntimeDeps;
-
-        shellHook = ''
-          NIX_CONFIG_PATH="${myNvim}/share"
-
-          # This function runs every time 'nvim' is called in the shell.
-          nvim() {
-            if [ -d "./nvim" ]; then
-              echo "Using project-local Neovim config: ./nvim" >&2
-              # Using built-in $PWD for the current directory
-              XDG_CONFIG_HOME="$PWD" XDG_DATA_HOME="$HOME/.local/share/nvim-project-data" ${pkgs.neovim}/bin/nvim "$@"
-            else
-              echo "Using flake's immutable config: $NIX_CONFIG_PATH/nvim" >&2
-              # Use the immutable flake config
-              XDG_CONFIG_HOME="$NIX_CONFIG_PATH" XDG_DATA_HOME="$HOME/.local/share/nvim-project-data" ${pkgs.neovim}/bin/nvim "$@"
-            fi
-          }
-        '';
-      };
-    }
-  );
+      flake = { };
+    };
 }
