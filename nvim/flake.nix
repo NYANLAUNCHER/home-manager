@@ -24,16 +24,12 @@
           nixd nixdoc
         ]);
       in {
-        # Per-system attributes can be defined here. The self' and inputs'
-        # module parameters provide easy access to attributes of the same
-        # system.
-
+        # For a more minimal/quick setup
         packages.base = pkgs.symlinkJoin {
           name = "nyanlauncher-neovim-base";
           paths = base-pkgs;
         };
 
-        # Equivalent to  inputs'.nixpkgs.legacyPackages.hello;
         packages.default = pkgs.symlinkJoin {
           name = "nyanlauncher-neovim";
           paths = base-pkgs ++ (with pkgs; [
@@ -50,6 +46,13 @@
             # Shell Script
             bash-language-server
           ]);
+        };
+
+        homeManagerModules.default = { pkgs, ... }: {
+          programs.neovim = {
+            enable = true;
+            package = self'.packages.${pkgs.system}.default;
+          };
         };
       };
       flake = { };

@@ -2,11 +2,10 @@
 {
   home = {inherit username homeDirectory;};
 
-  imports = [
-    ./nvim/home.nix
-  ];
-
+  # Environment Variables:
   home.sessionVariables = {};
+
+  # Config Files:
   # Note: manage plain files through "filename".text = ''contents''
   home.file = { # <dest> = <source>
     ".profile".source = lib.mkForce ./.profile;
@@ -26,6 +25,7 @@
     ".config/vieb/".source =    ./vieb;
   };
 
+  # Packages:
   home.packages = (with pkgs; [
     # Dev
     xclip
@@ -53,6 +53,7 @@
   programs.gpg.homedir = "${config.xdg.dataHome}/gnupg";
   programs.zathura.enable = true;
 
+  # Home-manager Configs
   xdg.userDirs = {
     enable = true;
     desktop = "$HOME/.desktop";
