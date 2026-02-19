@@ -3,7 +3,7 @@ inputs@{ config, pkgs, lib, ... }:
   home.packages = (with pkgs; [
     neovim
     xxd
-    nil # Nix LSP
+    nixd nixdoc # Nix LSP
     bash-language-server
     # Lua
     lua lua-language-server

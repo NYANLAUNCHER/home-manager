@@ -1,5 +1,5 @@
 {
-  description = "My deterministic* neovim config.";
+  description = "My (NYANLAUNCHER's) *deterministic* neovim config.";
 
   inputs = {
     flake-parts.url = "github:hercules-ci/flake-parts";
@@ -21,7 +21,7 @@
           # C/C++
           gcc ccls
           # Nix
-          nil
+          nixd nixdoc
         ]);
       in {
         # Per-system attributes can be defined here. The self' and inputs'
