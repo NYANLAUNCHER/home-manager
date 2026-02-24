@@ -47,6 +47,7 @@ alias cdtmp="cd $(mktemp -d)"
 alias cargo-docs="cargo doc --no-deps --open"
 ## Nix & Home-Manager
 alias nsh="nix-shell -p"
+alias nd="nix develop"
 alias hm="home-manager"
 fn_hms() {
   home-manager switch "$@"
