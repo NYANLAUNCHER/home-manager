@@ -39,10 +39,12 @@
     ghostty
     zellij
     yazi
+    just
     git lazygit gh
     newsboat # rss/atom feed reader
     aerc # email client
     direnv
+    devenv
 
     # Utils
     btop
