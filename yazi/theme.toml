@@ -21,18 +21,18 @@ rules = [
     #############################################
     # Add the 2 lines below
     # Hidden files
-    { name = "*", is = "hidden", bg = "cyan" },
+    { url = "*", is = "hidden", bg = "cyan" },
     #############################################
 
     # Special files
-    { name = "*", is = "orphan", bg = "red" },
-    { name = "*", is = "exec", fg = "green" },
+    { url = "*", is = "orphan", bg = "red" },
+    { url = "*", is = "exec", fg = "green" },
 
     # Dummy files
-    { name = "*", is = "dummy", bg = "red" },
-    { name = "*/", is = "dummy", bg = "red" },
+    { url = "*", is = "dummy", bg = "red" },
+    { url = "*/", is = "dummy", bg = "red" },
 
     # Fallback
-    # { name = "*", fg = "white" },
-    { name = "*/", fg = "blue" },
+    # { url = "*", fg = "white" },
+    { url = "*/", fg = "blue" },
 ]

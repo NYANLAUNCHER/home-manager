@@ -13,7 +13,7 @@
     ".inputrc".source = lib.mkForce ./.inputrc;
     ".bashrc".source = lib.mkForce ./.bashrc;
     #".config/nvim/".source =   ./nvim;
-    ".config/yazi/".source =    ./yazi;
+    #".config/yazi/".source =    ./yazi;
     ".config/zellij/".source =  ./zellij;
     ".config/ghostty/".source = ./ghostty;
     ".config/nix/".source =     ./nix;

@@ -1,8 +1,7 @@
-# Disable Certain Defaults: {{{
+# Disable Certain Defaults:
 [[mgr.prepend_keymap]]
 on   = [ "D" ]
-run  = ":"
-#}}}
+run  = "noop"
 
 # Directory Shortcuts
 [[mgr.prepend_keymap]]

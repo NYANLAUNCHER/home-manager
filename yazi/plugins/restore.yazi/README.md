@@ -1,5 +1,14 @@
 # restore.yazi
 
+> [!IMPORTANT]
+> This repository is deprecated  
+> This project is no longer actively maintained,  
+> and there will be no more updates to this repository.  
+> If you've made a fork or a newer, actively maintained version of this project,  
+> feel free to share it in the Issues page.  
+> This way, newcomers can easily find an up-to-date alternative.
+> Forks, improvements, and alternative implementations are always welcome!
+
 <!--toc:start-->
 
 - [restore.yazi](#restoreyazi)
@@ -13,9 +22,9 @@
 
 ## Requirements
 
-- [yazi >= v25.5.31](https://github.com/sxyazi/yazi)
+- [yazi >= v25.5.31 and <= v26.9.1](https://github.com/sxyazi/yazi)
 - [trash-cli](https://github.com/andreafrancia/trash-cli)
-  - If you have `Can't Get Trash Directory` error and running `trash-cli --volumes`
+  - If you have `Can't Get Trash Directory` error and running `trash-list --volumes`
     in terminal throw `AttributeError: 'PrintVolumesList' object has no attribute 'run_action'`.
     Remove the old version of trash-cli and install newer version [How to install](https://github.com/andreafrancia/trash-cli?tab=readme-ov-file#the-easy-way).
 
@@ -34,6 +43,9 @@ ya pkg add boydaihungst/restore
 > However, since Yazi deletes files in batches of approximately 1000\~2000, not all files in a large selection will have the same deletion timestamp.
 > For example, if you select and delete 10,000 files, each batch of 1000\~2000 may have a different deletion time. This can result in only a partial restoration of your files (in the worst case, only the last 1000\~2000 files deleted).
 > To resolve this, you may need to run the "restore" command multiple times until all desired files are recovered. For instance, to restore 10,000 files, you might have to execute the command up to 10 times.
+>
+> - Won't work with remote servers in vfs.toml. Since it doesn't support trash: https://yazi-rs.github.io/docs/next/configuration/vfs
+> - Other types of mount methods should work, but I haven't tested them.
 
 1. Key binding
    - Add this to your `keymap.toml`. Make it doesn't override other keymaps.
