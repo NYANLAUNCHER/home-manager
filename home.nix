@@ -6,46 +6,56 @@
   home.sessionVariables = {};
 
   # Config Files:
-  # Note: manage plain files through "filename".text = ''contents''
-  home.file = { # <dest> = <source>
+  # Note: Manage plain files through "filename".text = ''contents''
+  home.file = {
+    # Note: Using sym links instead of the commented lines for quick iteration
     ".profile".source = lib.mkForce ./.profile;
     ".inputrc".source = lib.mkForce ./.inputrc;
     ".bashrc".source = lib.mkForce ./.bashrc;
-    ".zshenv".source = lib.mkForce ./.zshenv;
-    ".zshrc".source = lib.mkForce ./.zshrc;
-    #".config/zsh".source = lib.mkForce ./zsh;
     #".config/nvim/".source =   ./nvim;
-    ".config/yazi/".source =   ./yazi;
-    ".config/zellij/".source = ./zellij;
-    ".config/nix/".source =     ./nix;
+    ".config/yazi/".source =    ./yazi;
+    ".config/zellij/".source =  ./zellij;
     ".config/ghostty/".source = ./ghostty;
+    ".config/nix/".source =     ./nix;
     ".config/git/".source =     ./git;
+    #".config/aerc/".source =   ./aerc/;
+    #".config/newsboat/".source = ./newsboat/;
     ".config/mpv/".source =     ./mpv;
     ".config/zathura/".source = ./zathura;
-    ".config/vieb/".source =    ./vieb;
+    #".config/vieb/".source =   ./vieb;
+    #".config/mimeapps.list".source = lib.mkForce ./mimeapps.list;
+
+    # Archive
+    #".zshenv".source = lib.mkForce ./.zshenv;
+    #".zshrc".source = lib.mkForce ./.zshrc;
+    #".config/zsh".source = lib.mkForce ./zsh;
+    #".config/qutebrowser/".source = ./qutebrowser/;
+    #".config/mutt/".source = ./mutt; # Mutt & Neomutt
   };
 
   # Packages:
   home.packages = (with pkgs; [
     # Dev
-    xclip
     ghostty
-    qutebrowser
     zellij
     yazi
-    git
-    lazygit
-    gh
-    file
+    git lazygit gh
+    newsboat # rss/atom feed reader
+    aerc # email client
     direnv
-    checkbashisms
+
     # Utils
     btop
     tree
+    file
+    xclip
     libqalculate
+    checkbashisms
+
     # Graphical
     brave
     #vieb
+    #qutebrowser
     mpv
     nsxiv
     f3d
