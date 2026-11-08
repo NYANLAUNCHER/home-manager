@@ -53,7 +53,6 @@
     checkbashisms
 
     # Graphical
-    brave
     #vieb
     #qutebrowser
     mpv
