@@ -186,6 +186,9 @@ show_startup_tips false
 pane_frames false
 // On certain configurations, or terminals mouse_mode can interfere with copying text.
 mouse_mode true
+mouse_hover_effects true
+mouse_hover_tips true
+scroll_mode_sync false
 // 100_000 should never exceed 6MB per shell pane, unless the lines are very long
 scroll_buffer_size 100000
 // Command to execute when copying text. Text will be piped to stdin of program
