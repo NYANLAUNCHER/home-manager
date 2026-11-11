@@ -34,6 +34,7 @@
   };
 
   # Packages:
+  nixpkgs.config.allowUnfree = true;
   home.packages = (with pkgs; [
     # Dev
     ghostty
@@ -55,6 +56,9 @@
     checkbashisms
 
     # Graphical
+    discord
+    discordo
+    #brave
     #vieb
     #qutebrowser
     mpv

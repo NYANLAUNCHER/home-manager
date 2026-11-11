@@ -111,37 +111,26 @@ return {
       })
     end
   },
-  {'mikavilpas/yazi.nvim',
-    version = "*", -- use the latest stable version
-    event = "VeryLazy",
+  {'nvim-telescope/telescope.nvim', version = '*',
     dependencies = {
-      { "nvim-lua/plenary.nvim", lazy = true },
+      'nvim-lua/plenary.nvim',
+      -- optional but recommended
+      { 'nvim-telescope/telescope-fzf-native.nvim', build = 'make' },
     },
-    keys = {
-      {
-        "<leader>cf",
-        "<cmd>Yazicwd<cr>",
-        desc = "Open yazi at the current file",
-      },
-      {
-        "<c-i>",
-        "<cmd>Yazi toggle<cr>",
-        desc = "Resume the last yazi session",
-      },
-    },
-    ---@type YaziConfig | {}
     opts = {
-      -- if you want to open yazi instead of netrw, see below for more info
-      open_for_directories = false,
-      keymaps = {
-        show_help = "<f1>",
-      },
+      defaults = {
+        mappings = {
+          i = {
+            ["<C-u>"] = false, -- delete everything before cursor
+            ["<C-k>"] = false, -- delete everything after cursor
+          },
+        }
+      }
     },
-    -- 👇 if you use `open_for_directories=true`, this is recommended
-    init = function()
-      -- mark netrw as loaded so it's not loaded at all.
-      -- More details: https://github.com/mikavilpas/yazi.nvim/issues/802
-      vim.g.loaded_netrwPlugin = 1
-    end,
-  },
+    config = function()
+      local builtin=require('telescope.builtin')
+      keymap('n', '<leader>ff', builtin.find_files, {desc="Telescope find files"})
+      keymap('n', '<leader>fg', builtin.live_grep, {desc="Telescope live grep"})
+    end
+  }
 }

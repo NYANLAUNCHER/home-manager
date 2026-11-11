@@ -1,8 +1,15 @@
 source ~/.profile
 shopt -s autocd
 shopt -s direxpand
-export PS1="\n\[\033[1;32m\][\[\e]0;\u@\h: \w\a\]\u@\h:\w]\$\[\033[0m\] "
 export HISTFILE="$HOME/.local/state/.bash_history"
+update_prompt() {
+    export _prompt_shell_info=""
+    if [[ ${IN_NIX_SHELL+x} ]]; then
+        _prompt_shell_info="\[\033[1;33m\](nix-shell)\[\033[0m\]"
+    fi
+    export PS1="\n\[\033[1;32m\][\[\e]0;\u@\h: \w\a\]\u@\h:\w]$_prompt_shell_info\$\[\033[0m\] "
+}
+export PROMPT_COMMAND="update_prompt"
 # Aliases:
 alias o="$OPENER"
 fn_edit() {
