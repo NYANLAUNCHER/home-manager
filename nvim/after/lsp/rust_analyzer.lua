@@ -19,6 +19,8 @@ vim.cmd([[
 com! Fmt :lua Format()
 cnoreabbrev fmt Fmt
 ]])
+
+---@type vim.lsp.Config
 return {
   filetypes = {'rust'},
   settings = {

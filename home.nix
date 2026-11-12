@@ -36,7 +36,7 @@
   # Packages:
   nixpkgs.config.allowUnfree = true;
   home.packages = (with pkgs; [
-    # Dev
+    # Development
     ghostty
     zellij
     yazi
