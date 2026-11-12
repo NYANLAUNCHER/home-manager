@@ -56,12 +56,11 @@
     checkbashisms
 
     # Graphical
-    discord
-    discordo
-    #brave
+    brave
     #vieb
     #qutebrowser
-    mpv
+    discord discordo
+    mpv yt-dlp
     nsxiv
     f3d
   ]);
