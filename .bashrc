@@ -73,9 +73,8 @@ fn_yazi() {
 }
 alias y="fn_yazi"
 bind '"\C-o": "\C-e\C-uy\C-m"'
-alias z="zellij"
 # Miniture prompt for popup terminals
-alias microprompt="PS1='> '"
+alias miniprompt="PS1='> '"
 alias grep="grep --color=always"
 alias rga="rga --line-number"
 alias diff="diff --color=always"
