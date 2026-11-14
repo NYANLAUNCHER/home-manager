@@ -56,7 +56,7 @@
     checkbashisms
 
     # Graphical
-    brave
+    #brave
     #vieb
     #qutebrowser
     discord discordo
