@@ -56,7 +56,7 @@ alias cdtmp="cd $(mktemp -d)"
 alias cargo-docs="cargo doc --no-deps --open"
 
 ## Nix & Home-Manager
-fn_nsh() {
+fn_nsh() { # `nix shell` wrapper
     local pkgs=()
     for i in "$@"; do
         pkgs+=("nixpkgs#$i")
@@ -65,6 +65,11 @@ fn_nsh() {
     nix shell --impure "${pkgs[@]}"
 }
 alias nsh="fn_nsh"
+fn_nr() { # `nix run` wrapper
+    echo "nix run --impure nixpkgs#$1 -- ${*:2}"
+    nix run --impure "nixpkgs#$1" -- "${@:2}"
+}
+alias nr="fn_nr"
 alias nd="nix develop"
 alias hm="home-manager"
 alias hms="home-manager switch"
@@ -82,10 +87,12 @@ alias y="fn_yazi"
 bind '"\C-o": "\C-e\C-uy\C-m"' # open yazi with <C-o> keybind
 
 fn_opencode() {
+    local args="${@:-"--continue"}"
     if ! [[ -z ${OLLAMA_DEFAULT_AGENT_MODEL} ]] then
-        ollama launch --model=${OLLAMA_DEFAULT_AGENT_MODEL} opencode $@
+        echo "ollama launch --model=${OLLAMA_DEFAULT_AGENT_MODEL} opencode -- $args"
+        ollama launch --model=${OLLAMA_DEFAULT_AGENT_MODEL} opencode -- $args
     else
-        ollama launch opencode $@
+        ollama launch opencode -- $args
     fi
 }
 alias opencode="fn_opencode"
