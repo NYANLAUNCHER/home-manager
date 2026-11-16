@@ -47,21 +47,28 @@ fn_ll() {
 }
 bind -x '"\C-j": "fn_ll"'
 alias ll="fn_ll"
+
 # <A-z>  ->  cd -
 bind '"\ez": "\C-e\C-ucd -\C-m"'
 alias cdtmp="cd $(mktemp -d)"
+
 ## Rust
 alias cargo-docs="cargo doc --no-deps --open"
+
 ## Nix & Home-Manager
-alias nsh="nix-shell -p"
+fn_nsh() {
+    local pkgs=()
+    for i in "$@"; do
+        pkgs+=("nixpkgs#$i")
+    done
+    echo "nix shell --impure ${pkgs[@]}"
+    nix shell --impure "${pkgs[@]}"
+}
+alias nsh="fn_nsh"
 alias nd="nix develop"
 alias hm="home-manager"
-fn_hms() {
-  home-manager switch "$@"
-  source "$BASH_SOURCE"
-}
-alias hms="fn_hms"
-##
+alias hms="home-manager switch"
+
 fn_yazi() {
   YAZI_START_DIR="$(pwd)"
   local tmp="$(mktemp -t "yazi-cwd.XXXXXX")" cwd
@@ -72,9 +79,18 @@ fn_yazi() {
   rm -f -- "$tmp"
 }
 alias y="fn_yazi"
-bind '"\C-o": "\C-e\C-uy\C-m"'
-# Miniture prompt for popup terminals
-alias miniprompt="PS1='> '"
+bind '"\C-o": "\C-e\C-uy\C-m"' # open yazi with <C-o> keybind
+
+fn_opencode() {
+    if ! [[ -z ${OLLAMA_DEFAULT_AGENT_MODEL} ]] then
+        ollama launch --model=${OLLAMA_DEFAULT_AGENT_MODEL} opencode $@
+    else
+        ollama launch opencode $@
+    fi
+}
+alias opencode="fn_opencode"
+
+alias miniprompt="PS1='> '" # Miniture prompt for popup terminals
 alias grep="grep --color=always"
 alias rga="rga --line-number"
 alias diff="diff --color=always"
