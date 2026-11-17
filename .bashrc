@@ -87,7 +87,6 @@ alias y="fn_yazi"
 bind '"\C-o": "\C-e\C-uy\C-m"' # open yazi with <C-o> keybind
 
 fn_opencode() {
-    local args="${@:-"--continue"}"
     if ! [[ -z ${OLLAMA_DEFAULT_AGENT_MODEL} ]] then
         echo "ollama launch --model=${OLLAMA_DEFAULT_AGENT_MODEL} opencode -- $args"
         ollama launch --model=${OLLAMA_DEFAULT_AGENT_MODEL} opencode -- $args

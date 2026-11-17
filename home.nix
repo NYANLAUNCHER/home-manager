@@ -12,17 +12,17 @@
     ".profile".source = lib.mkForce ./.profile;
     ".inputrc".source = lib.mkForce ./.inputrc;
     ".bashrc".source = lib.mkForce ./.bashrc;
+    ".config/nix/".source = lib.mkForce ./nix;
     #".config/nvim/".source =   ./nvim;
-    #".config/yazi/".source =    ./yazi;
+    ".config/yazi/".source =    ./yazi;
+    ".config/git/".source =     ./git;
     ".config/zellij/".source =  ./zellij;
     ".config/ghostty/".source = ./ghostty;
-    ".config/nix/".source =     ./nix;
-    ".config/git/".source =     ./git;
     #".config/aerc/".source =   ./aerc/;
     #".config/newsboat/".source = ./newsboat/;
     ".config/mpv/".source =     ./mpv;
     ".config/zathura/".source = ./zathura;
-    #".config/vieb/".source =   ./vieb;
+    ".config/vieb/".source =   ./vieb;
     #".config/mimeapps.list".source = lib.mkForce ./mimeapps.list;
 
     # Archive
@@ -37,6 +37,7 @@
   nixpkgs.config.allowUnfree = true;
   home.packages = (with pkgs; [
     # Development
+    tree-sitter
     ghostty
     zellij
     yazi
@@ -46,6 +47,8 @@
     aerc # email client
     direnv
     devenv
+		neovim
+		gcc xxd
 
     # Utils
     btop

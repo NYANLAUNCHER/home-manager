@@ -12,7 +12,7 @@
     let
       system = "x86_64-linux";
       pkgs = nixpkgs.legacyPackages.${system};
-      username = "markiep";
+      username = "nixos";
       homeDirectory = "/home/${username}";
     in {
       homeConfigurations.${username} = home-manager.lib.homeManagerConfiguration {
