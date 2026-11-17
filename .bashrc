@@ -72,7 +72,11 @@ fn_nr() { # `nix run` wrapper
 alias nr="fn_nr"
 alias nd="nix develop"
 alias hm="home-manager"
-alias hms="home-manager switch"
+fn_hms() {
+    home-manager switch $@
+    [[ -f ~/.bashrc ]] && source ~/.bashrc || echo "Couldn't find ~/.bashrc"
+}
+alias hms="fn_hms"
 
 fn_yazi() {
   YAZI_START_DIR="$(pwd)"
