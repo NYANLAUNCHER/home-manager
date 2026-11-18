@@ -56,6 +56,7 @@ alias cdtmp="cd $(mktemp -d)"
 alias cargo-docs="cargo doc --no-deps --open"
 
 ## Nix & Home-Manager
+alias nsh="fn_nsh"
 fn_nsh() { # `nix shell` wrapper
     local pkgs=()
     for i in "$@"; do
@@ -64,19 +65,18 @@ fn_nsh() { # `nix shell` wrapper
     echo "nix shell --impure ${pkgs[@]}"
     nix shell --impure "${pkgs[@]}"
 }
-alias nsh="fn_nsh"
+alias nr="fn_nr"
 fn_nr() { # `nix run` wrapper
     echo "nix run --impure nixpkgs#$1 -- ${*:2}"
     nix run --impure "nixpkgs#$1" -- "${@:2}"
 }
-alias nr="fn_nr"
-alias nd="nix develop"
+
 alias hm="home-manager"
+alias hms="fn_hms"
 fn_hms() {
     home-manager switch $@
     [[ -f ~/.bashrc ]] && source ~/.bashrc || echo "Couldn't find ~/.bashrc"
 }
-alias hms="fn_hms"
 
 fn_yazi() {
   YAZI_START_DIR="$(pwd)"
