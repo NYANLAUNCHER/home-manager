@@ -1,60 +1,37 @@
 {
   description = "My (NYANLAUNCHER's) *deterministic* neovim config.";
 
-  inputs = {
-    flake-parts.url = "github:hercules-ci/flake-parts";
-    nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
-  };
+  # Try it anywhere:
+  #   nix shell 'github:NYANLAUNCHER/home-manager?dir=nvim'        (full)
+  #   nix shell 'github:NYANLAUNCHER/home-manager?dir=nvim#base'   (minimal)
+  # Home-manager:
+  #   imports = [ inputs.nyan-nvim.homeManagerModules.default ];
+  #   nyan.nvim.enable = true;
 
-  outputs = inputs@{ flake-parts, ... }:
-    flake-parts.lib.mkFlake { inherit inputs; } {
-      imports = [ ];
-      systems = [ "x86_64-linux" "aarch64-linux" ];
-      perSystem = { config, self', inputs', pkgs, system, ... }:
-      let 
-        # The base-level packages I might need in a minimal environment
-        base-pkgs = (with pkgs; [
-          neovim
-          xxd
-          # Lua
-          lua lua-language-server
-          # C/C++
-          gcc ccls
-          # Nix
-          nixd nixdoc
-        ]);
-      in {
-        # For a more minimal/quick setup
-        packages.base = pkgs.symlinkJoin {
-          name = "nyanlauncher-neovim-base";
-          paths = base-pkgs;
-        };
+  inputs.nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
 
-        packages.default = pkgs.symlinkJoin {
-          name = "nyanlauncher-neovim";
-          paths = base-pkgs ++ (with pkgs; [
-            # Julia
-            julia-bin
-            # Rust
-            rustc
-            cargo
-            rust-analyzer
-            taplo
-            # Shaders
-            glsl_analyzer
-            wgsl-analyzer
-            # Shell Script
-            bash-language-server
-          ]);
-        };
+  outputs =
+    { self, nixpkgs }:
+    let
+      forAllSystems = nixpkgs.lib.genAttrs [
+        "x86_64-linux"
+        "aarch64-linux"
+      ];
+    in
+    {
+      packages = forAllSystems (
+        system:
+        let
+          pkgs = nixpkgs.legacyPackages.${system};
+        in
+        {
+          default = pkgs.callPackage ./package.nix { };
+          # For a more minimal/quick setup
+          base = pkgs.callPackage ./package.nix { full = false; };
+        }
+      );
 
-        homeManagerModules.default = { pkgs, ... }: {
-          programs.neovim = {
-            enable = true;
-            package = self'.packages.${pkgs.system}.default;
-          };
-        };
-      };
-      flake = { };
+      homeManagerModules.default = ./module.nix;
+      homeModules.default = ./module.nix;
     };
 }

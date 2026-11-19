@@ -1,25 +1,41 @@
 #!/usr/bin/env bash
-# Creates an erwic container,
-# containing the files: run.sh, erwic.json, <cont_name>.desktop
-# Features:
-# - run.sh manages the desktop file link to ~/.local/applications
-# - run.sh tries to download an icon for the desktop file
-# Usage: ./mkerwic.sh dir_name [container_name url]
-[ ! -n "$1" ] && exit 1
+# Creates an erwic (Easily Run Websites In Containers) app for vieb:
+#   $VIEB_ERWIC_DIR/<dir_name>/{run.sh,erwic.json,<container_name>.desktop}
+# and links the desktop file into ~/.local/share/applications.
+# The app's datafolder is its own directory, and it uses the normal viebrc.
+#
+# VIEB_ERWIC_DIR defaults to ${XDG_DATA_HOME:-~/.local/share}/vieb/erwic, so it
+# works when the vieb config itself lives in the (read-only) nix store.
+#
+# Usage: mkerwic.sh dir_name [container_name url]
+# The nix package installs this as `vieb-mkerwic`.
+set -euo pipefail
+
+if [ -z "${1:-}" ]; then
+  echo "Usage: $(basename "$0") dir_name [container_name url]" >&2
+  exit 1
+fi
 container_name="${2:-enter_container_name_here}"
 url="${3:-enter_url_here}"
-mkdir $1
-touch "$1/run.sh" "$1/erwic.json" "$1/$container_name.desktop"
 
-run_script=$(cat <<EOF
+erwic_dir="${VIEB_ERWIC_DIR:-${XDG_DATA_HOME:-$HOME/.local/share}/vieb/erwic}"
+app_dir="$erwic_dir/$1"
+apps_dir="${XDG_DATA_HOME:-$HOME/.local/share}/applications"
+
+if [ -e "$app_dir" ]; then
+  echo "$app_dir already exists" >&2
+  exit 1
+fi
+mkdir -p "$app_dir" "$apps_dir"
+
+cat > "$app_dir/run.sh" <<'EOF'
 #!/bin/sh
-prefix_dir="\${XDG_CONFIG_HOME:-\$HOME/.config}/vieb/erwic/$1"
-[ -n "\$VIEB_CONFIG_FILE" ] && prefix_dir="\$(dirname "\$VIEB_CONFIG_FILE")/erwic/$1"
-# run vieb
-vieb --config-file="\$prefix_dir/viebrc" --erwic="\$prefix_dir/erwic.json" --datafolder="\$prefix_dir"
+dir=$(CDPATH='' cd -- "$(dirname -- "$0")" && pwd)
+exec vieb --erwic="$dir/erwic.json" --datafolder="$dir"
 EOF
-)
-boilerplate_json=$(cat <<EOF
+chmod +x "$app_dir/run.sh"
+
+cat > "$app_dir/erwic.json" <<EOF
 {
   "name": "$container_name",
   "apps": [
@@ -30,22 +46,16 @@ boilerplate_json=$(cat <<EOF
   ]
 }
 EOF
-)
-desktop_file=$(cat <<EOF
+
+cat > "$app_dir/$container_name.desktop" <<EOF
 [Desktop Entry]
 Name=Erwic - $container_name
-Exec=$(realpath "$1/run.sh")
+Exec=$app_dir/run.sh
 Terminal=false
 Type=Application
 Comment=Easily Run Websites In Containers
 Categories=Network;WebBrowser;
 EOF
-)
+ln -sf "$app_dir/$container_name.desktop" "$apps_dir/"
 
-echo "$run_script" > "$1/run.sh"
-echo "$boilerplate_json" > "$1/erwic.json"
-echo "$desktop_file" > "$1/$container_name.desktop"
-echo "source ../../viebrc" > "$1/viebrc"
-ln -s $(realpath "$1/$container_name.desktop") "${XDG_DATA_HOME:-$HOME/.local/share}/applications"
-chmod +x "$1/run.sh"
-
+echo "Created $app_dir"

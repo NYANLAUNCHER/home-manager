@@ -14,7 +14,6 @@
     ".bashrc".source = lib.mkForce ./.bashrc;
     ".config/nix/".source = lib.mkForce ./nix;
     #".config/nvim/".source =   ./nvim;
-    ".config/yazi/".source =    ./yazi;
     ".config/git/".source =     ./git;
     ".config/zellij/".source =  ./zellij;
     ".config/ghostty/".source = ./ghostty;
@@ -22,7 +21,6 @@
     #".config/newsboat/".source = ./newsboat/;
     ".config/mpv/".source =     ./mpv;
     ".config/zathura/".source = ./zathura;
-    ".config/vieb/".source =   ./vieb;
     #".config/mimeapps.list".source = lib.mkForce ./mimeapps.list;
 
     # Archive
@@ -33,6 +31,17 @@
     #".config/mutt/".source = ./mutt; # Mutt & Neomutt
   };
 
+  # nvim/, yazi/ and vieb/ (modules are imported in flake.nix, options in */module.nix)
+  nyan.nvim = {
+    enable = true; # neovim, gcc, xxd, LSPs, ...
+    # ~/.config/nvim is a manual symlink to ./nvim for quick iteration. To have
+    # home-manager manage that link instead, delete it and replace this line with:
+    #   configPath = "${homeDirectory}/.local/home-manager/nvim";
+    linkConfig = false;
+  };
+  nyan.yazi.enable = true; # also links ~/.config/yazi
+  nyan.vieb.enable = true; # also links ~/.config/vieb
+
   # Packages:
   nixpkgs.config.allowUnfree = true;
   home.packages = (with pkgs; [
@@ -40,15 +49,12 @@
     tree-sitter
     ghostty
     zellij
-    yazi
     just
     git lazygit gh
     newsboat # rss/atom feed reader
     aerc # email client
     direnv
     devenv
-		neovim
-		gcc xxd
 
     # Utils
     btop

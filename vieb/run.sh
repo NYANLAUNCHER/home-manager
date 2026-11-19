@@ -1,27 +1,59 @@
 #!/bin/sh
-# Wrapper around vieb adds:
-# --session="<path>" sets --datafolder=<dir>
-# If <path> doesn't start with "./" or "/" it is a path in $VIEB_SESSIONS_DIR
-# "-t"|"--temp" creates a temporary session 
+# Wrapper around vieb. Loads the settings in .env, then adds:
+#   --session=<name|path>  Use a separate datafolder. A bare <name> lives in
+#                          $VIEB_SESSIONS_DIR; anything starting with "/", "./"
+#                          or "../" is used as a path.
+#   -t | --temp            Use a temporary datafolder, deleted when vieb exits.
+# All other arguments are passed to vieb unchanged (so an explicit
+# --datafolder=... still wins).
+#
+# The nix package installs this as `vieb`, with VIEB_BIN pointing at the real binary.
 
-# if passed a directory it'll create a session folder inside it
-# if passed a file it'll try to open it
+[ -n "$VIEB_CONFIG_DIR" ] || VIEB_CONFIG_DIR=$(CDPATH='' cd -- "$(dirname -- "$0")" && pwd)
+export VIEB_CONFIG_DIR
+# shellcheck source=.env
+[ -f "$VIEB_CONFIG_DIR/.env" ] && . "$VIEB_CONFIG_DIR/.env"
+vieb_bin="${VIEB_BIN:-vieb}"
 
-. "$XDG_CONFIG_HOME/vieb/init.sh" # must be sourced
-args="$*" # gets parsed into vieb compatible args
-session_dir="$VIEB_DATAFOLDER" # the default session directory
+session=""
+temp=""
+# Rebuild "$@" without our own flags.
+n=$#
+while [ "$n" -gt 0 ]; do
+  arg=$1
+  shift
+  n=$((n - 1))
+  case $arg in
+    --session=*) session=${arg#--session=} ;;
+    --session)
+      if [ "$n" -eq 0 ]; then
+        echo "vieb: --session needs a value" >&2
+        exit 1
+      fi
+      session=$1
+      shift
+      n=$((n - 1))
+      ;;
+    -t | --temp) temp=1 ;;
+    *) set -- "$@" "$arg" ;;
+  esac
+done
 
-# if --session exists
-session="$(echo "$args" | grep -oP '(?<=--session(=|\s))[^\s]+' | tail -n 1)" # grep the last instance of --session
-args="$(echo "$args" | sed 's/--session(=|\s)[^\s]+/hello/g')"
-echo "$session"
+if [ -n "$temp" ]; then
+  VIEB_DATAFOLDER=$(mktemp -d "${TMPDIR:-/tmp}/vieb-session.XXXXXX") || exit 1
+  export VIEB_DATAFOLDER
+  "$vieb_bin" "$@"
+  status=$?
+  rm -rf "$VIEB_DATAFOLDER"
+  exit "$status"
+fi
 
-# if "-t"|"--temp" exists
-#(echo "$args" | sed -E '/\b(-t|--temp)\b/!q1; s/\b(-t|--temp)\b/ /g') && temp_session="$(mktemp -d)"
-args="$args --datafolder=\"${temp_session:-$session_dir}\""
+if [ -n "$session" ]; then
+  case $session in
+    /* | ./* | ../*) VIEB_DATAFOLDER=$session ;;
+    *) VIEB_DATAFOLDER="$VIEB_SESSIONS_DIR/$session" ;;
+  esac
+  export VIEB_DATAFOLDER
+fi
 
-
-# vieb uses the original vieb cmd since it is in a sh script
-echo "vieb $args"
-eval "vieb $args"
-[ -d "$temp_session" ] && rm -rf "$temp_session" # remove the temporary session once vieb is closed
+exec "$vieb_bin" "$@"

@@ -1,11 +1,8 @@
 " vim: ft=vim
 " TODO:
-" - fix run.sh
-" - fix erwic/mkerwic.sh
 " - support shell environment variables in vieb cmd prompt
 " - <C-o> previous scroll percentage
 " - have keybinds to select different scroll frames/buffers to scroll
-" - create flake.nix
 
 " Settings
 "set adblocker=update
