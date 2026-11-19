@@ -7,7 +7,7 @@ inputs@{ config, pkgs, lib, ... }:
   home.packages = (with pkgs; [
     neovim
     # Shell Utils
-    tree-sitter xxd
+    xxd tree-sitter
     # Lua
     lua lua-language-server
     # Nix
