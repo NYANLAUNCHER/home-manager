@@ -7,13 +7,13 @@ inputs@{ config, pkgs, lib, ... }:
   home.packages = (with pkgs; [
     neovim
     # Shell Utils
-    xxd gcc tree-sitter
+    tree-sitter xxd
     # Lua
     lua lua-language-server
     # Nix
     nixd nixdoc
     # C/C++
-    clang clang-tools
+    clang clang-tools # clangd
     # Rust
     rustc
     cargo

@@ -1,0 +1,88 @@
+warning: Git tree '/home/nixos/.config/home-manager' is dirty
+error:
+       … while evaluating the attribute 'root.result'
+         at «flakes-internal»/call-flake.nix:94:7:
+           93|     {
+           94|       result =
+             |       ^
+           95|         if node.flake or true then
+
+       … in the left operand of the update (//) operator
+         at «flakes-internal»/call-flake.nix:75:9:
+           74|       result =
+           75|         outputs
+             |         ^
+           76|         # We add the sourceInfo attribute for its metadata, as they are
+
+       (stack trace truncated; use '--show-trace' to show the full, detailed trace)
+
+       error: The option `description' does not exist. Definition values:
+       - In `/nix/store/lbqkv051nnvi0dgkiswavkwl3dxmr49k-source/nvim/flake.nix': "NYANLAUNCHER's neovim config."
+
+       Did you mean `transposition', `debug' or `perInput'?
+warning: Git tree '/home/nixos/.config/home-manager' is dirty
+error:
+       … while evaluating the attribute 'root.result'
+         at «flakes-internal»/call-flake.nix:94:7:
+           93|     {
+           94|       result =
+             |       ^
+           95|         if node.flake or true then
+
+       … in the left operand of the update (//) operator
+         at «flakes-internal»/call-flake.nix:75:9:
+           74|       result =
+           75|         outputs
+             |         ^
+           76|         # We add the sourceInfo attribute for its metadata, as they are
+
+       (stack trace truncated; use '--show-trace' to show the full, detailed trace)
+
+       error: The option `description' does not exist. Definition values:
+       - In `/nix/store/lbqkv051nnvi0dgkiswavkwl3dxmr49k-source/nvim/flake.nix': "NYANLAUNCHER's neovim config."
+
+       Did you mean `transposition', `debug' or `perInput'?
+warning: Git tree '/home/nixos/.config/home-manager' is dirty
+error:
+       … while evaluating the attribute 'root.result'
+         at «flakes-internal»/call-flake.nix:94:7:
+           93|     {
+           94|       result =
+             |       ^
+           95|         if node.flake or true then
+
+       … in the left operand of the update (//) operator
+         at «flakes-internal»/call-flake.nix:75:9:
+           74|       result =
+           75|         outputs
+             |         ^
+           76|         # We add the sourceInfo attribute for its metadata, as they are
+
+       (stack trace truncated; use '--show-trace' to show the full, detailed trace)
+
+       error: The option `description' does not exist. Definition values:
+       - In `/nix/store/lbqkv051nnvi0dgkiswavkwl3dxmr49k-source/nvim/flake.nix': "NYANLAUNCHER's neovim config."
+
+       Did you mean `transposition', `debug' or `perInput'?
+warning: Git tree '/home/nixos/.config/home-manager' is dirty
+error:
+       … while evaluating the attribute 'root.result'
+         at «flakes-internal»/call-flake.nix:94:7:
+           93|     {
+           94|       result =
+             |       ^
+           95|         if node.flake or true then
+
+       … in the left operand of the update (//) operator
+         at «flakes-internal»/call-flake.nix:75:9:
+           74|       result =
+           75|         outputs
+             |         ^
+           76|         # We add the sourceInfo attribute for its metadata, as they are
+
+       (stack trace truncated; use '--show-trace' to show the full, detailed trace)
+
+       error: The option `description' does not exist. Definition values:
+       - In `/nix/store/lbqkv051nnvi0dgkiswavkwl3dxmr49k-source/nvim/flake.nix': "NYANLAUNCHER's neovim config."
+
+       Did you mean `transposition', `debug' or `perInput'?

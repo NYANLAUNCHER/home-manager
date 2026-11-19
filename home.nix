@@ -22,10 +22,10 @@
     ".config/mutt/".source =     ./mutt; # Mutt & Neomutt
     ".config/newsboat/".source = ./newsboat;
     ".config/zathura/".source =  ./zathura;
+    ".config/qutebrowser/".source =  ./qutebrowser;
   };
 
   # Packages:
-  #nixpkgs.config.allowUnfree = true;
   home.packages = (with pkgs; [
     # Development
     ghostty
@@ -43,10 +43,11 @@
     tree
     file
     xclip
-    libqalculate
+    libqalculate # advanced calculator
+    discordo # tui discord client
 
     # Graphical
-    discord discordo
+    qutebrowser
     mpv yt-dlp
     nsxiv
     f3d
