@@ -23,6 +23,7 @@
     ".config/newsboat/".source = ./newsboat;
     ".config/zathura/".source =  ./zathura;
     ".config/qutebrowser/".source =  ./qutebrowser;
+    ".config/moxide/".source =  ./moxide; # markdown-oxide, see: https://oxide.md/Configuration
   };
 
   # Packages:
@@ -33,9 +34,8 @@
     yazi
     just
     git lazygit gh
-    newsboat # rss/atom feed reader
     aerc # email client
-    direnv
+    newsboat # rss/atom feed reader
     devenv
 
     # Utils
