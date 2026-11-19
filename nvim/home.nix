@@ -1,23 +1,28 @@
 inputs@{ config, pkgs, lib, ... }:
 {
+  home.file = {
+    ".config/nvim/".source = ./.;
+  };
+
   home.packages = (with pkgs; [
     neovim
-    xxd
-    nixd nixdoc # Nix LSP
-    bash-language-server
+    # Shell Utils
+    xxd gcc tree-sitter
     # Lua
     lua lua-language-server
-    # Julia
-    julia-bin
+    # Nix
+    nixd nixdoc
+    # C/C++
+    clang clang-tools
     # Rust
     rustc
     cargo
     rust-analyzer
     taplo
-    # C/C++
-    gcc ccls
-    # Shaders
-    glsl_analyzer
-    wgsl-analyzer
+    # Personal-Knowledge-Management
+    markdown-oxide
+    # Shell Scripting
+    bash-language-server
+    checkbashisms
   ]);
 }

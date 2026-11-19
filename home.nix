@@ -6,38 +6,28 @@
   home.sessionVariables = {};
 
   # Config Files:
-  # Note: Manage plain files through "filename".text = ''contents''
+  # Note: Manage plain text through "filename".text = ''contents''
   home.file = {
-    # Note: Using sym links instead of the commented lines for quick iteration
     ".profile".source = lib.mkForce ./.profile;
     ".inputrc".source = lib.mkForce ./.inputrc;
-    ".bashrc".source = lib.mkForce ./.bashrc;
+    ".bashrc".source = lib.mkForce  ./.bashrc;
+    ".config/mimeapps.list".source = lib.mkForce ./mimeapps.list;
     ".config/nix/".source = lib.mkForce ./nix;
-    #".config/nvim/".source =   ./nvim;
-    ".config/yazi/".source =    ./yazi;
-    ".config/git/".source =     ./git;
-    ".config/zellij/".source =  ./zellij;
-    ".config/ghostty/".source = ./ghostty;
-    #".config/aerc/".source =   ./aerc/;
-    #".config/newsboat/".source = ./newsboat/;
-    ".config/mpv/".source =     ./mpv;
-    ".config/zathura/".source = ./zathura;
-    ".config/vieb/".source =   ./vieb;
-    #".config/mimeapps.list".source = lib.mkForce ./mimeapps.list;
-
-    # Archive
-    #".zshenv".source = lib.mkForce ./.zshenv;
-    #".zshrc".source = lib.mkForce ./.zshrc;
-    #".config/zsh".source = lib.mkForce ./zsh;
-    #".config/qutebrowser/".source = ./qutebrowser/;
-    #".config/mutt/".source = ./mutt; # Mutt & Neomutt
+    ".config/git/".source = lib.mkForce ./git;
+    ".config/zellij/".source =   ./zellij;
+    ".config/ghostty/".source =  ./ghostty;
+    ".config/yazi/".source =     ./yazi;
+    ".config/mpv/".source =      ./mpv;
+    ".config/aerc/".source =     ./aerc;
+    ".config/mutt/".source =     ./mutt; # Mutt & Neomutt
+    ".config/newsboat/".source = ./newsboat;
+    ".config/zathura/".source =  ./zathura;
   };
 
   # Packages:
-  nixpkgs.config.allowUnfree = true;
+  #nixpkgs.config.allowUnfree = true;
   home.packages = (with pkgs; [
     # Development
-    tree-sitter
     ghostty
     zellij
     yazi
@@ -47,8 +37,6 @@
     aerc # email client
     direnv
     devenv
-		neovim
-		gcc xxd
 
     # Utils
     btop
@@ -56,12 +44,8 @@
     file
     xclip
     libqalculate
-    checkbashisms
 
     # Graphical
-    #brave
-    #vieb
-    #qutebrowser
     discord discordo
     mpv yt-dlp
     nsxiv
