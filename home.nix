@@ -51,6 +51,7 @@
     mpv yt-dlp
     nsxiv
     f3d
+    vivify # live md viewer, see: https://github.com/jannis-baum/Vivify
   ]);
   programs.gpg.homedir = "${config.xdg.dataHome}/gnupg";
   programs.zathura.enable = true;
