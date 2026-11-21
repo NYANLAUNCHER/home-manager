@@ -1,3 +1,4 @@
+---@diagnostic disable:unused-local
 ------------------------------------------------------------------------------
 -- luakit configuration file, more information at https://luakit.github.io/ --
 ------------------------------------------------------------------------------
@@ -7,19 +8,19 @@ require "lfs"
 -- Check for lua configuration files that will never be loaded because they are
 -- shadowed by builtin modules.
 table.insert(package.loaders, 2, function (modname)
-    if not package.searchpath then return end
-    local f = package.searchpath(modname, package.path)
-    if not f or f:find(luakit.install_paths.install_dir .. "/", 0, true) ~= 1 then
-        return
-    end
-    local lf = luakit.config_dir .. "/" .. modname:gsub("%.","/") .. ".lua"
-    if f == lf then
-        msg.warn("Loading local version of '" .. modname .. "' module: " .. lf)
-    elseif lfs.attributes(lf) then
-        msg.warn("Found local version " .. lf
-            .. " for core module '" .. modname
-            .. "', but it won't be used, unless you update 'package.path' accordingly.")
-    end
+  if not package.searchpath then return end
+  local f = package.searchpath(modname, package.path)
+  if not f or f:find(luakit.install_paths.install_dir .. "/", 0, true) ~= 1 then
+    return
+  end
+  local lf = luakit.config_dir .. "/" .. modname:gsub("%.","/") .. ".lua"
+  if f == lf then
+    msg.warn("Loading local version of '" .. modname .. "' module: " .. lf)
+  elseif lfs.attributes(lf) then
+    msg.warn("Found local version " .. lf
+    .. " for core module '" .. modname
+    .. "', but it won't be used, unless you update 'package.path' accordingly.")
+  end
 end)
 
 require "unique_instance"
@@ -33,36 +34,36 @@ soup.cookies_storage = luakit.data_dir .. "/cookies.db"
 -- Load library of useful functions for luakit
 local lousy = require "lousy"
 
--- Load users theme
--- ("$XDG_CONFIG_HOME/luakit/theme.lua" or "/etc/xdg/luakit/theme.lua")
-lousy.theme.init(lousy.util.find_config("theme.lua"))
+-- Load theme
+-- ("$XDG_CONFIG_HOME/luakit/themes/nord.lua")
+lousy.theme.init(lousy.util.find_config("themes/nord.lua"))
 assert(lousy.theme.get(), "failed to load theme")
 
--- Load users window class
--- ("$XDG_CONFIG_HOME/luakit/window.lua" or "/etc/xdg/luakit/window.lua")
+-- Load window class
+-- ("$XDG_CONFIG_HOME/luakit/window.lua")
 local window = require "window"
 
--- Load users webview class
--- ("$XDG_CONFIG_HOME/luakit/webview.lua" or "/etc/xdg/luakit/webview.lua")
+-- Load webview class
+-- ("$XDG_CONFIG_HOME/luakit/webview.lua")
 local webview = require "webview"
 
 -- Add luakit://log/ chrome page
 local log_chrome = require "log_chrome"
 
 window.add_signal("build", function (w)
-    local widgets, l, r = require "lousy.widget", w.sbar.l, w.sbar.r
+  local widgets, l, r = require "lousy.widget", w.sbar.l, w.sbar.r
 
-    -- Left-aligned status bar widgets
-    l.layout:pack(widgets.uri())
-    l.layout:pack(widgets.hist())
-    l.layout:pack(widgets.progress())
+  -- Left-aligned status bar widgets
+  l.layout:pack(widgets.uri())
+  l.layout:pack(widgets.hist())
+  l.layout:pack(widgets.progress())
 
-    -- Right-aligned status bar widgets
-    r.layout:pack(widgets.buf())
-    r.layout:pack(log_chrome.widget())
-    r.layout:pack(widgets.ssl())
-    r.layout:pack(widgets.tabi())
-    r.layout:pack(widgets.scroll())
+  -- Right-aligned status bar widgets
+  r.layout:pack(widgets.buf())
+  r.layout:pack(log_chrome.widget())
+  r.layout:pack(widgets.ssl())
+  r.layout:pack(widgets.tabi())
+  r.layout:pack(widgets.scroll())
 end)
 
 -- Load luakit binds and modes
@@ -129,8 +130,8 @@ local viewpdf = require "viewpdf"
 
 -- Example using xdg-open for opening downloads / showing download folders
 downloads.add_signal("open-file", function (file)
-    luakit.spawn(string.format("xdg-open %q", file))
-    return true
+  luakit.spawn(string.format("xdg-open %q", file))
+  return true
 end)
 
 -- Add vimperator-like link hinting & following
@@ -190,13 +191,6 @@ local tab_favicons = require "tab_favicons"
 -- Add :view-source command
 local view_source = require "view_source"
 
--- Put "userconf.lua" in your Luakit config dir with your own tweaks; if this is
--- permanent, no need to copy/paste/modify the default rc.lua whenever you
--- update Luakit.
-if pcall(function () lousy.util.find_config("userconf.lua") end) then
-    require "userconf"
-end
-
 -----------------------------
 -- End user script loading --
 -----------------------------
@@ -204,12 +198,10 @@ end
 -- Restore last saved session
 local w = (not luakit.nounique) and (session and session.restore())
 if w then
-    for i, uri in ipairs(uris) do
-        w:new_tab(uri, { switch = i == 1 })
-    end
+  for i, uri in ipairs(uris) do
+    w:new_tab(uri, { switch = i == 1 })
+  end
 else
-    -- Or open new window
-    window.new(uris)
+  -- Or open new window
+  window.new(uris)
 end
-
--- vim: et:sw=4:ts=8:sts=4:tw=80
