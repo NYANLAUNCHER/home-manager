@@ -2,24 +2,19 @@
 return {
   filetypes = {'lua'},
   on_init = function(client)
-    if client.workspace_folders then
-      local path = client.workspace_folders[1].name
-      if
-        path ~= vim.fn.stdpath('config')
-        and (vim.uv.fs_stat(path .. '/.luarc.json') or vim.uv.fs_stat(path .. '/.luarc.jsonc'))
-      then
-        return
-      end
+    local join = vim.fs.joinpath
+    local path = client.workspace_folders[1].name -- workspace directory
+    -- Don't do anything if there is project local config
+    if vim.uv.fs_stat(join(path, '.luarc.json'))
+      or vim.uv.fs_stat(join(path, '.luarc.jsonc'))
+    then
+      return
     end
 
     client.config.settings.Lua = vim.tbl_deep_extend('force', client.config.settings.Lua, {
       runtime = {
-        -- Tell the language server which version of Lua you're using (most
-        -- likely LuaJIT in the case of Neovim)
         version = 'LuaJIT',
-        -- Tell the language server how to find Lua modules same way as Neovim
-        -- (see `:h lua-module-load`)
-        path = {
+        path = { -- (see `:h lua-module-load`)
           'lua/?.lua',
           'lua/?/init.lua',
         },
@@ -29,6 +24,7 @@ return {
         checkThirdParty = false,
         library = {
           vim.env.VIMRUNTIME,
+          vim.fn.stdpath('config'),
         }
       }
     })
@@ -36,10 +32,9 @@ return {
   settings = {
     Lua = {
       diagnostics = {
-        disable = {
-          "undefined-global"
-        }
-      }
+        disable = { "undefined-global" },
+      },
+      telemetry = { enable = false },
     }
   }
 }

@@ -23,8 +23,8 @@
     ".config/newsboat/".source = ./newsboat;
     ".config/zathura/".source =  ./zathura;
     ".config/moxide/".source =   ./moxide; # markdown-oxide, see: https://oxide.md/Configuration
-    ".config/luakit/".source =   ./luakit;
-    ".config/qutebrowser/".source = ./qutebrowser;
+    #".config/luakit/".source =   ./luakit;
+    #".config/qutebrowser/".source = ./qutebrowser;
   };
 
   # Packages:
