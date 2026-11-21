@@ -138,6 +138,13 @@ end)
 -- Add vimperator-like link hinting & following
 local follow = require "follow"
 
+-- Use qutebrowser-like link hinting & following
+local select = require "select"
+select.label_maker = function (s)
+    local chars = s.charset("asdfqwerzxcv")
+    return s.trim(s.sort(s.reverse(chars)))
+end
+
 -- Add command history
 local cmdhist = require "cmdhist"
 
