@@ -1,5 +1,5 @@
 {
     "workspace.library": [
-        "${LUAKIT_LUA_PATH}"
+        "${env:LUAKIT_LUA_PATH}"
     ]
 }

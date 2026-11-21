@@ -30,6 +30,8 @@ export INPUTRC="$HOME/.inputrc"
 export LESSHISTFILE="$XDG_CACHE_HOME/less/history"
 # Integrations
 export LUA_PATH="$LUA_PATH;./?.lua;./?/init.lua"
+export LUAROCKS_CONFIG="$XDG_CONFIG_HOME/luarocks/config.lua"
+mkdir -p $(dirname $LUAROCKS_CONFIG) && touch $LUAROCKS_CONFIG
 export OLLAMA_DEFAULT_AGENT_MODEL="gemma4:12b" # see: 'alias opencode' in .bashrc
 # Directory Shortcuts:
 set -a

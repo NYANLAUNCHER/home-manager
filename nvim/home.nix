@@ -9,7 +9,7 @@
     # Shell Utils
     xxd tree-sitter
     # Lua
-    lua lua-language-server
+    lua lua-language-server luarocks
     # Nix
     nixd nixdoc
     # C/C++

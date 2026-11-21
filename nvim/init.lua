@@ -55,7 +55,7 @@ vim.opt.errorbells=true
 vim.opt.timeoutlen=800
 vim.opt.splitbelow=true
 vim.opt.splitright=true
-vim.opt.mouse='n'
+vim.opt.mouse=''
 -- Command
 vim.opt.wildmenu = true
 vim.opt.wildmode = 'longest:full,full'
@@ -265,5 +265,10 @@ function ToggleBufferMaximized()
     vim.cmd('exe "normal \\<C-w>="')
     bufferMaximized = 0
   end
+end
+
+-- Print info about the LSP attached to the current buffer
+function LspInfo()
+  vim.print(vim.lsp.get_clients({bufnr=0})[1].config)
 end
 --}}}
