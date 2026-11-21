@@ -1,0 +1,417 @@
+/*
+ * GitHub Soft Dark for Vivify
+ * A GitHub Dark Dimmed-inspired theme.
+ *
+ * Install by adding this file to Vivify's "styles" configuration.
+ */
+
+/* --------------------------------------------------------------------------
+ * COLOR PALETTE
+ * -------------------------------------------------------------------------- */
+
+:root {
+  color-scheme: dark;
+
+  --bg-primary: #22272e;
+  --bg-secondary: #2d333b;
+  --bg-tertiary: #373e47;
+  --bg-code: #2d333b;
+  --bg-mark: #5a4b27;
+
+  --text-primary: #adbac7;
+  --text-secondary: #768390;
+  --text-tertiary: #adbac7;
+  --text-link: #6cb6ff;
+  --text-mark: #f0e6c0;
+
+  --border-regular: #444c56;
+  --border-muted: #373e47;
+
+  --icon-directory: #6cb6ff;
+  --icon-file: #768390;
+  --icon-chevron: #768390;
+
+  /* Syntax highlighting */
+  --syntax-text: #adbac7;
+  --syntax-keyword: #f47067;
+  --syntax-entity: #dcbdfb;
+  --syntax-constant: #6cb6ff;
+  --syntax-string: #96d0a6;
+  --syntax-symbol: #f69d50;
+  --syntax-comment: #768390;
+  --syntax-entity-tag: #8ddb8c;
+  --syntax-storage-modifier-import: #f47067;
+
+  --syntax-markup-heading: #6cb6ff;
+  --syntax-markup-list: #f69d50;
+  --syntax-markup-italic: #adbac7;
+  --syntax-markup-bold: #adbac7;
+
+  --syntax-markup-inserted-fg: #8ddb8c;
+  --syntax-markup-inserted-bg: #243d30;
+  --syntax-markup-deleted-fg: #f47067;
+  --syntax-markup-deleted-bg: #482b2b;
+
+  /* GitHub-style alerts */
+  --alert-note: #6cb6ff;
+  --alert-tip: #8ddb8c;
+  --alert-important: #dcbdfb;
+  --alert-warning: #f69d50;
+  --alert-caution: #f47067;
+  --fallback-alert: var(--alert-note);
+
+  /* Jupyter notebook output */
+  --ipynb-bg-error: rgba(244, 112, 103, 0.12);
+
+  --ipynb-ansi-black: #545d68;
+  --ipynb-ansi-brblack: #768390;
+  --ipynb-ansi-red: #f47067;
+  --ipynb-ansi-brred: #ff938a;
+  --ipynb-ansi-green: #8ddb8c;
+  --ipynb-ansi-brgreen: #b4f1b4;
+  --ipynb-ansi-yellow: #f69d50;
+  --ipynb-ansi-bryellow: #ffcc66;
+  --ipynb-ansi-blue: #6cb6ff;
+  --ipynb-ansi-brblue: #91cbff;
+  --ipynb-ansi-magenta: #dcbdfb;
+  --ipynb-ansi-brmagenta: #e6cfff;
+  --ipynb-ansi-cyan: #76e3ea;
+  --ipynb-ansi-brcyan: #9ae6ec;
+  --ipynb-ansi-white: #adbac7;
+  --ipynb-ansi-brwhite: #cdd9e5;
+}
+
+/* --------------------------------------------------------------------------
+ * DOCUMENT
+ * -------------------------------------------------------------------------- */
+
+html,
+body {
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+}
+
+body {
+  line-height: 1.65;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+::selection {
+  color: #ffffff;
+  background: #316dca;
+}
+
+/* --------------------------------------------------------------------------
+ * TYPOGRAPHY
+ * -------------------------------------------------------------------------- */
+
+h1, h2, h3, h4, h5, h6 {
+  color: #cdd9e5;
+  font-weight: 600;
+  line-height: 1.3;
+}
+
+h1, h2 {
+  border-bottom: 1px solid var(--border-muted);
+  padding-bottom: 0.5em;
+}
+
+p {
+  line-height: 1.7;
+}
+
+strong, b {
+  color: #cdd9e5;
+}
+
+small {
+  color: var(--text-secondary);
+}
+
+/* --------------------------------------------------------------------------
+ * LINKS
+ * -------------------------------------------------------------------------- */
+
+a {
+  color: var(--text-link);
+  text-decoration: none;
+  text-underline-offset: 0.2em;
+}
+
+a:hover {
+  color: #91cbff;
+  text-decoration: underline;
+}
+
+a:visited {
+  color: #dcbdfb;
+}
+
+/* --------------------------------------------------------------------------
+ * CODE
+ * -------------------------------------------------------------------------- */
+
+code,
+pre {
+  font-family: "JetBrains Mono", "Cascadia Code", "SFMono-Regular",
+               Consolas, monospace;
+}
+
+code {
+  color: #cdd9e5;
+  background: var(--bg-secondary);
+  border: 1px solid rgba(68, 76, 86, 0.55);
+  border-radius: 6px;
+  padding: 0.15em 0.4em;
+  font-size: 0.88em;
+}
+
+pre {
+  color: var(--text-primary);
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-regular);
+  border-radius: 8px;
+  padding: 16px;
+  line-height: 1.55;
+  overflow: auto;
+}
+
+pre > code {
+  color: inherit;
+  background: transparent;
+  border: 0;
+  border-radius: 0;
+  padding: 0;
+  font-size: 0.9em;
+}
+
+pre code,
+.hljs {
+  color: var(--syntax-text);
+  background: transparent;
+}
+
+/* Highlight.js token fallbacks */
+.hljs-comment,
+.hljs-quote {
+  color: var(--syntax-comment);
+  font-style: italic;
+}
+
+.hljs-keyword,
+.hljs-selector-tag,
+.hljs-literal,
+.hljs-section {
+  color: var(--syntax-keyword);
+}
+
+.hljs-string,
+.hljs-regexp,
+.hljs-addition {
+  color: var(--syntax-string);
+}
+
+.hljs-number,
+.hljs-built_in,
+.hljs-builtin-name,
+.hljs-attribute {
+  color: var(--syntax-constant);
+}
+
+.hljs-title,
+.hljs-title.class_,
+.hljs-title.function_ {
+  color: var(--syntax-entity);
+}
+
+.hljs-variable,
+.hljs-template-variable,
+.hljs-params {
+  color: var(--syntax-text);
+}
+
+.hljs-type,
+.hljs-class .hljs-title {
+  color: var(--syntax-entity);
+}
+
+.hljs-meta,
+.hljs-symbol,
+.hljs-bullet {
+  color: var(--syntax-symbol);
+}
+
+.hljs-name,
+.hljs-tag,
+.hljs-selector-class,
+.hljs-selector-id {
+  color: var(--syntax-entity-tag);
+}
+
+.hljs-deletion {
+  color: var(--syntax-markup-deleted-fg);
+  background: var(--syntax-markup-deleted-bg);
+}
+
+.hljs-addition {
+  color: var(--syntax-markup-inserted-fg);
+  background: var(--syntax-markup-inserted-bg);
+}
+
+/* --------------------------------------------------------------------------
+ * TABLES
+ * -------------------------------------------------------------------------- */
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  border-spacing: 0;
+  margin: 1rem 0;
+  overflow: hidden;
+  border: 1px solid var(--border-regular);
+  border-radius: 6px;
+}
+
+th,
+td {
+  padding: 8px 13px;
+  border: 1px solid var(--border-regular);
+}
+
+th {
+  color: #cdd9e5;
+  background: var(--bg-secondary);
+  font-weight: 600;
+  text-align: left;
+}
+
+tr {
+  background: var(--bg-primary);
+}
+
+tr:nth-child(even) {
+  background: var(--bg-secondary);
+}
+
+/* --------------------------------------------------------------------------
+ * BLOCKQUOTES AND ALERTS
+ * -------------------------------------------------------------------------- */
+
+blockquote {
+  color: var(--text-secondary);
+  border-left: 3px solid var(--border-regular);
+  margin: 1rem 0;
+  padding: 0.25rem 1rem;
+}
+
+.alert {
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-muted);
+  border-left: 3px solid var(--color, var(--alert-note));
+  border-radius: 6px;
+  padding: 0.8rem 1rem;
+  margin: 1rem 0;
+}
+
+.alert .alert-title {
+  color: var(--color);
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+}
+
+.alert > :first-child {
+  margin-top: 0;
+}
+
+.alert > :last-child {
+  margin-bottom: 0;
+}
+
+/* --------------------------------------------------------------------------
+ * LISTS AND TASK LISTS
+ * -------------------------------------------------------------------------- */
+
+li {
+  margin: 0.2rem 0;
+}
+
+li::marker {
+  color: var(--text-secondary);
+}
+
+input.task-list-item-checkbox {
+  accent-color: #539bf5;
+}
+
+/* --------------------------------------------------------------------------
+ * IMAGES, KEYBOARD AND MISCELLANEOUS
+ * -------------------------------------------------------------------------- */
+
+img,
+svg {
+  max-width: 100%;
+  border-radius: 4px;
+}
+
+kbd {
+  color: #cdd9e5;
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-regular);
+  border-bottom-width: 2px;
+  border-radius: 5px;
+  padding: 3px 6px;
+  font-family: inherit;
+  font-size: 0.85em;
+}
+
+mark {
+  color: var(--text-mark);
+  background: var(--bg-mark);
+  border-radius: 3px;
+  padding: 0.1em 0.25em;
+}
+
+hr {
+  border: 0;
+  border-top: 1px solid var(--border-muted);
+  margin: 1.5rem 0;
+}
+
+/* --------------------------------------------------------------------------
+ * FOOTNOTES
+ * -------------------------------------------------------------------------- */
+
+section.footnotes {
+  color: var(--text-secondary);
+  border-top: 1px solid var(--border-muted);
+  font-size: 0.85rem;
+  margin-top: 2rem;
+  padding-top: 0.75rem;
+}
+
+/* --------------------------------------------------------------------------
+ * COPY CODE BUTTON
+ * -------------------------------------------------------------------------- */
+
+.copy-button,
+.copy-success,
+.copy-fail {
+  color: var(--text-secondary);
+  border-radius: 6px;
+}
+
+.copy-button:hover,
+.copy-success,
+.copy-fail {
+  background: var(--bg-tertiary);
+}
+
+/* --------------------------------------------------------------------------
+ * FOCUS
+ * -------------------------------------------------------------------------- */
+
+:focus-visible {
+  outline: 2px solid #539bf5;
+  outline-offset: 2px;
+}
