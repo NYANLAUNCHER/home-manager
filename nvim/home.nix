@@ -21,6 +21,7 @@ inputs@{ config, pkgs, lib, ... }:
     taplo
     # Personal-Knowledge-Management
     markdown-oxide
+    quarto
     # Shell Scripting
     bash-language-server
     checkbashisms

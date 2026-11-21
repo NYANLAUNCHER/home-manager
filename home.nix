@@ -8,12 +8,12 @@
   # Config Files:
   # Note: Manage plain text through "filename".text = ''contents''
   home.file = {
-    ".profile".source = lib.mkForce ./.profile;
-    ".inputrc".source = lib.mkForce ./.inputrc;
-    ".bashrc".source = lib.mkForce  ./.bashrc;
-    ".config/mimeapps.list".source = lib.mkForce ./mimeapps.list;
-    ".config/nix/".source = lib.mkForce ./nix;
-    ".config/git/".source = lib.mkForce ./git;
+    ".profile".source = ./.profile;
+    ".inputrc".source = ./.inputrc;
+    ".bashrc".source = ./.bashrc;
+    ".config/mimeapps.list".source = ./mimeapps.list;
+    ".config/nix/".source = ./nix;
+    ".config/git/".source = ./git;
     ".config/zellij/".source =   ./zellij;
     ".config/ghostty/".source =  ./ghostty;
     ".config/yazi/".source =     ./yazi;

@@ -1,5 +1,5 @@
 local _ = require('config').setup()
-local u = require('config.util')
+local util = require('config.util')
 local keymap = vim.keymap.set
 local delkey = function(mode, lhs) vim.keymap.set(mode, lhs, '<nop>', { noremap=true, silent=true }) end
 
@@ -55,7 +55,7 @@ vim.opt.errorbells=true
 vim.opt.timeoutlen=800
 vim.opt.splitbelow=true
 vim.opt.splitright=true
-vim.opt.mouse=''
+vim.opt.mouse='n'
 -- Command
 vim.opt.wildmenu = true
 vim.opt.wildmode = 'longest:full,full'

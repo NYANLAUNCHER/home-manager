@@ -29,7 +29,7 @@ return {
           keymap('n', 'gm',   '<Plug>(InfoMenu)')
           keymap('n', 'gt',   '<Plug>(InfoGoto)')
           keymap('n', '<Cr>', '<Plug>(InfoFollow)')
-          --keymap('n', 'gd',   ':call <SNR>15_xRefUnderCursor()<CR><Space>', {noremap=true})
+          keymap('n', 'gd',   ':call <SNR>15_xRefUnderCursor()<CR><Space>', {noremap=true})
         end
       })
       -- man page config & keybinds
@@ -40,21 +40,7 @@ return {
       })
     end,
   },
-  -- LSP Config
-  {'neovim/nvim-lspconfig'},
-  {'nvimdev/lspsaga.nvim',
-    config=function()
-      require('lspsaga').setup({
-        symbol_in_winbar = {
-          enable = true
-        },
-        light_bulb = {
-          enable = false
-        }
-      })
-    end
-  },
-  -- Text Stuffs
+  -- Navigation & Text Manipulation
   {'kylechui/nvim-surround',
     event = 'VeryLazy',
     config=function()
@@ -70,21 +56,16 @@ return {
       })
     end,
   },
-  {'https://codeberg.org/andyg/leap.nvim',
-    dependencies={'tpope/vim-repeat'},
-    config=function()
-      delkey({'n','x','o'}, 's')
-      keymap({'n','x','o'}, 's', function ()
-        require('leap').leap({
-          backward=false,
-        })
-      end)
-      keymap('n', 'S', function ()
-        require('leap').leap({
-          backward=true,
-        })
-      end)
-    end,
+  {'folke/flash.nvim',
+    event = "VeryLazy",
+    opts = {},
+    keys = {
+      { "s", mode = { "n", "x", "o" }, function() require("flash").jump() end, desc = "Flash" },
+      { "S", mode = { "n", "x", "o" }, function() require("flash").treesitter() end, desc = "Flash Treesitter" },
+      { "r", mode = "o", function() require("flash").remote() end, desc = "Remote Flash" },
+      { "R", mode = { "o", "x" }, function() require("flash").treesitter_search() end, desc = "Treesitter Search" },
+      { "<c-s>", mode = { "c" }, function() require("flash").toggle() end, desc = "Toggle Flash Search" },
+    },
   },
   {'lukas-reineke/indent-blankline.nvim',
     main = 'ibl',
@@ -101,7 +82,7 @@ return {
       vim.g.loaded_netrw = 1
       vim.g.loaded_netrwPlugin = 1
       vim.opt.termguicolors = true
-      require'nvim-tree'.setup({
+      require('nvim-tree').setup({
         view = {
           width = 30,
         },
