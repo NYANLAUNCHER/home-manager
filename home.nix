@@ -22,8 +22,9 @@
     ".config/mutt/".source =     ./mutt; # Mutt & Neomutt
     ".config/newsboat/".source = ./newsboat;
     ".config/zathura/".source =  ./zathura;
-    ".config/qutebrowser/".source =  ./qutebrowser;
-    ".config/moxide/".source =  ./moxide; # markdown-oxide, see: https://oxide.md/Configuration
+    ".config/moxide/".source =   ./moxide; # markdown-oxide, see: https://oxide.md/Configuration
+    #".config/luakit/".source =   ./luakit;
+    #".config/qutebrowser/".source = ./qutebrowser;
   };
 
   # Packages:
@@ -47,7 +48,8 @@
     discordo # tui discord client
 
     # Graphical
-    qutebrowser
+    #qutebrowser
+    luakit
     mpv yt-dlp
     nsxiv
     f3d
