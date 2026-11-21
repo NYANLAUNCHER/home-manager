@@ -1,0 +1,5 @@
+{
+    "workspace.library": [
+        "${LUAKIT_LUA_PATH}"
+    ]
+}

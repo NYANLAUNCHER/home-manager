@@ -8,10 +8,6 @@
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    #nvim = {
-    #  url = "path:./nvim";
-    #  inputs.nixpkgs.follows = "nixpkgs";
-    #};
   };
 
   outputs = inputs@{ nixpkgs, flake-parts, home-manager, ... }:
@@ -29,9 +25,9 @@
             # Pass arguments to modules
             extraSpecialArgs = {inherit username homeDirectory;};
             modules = [
-              #inputs.nvim.homeModules.neovim
-              ./nvim/home.nix
               ./home.nix
+              ./luakit/home.nix
+              ./nvim/home.nix
               ./zsh/home.nix
             ];
           };

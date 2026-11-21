@@ -1,5 +1,8 @@
+# home-manager session variables
 export HM_SESSION_VARS_SH="$HOME/.nix-profile/etc/profile.d/hm-session-vars.sh"
+unset __HM_SESS_VARS_SOURCED
 [ -f "$HM_SESSION_VARS_SH" ] && . "$HM_SESSION_VARS_SH"
+
 # Secrets:
 [ -f "$HOME/.secrets/expose.sh" ] && \
 . "$HOME/.secrets/expose.sh" &>/dev/null || true

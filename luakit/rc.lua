@@ -116,6 +116,7 @@ local tabmenu = require "tabmenu"
 
 -- Add greasemonkey-like javascript userscript support
 local userscripts = require "userscripts"
+userscripts.dir = luakit.config_dir .. "/scripts" -- put userscripts in "$XDG_CONFIG_HOME/luakit/scripts"
 
 -- Add bookmarks support
 local bookmarks = require "bookmarks"
