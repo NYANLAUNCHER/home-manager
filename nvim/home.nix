@@ -1,7 +1,11 @@
 { config, pkgs, lib, ... }:
 {
   home.file = {
-    ".config/nvim/".source = ./.;
+    ".config/nvim/" = {
+      source = ./.;
+      recursive = true;
+      force = true;
+    };
   };
 
   home.packages = (with pkgs; [
