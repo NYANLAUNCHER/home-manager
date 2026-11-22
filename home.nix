@@ -41,6 +41,7 @@
     devenv
 
     # Utils
+    ripgrep-all
     btop
     tree
     file
