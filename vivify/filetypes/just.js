@@ -9,18 +9,19 @@
  *   - standalone files named `justfile` (any capitalization), `.justfile`,
  *     or ending in `.just`
  *
- * Lives in ~/.config/vivify/filetypes/ next to its optional stylesheet
- * (filetypes/just.css). themes/ is reserved for site-wide themes.
+ * Just's own syntax (recipes, settings, attributes, expressions, strings,
+ * {{ interpolation }}) is highlighted here with hljs-* classes (colors in
+ * filetypes/just.css). Recipe bodies are handed to filetypes/shellscript.js,
+ * which does the shell highlighting (sh-* classes, colors in
+ * filetypes/shellscript.css); {{ }} inside shell text stays just syntax.
+ * Without shellscript.js, recipe bodies are left uncolored.
+ *
+ * Config (~/.config/vivify/config.json):
  *   {
  *     "scripts": "filetypes/*.js",
  *     "styles": ["themes/*.css", "filetypes/*.css"]
  *   }
  * Restart Vivify afterwards (`pkill -f vivify-server`, then run `viv`).
- *
- * How it works: Vivify's bundled highlight.js has no `just` grammar and its
- * output is already rendered HTML, so this script tokenizes the code text
- * itself and emits the same `hljs-*` classes highlight.js uses. Whatever
- * highlight.js theme Vivify is using therefore colors the result.
  */
 (() => {
   'use strict';
@@ -32,10 +33,17 @@
   const IDENT = '[A-Za-z_][A-Za-z0-9_-]*';
   const KEYWORDS = new Set(['if', 'else']);
   const LITERALS = new Set(['true', 'false']);
-  const SHELL_KEYWORDS = new Set([
-    'if', 'then', 'else', 'elif', 'fi', 'for', 'while', 'until', 'do', 'done', 'case', 'esac',
-    'select', 'function', 'time',
-  ]);
+
+  // The shell highlighter is looked up lazily so script load order doesn't matter.
+  function getShell() {
+    if (typeof window !== 'undefined' && window.VivifyFiletypes && window.VivifyFiletypes.shellscript) {
+      return window.VivifyFiletypes.shellscript;
+    }
+    if (typeof module !== 'undefined' && typeof require === 'function') {
+      try { return require('./shellscript.js'); } catch (_) { /* not available */ }
+    }
+    return null;
+  }
 
   // ---------------------------------------------------------------- strings
   // just strings: '..' and '''..''' (raw), ".." and """.."""  (escapes),
@@ -226,10 +234,11 @@
   }
 
   // ---------------------------------------------------------- recipe bodies
-  // Bodies are shell (or whatever the shebang says); we do a light shell-ish
-  // pass and highlight {{ interpolation }} with the expression lexer.
+  // {{ interpolation }} inside shell text. `{{{{` is an escaped literal "{{".
+  // Returns null when there is no interpolation at `i`.
   function interpAt(t, i) {
-    if (t.startsWith('{{{{', i)) return { html: '{{{{', end: i + 4 }; // escaped literal "{{"
+    if (!t.startsWith('{{', i)) return null;
+    if (t.startsWith('{{{{', i)) return { html: '{{{{', end: i + 4 };
     const j = t.indexOf('}}', i + 2);
     const inner = j < 0 ? t.slice(i + 2) : t.slice(i + 2, j);
     return {
@@ -240,308 +249,45 @@
       end: j < 0 ? t.length : j + 2,
     };
   }
+  const HOOKS = { trigger: '{{', interpAt };
 
-  function withInterp(text, plainFn) {
+  // Used only if shellscript.js isn't loaded: no shell coloring, but {{ }} still works.
+  function plainLine(s) {
     let out = '';
     let i = 0;
-    while (i < text.length) {
-      if (text.startsWith('{{', i)) {
-        const r = interpAt(text, i);
+    while (i < s.length) {
+      const r = interpAt(s, i);
+      if (r) {
         out += r.html;
         i = r.end;
         continue;
       }
-      let k = text.indexOf('{{', i);
-      if (k < 0) k = text.length;
-      out += plainFn(text.slice(i, k));
+      let k = s.indexOf('{{', i + 1);
+      if (k < 0) k = s.length;
+      out += esc(s.slice(i, k));
       i = k;
     }
     return out;
   }
 
-  const SHELL_VAR_SPLIT = /(\$(?:\{[^}]*\}|[A-Za-z_]\w*|[0-9@#?*!$-]))/;
-  const withVars = (t) =>
-    t.split(SHELL_VAR_SPLIT).map((part, idx) => (idx % 2 ? sp('hljs-variable', part) : esc(part))).join('');
-
-  const SHELL_BUILTINS = new Set([
-    'alias', 'bg', 'bind', 'break', 'builtin', 'cd', 'command', 'continue', 'declare', 'dirs', 'echo',
-    'enable', 'eval', 'exec', 'exit', 'export', 'false', 'fg', 'getopts', 'hash', 'history', 'jobs',
-    'kill', 'let', 'local', 'popd', 'printf', 'pushd', 'pwd', 'read', 'readonly', 'return', 'set',
-    'shift', 'shopt', 'source', 'test', 'times', 'trap', 'true', 'type', 'typeset', 'ulimit', 'umask',
-    'unalias', 'unset', 'wait',
-  ]);
-  // After these, the next word is again a command (or an assignment).
-  const CMD_AFTER = new Set([
-    'if', 'then', 'do', 'else', 'elif', 'while', 'until', 'time', 'export', 'local', 'declare',
-    'readonly', 'typeset', 'exec', 'command', 'builtin', 'sudo', 'env', 'nohup', 'xargs',
-  ]);
-
-  const RE_SHVAR = /\$(?:\{[^}]*\}|[A-Za-z_]\w*|[0-9@#?*!$-])/y;
-  const RE_REDIR = /(?:\d*(?:>>|>|<)&?\d*-?|&>>?)/y;
-  const RE_HEREDOC = /<<(-?)[ \t]*(?:'([^']+)'|"([^"]+)"|\\?([A-Za-z_]\w*))/y;
-  const RE_FLAG = /-+[\w-]*/y;
-  const RE_NUMWORD = /[0-9A-Za-z_.]+/y;
-
-  function matchAt(re, s, i) {
-    re.lastIndex = i;
-    return re.exec(s);
-  }
-
-  // Index of the ")" matching an already-open "(" (search starts at `from`).
-  function closingParen(s, from) {
-    let depth = 1;
-    for (let k = from; k < s.length; k++) {
-      const ch = s[k];
-      if (ch === "'") {
-        const e = s.indexOf("'", k + 1);
-        if (e < 0) return -1;
-        k = e;
-      } else if (ch === '\\') k++;
-      else if (ch === '(') depth++;
-      else if (ch === ')' && --depth === 0) return k;
-    }
-    return -1;
-  }
-
-  // Shell quote spanning from `i` (or continuing one from the previous line).
-  function shQuoted(s, i, q, cont) {
-    const start = cont ? i : i + 1;
-    let k = start;
-    while (k < s.length && s[k] !== q) {
-      if (q === '"' && s[k] === '\\') k++;
-      k++;
-    }
-    const closed = k < s.length;
-    const inner = s.slice(start, Math.min(k, s.length));
-    return {
-      html:
-        `<span class="hljs-string">${cont ? '' : q}` +
-        withInterp(inner, q === '"' ? withVars : esc) +
-        `${closed ? q : ''}</span>`,
-      end: closed ? k + 1 : s.length,
-      open: closed ? null : q,
-    };
-  }
-
-  const subState = () => ({ quote: null, heredoc: null });
-
-  // `st` carries quote / heredoc state across the lines of a recipe body.
-  function shell(s, st) {
-    const n = s.length;
-    let out = '';
-    let i = 0;
-    let cmdPos = true; // is the next word in command position?
-    let sawFor = false;
-
-    if (st.quote) {
-      const r = shQuoted(s, 0, st.quote, true);
-      out += r.html;
-      i = r.end;
-      st.quote = r.open;
-      cmdPos = false;
-    }
-
-    while (i < n) {
-      const c = s[i];
-
-      if (s.startsWith('{{', i)) {
-        const r = interpAt(s, i);
-        out += r.html;
-        i = r.end;
-        cmdPos = false;
-        continue;
-      }
-
-      if (c === ' ' || c === '\t') {
-        out += c;
-        i++;
-        continue;
-      }
-
-      if (c === '#' && (i === 0 || /\s/.test(s[i - 1]))) {
-        out += sp('hljs-comment', s.slice(i));
-        break;
-      }
-
-      if (c === "'" || c === '"') {
-        const r = shQuoted(s, i, c, false);
-        out += r.html;
-        i = r.end;
-        st.quote = r.open;
-        cmdPos = false;
-        continue;
-      }
-
-      if (c === '$') {
-        if (s[i + 1] === '(') {
-          const j = closingParen(s, i + 2);
-          if (j >= 0) {
-            out += sp('hljs-variable', '$(') + shell(s.slice(i + 2, j), subState()) + sp('hljs-variable', ')');
-            i = j + 1;
-            cmdPos = false;
-            continue;
-          }
-        }
-        const m = matchAt(RE_SHVAR, s, i);
-        if (m) {
-          out += sp('hljs-variable', m[0]);
-          i += m[0].length;
-          cmdPos = false;
-          continue;
-        }
-      }
-
-      if (c === '`') {
-        const j = s.indexOf('`', i + 1);
-        if (j >= 0) {
-          out += sp('hljs-variable', '`') + shell(s.slice(i + 1, j), subState()) + sp('hljs-variable', '`');
-          i = j + 1;
-          cmdPos = false;
-          continue;
-        }
-      }
-
-      if (s.startsWith('&&', i) || s.startsWith('||', i)) {
-        out += sp('hljs-operator', s.substr(i, 2));
-        i += 2;
-        cmdPos = true;
-        continue;
-      }
-
-      if (c === '|' || c === ';') {
-        out += sp('hljs-operator', c);
-        i++;
-        cmdPos = true;
-        continue;
-      }
-
-      if (c === '<' && s.startsWith('<<', i) && !s.startsWith('<<<', i)) {
-        const m = matchAt(RE_HEREDOC, s, i);
-        if (m) {
-          const quoted = Boolean(m[2] || m[3]);
-          st.heredoc = { tag: m[2] || m[3] || m[4], expand: !quoted };
-          out += sp('hljs-operator', '<<' + m[1]) + sp('hljs-string', m[0].slice(2 + m[1].length));
-          i += m[0].length;
-          cmdPos = false;
-          continue;
-        }
-      }
-
-      if (c === '<' || c === '>' || c === '&' || (c >= '0' && c <= '9')) {
-        const m = matchAt(RE_REDIR, s, i);
-        if (m && m[0]) {
-          out += sp('hljs-operator', m[0]);
-          i += m[0].length;
-          continue;
-        }
-        if (c === '&') {
-          out += sp('hljs-operator', '&');
-          i++;
-          cmdPos = true;
-          continue;
-        }
-      }
-
-      if (c === '(' || c === '{') {
-        out += c;
-        i++;
-        cmdPos = true;
-        continue;
-      }
-
-      if (c === '-' && (i === 0 || /[\s=]/.test(s[i - 1]))) {
-        const m = matchAt(RE_FLAG, s, i);
-        out += esc(m[0]);
-        i += m[0].length;
-        cmdPos = false;
-        continue;
-      }
-
-      if (c >= '0' && c <= '9') {
-        const m = matchAt(RE_NUMWORD, s, i);
-        out += /^[0-9]+(?:\.[0-9]+)*$/.test(m[0]) ? sp('hljs-number', m[0]) : esc(m[0]);
-        i += m[0].length;
-        cmdPos = false;
-        continue;
-      }
-
-      if (/[A-Za-z_]/.test(c)) {
-        let j = i + 1;
-        while (j < n && /[A-Za-z0-9_-]/.test(s[j])) j++;
-        const w = s.slice(i, j);
-        const before = s[i - 1] || '';
-        const after = s[j] || '';
-
-        if (cmdPos && after === '=' && /^[A-Za-z_]\w*$/.test(w)) {
-          out += sp('hljs-variable', w) + sp('hljs-operator', '=');
-          i = j + 1;
-          // swallow a bare value so `FOO=bar BAZ=1 cmd` stays in command position
-          const v = /^[^\s;|&()<>"'`$#{]+/.exec(s.slice(i));
-          if (v) {
-            out += esc(v[0]);
-            i += v[0].length;
-          }
-          continue; // still in command position: FOO=bar cmd
-        }
-
-        if (!/[./]/.test(before) && !/[./=]/.test(after)) {
-          if (cmdPos && SHELL_KEYWORDS.has(w)) {
-            out += sp('hljs-keyword', w);
-            if (w === 'for' || w === 'case' || w === 'select') sawFor = true;
-            cmdPos = CMD_AFTER.has(w);
-            i = j;
-            continue;
-          }
-          if (w === 'in' && sawFor && !cmdPos) {
-            out += sp('hljs-keyword', w);
-            sawFor = false;
-            i = j;
-            continue;
-          }
-          if (cmdPos && SHELL_BUILTINS.has(w)) {
-            out += sp('hljs-built_in', w);
-            cmdPos = CMD_AFTER.has(w);
-            i = j;
-            continue;
-          }
-        }
-        out += esc(w);
-        cmdPos = false;
-        i = j;
-        continue;
-      }
-
-      out += esc(c);
-      i++;
-      cmdPos = false;
-    }
-    return out;
-  }
-
   function body(line, st) {
-    let m = /^([ \t]+)([\s\S]*)$/.exec(line);
+    const m = /^([ \t]+)([\s\S]*)$/.exec(line);
     const indent = m[1];
     let rest = m[2];
+    const shellApi = getShell();
+    if (shellApi && !st.sh) st.sh = shellApi.newState();
 
-    if (st.heredoc) {
-      const h = st.heredoc;
-      if (rest.trim() === h.tag) {
-        st.heredoc = null;
-        return indent + sp('hljs-string', rest);
-      }
-      return indent + '<span class="hljs-string">' + withInterp(rest, h.expand ? withVars : esc) + '</span>';
-    }
-
+    // recipe line prefixes: @ (quiet), - (ignore errors), ? (guard)
     let prefix = '';
-    if (!st.quote) {
-      if (/^#!/.test(rest)) return indent + sp('hljs-meta', rest);
-      m = /^[@\-?]+/.exec(rest);
-      if (m) {
-        prefix = m[0];
+    if (!shellApi || (!st.sh.quote && !st.sh.heredoc && !st.sh.cont)) {
+      const p = /^[@\-?]+/.exec(rest);
+      if (p) {
+        prefix = p[0];
         rest = rest.slice(prefix.length);
       }
     }
-    return indent + (prefix ? sp('hljs-meta', prefix) : '') + shell(rest, st);
+    const html = shellApi ? shellApi.line(rest, st.sh, HOOKS) : plainLine(rest);
+    return indent + (prefix ? sp('hljs-meta', prefix) : '') + html;
   }
 
   // ------------------------------------------------------------ whole files
@@ -566,8 +312,7 @@
     if (/^[ \t]/.test(line)) return st.inBody ? body(line, st) : lex(line, st, 'expr');
 
     st.inBody = false;
-    st.quote = null;
-    st.heredoc = null;
+    st.sh = null; // fresh shell state for the next recipe
     if (line[0] === '#') return sp(line.startsWith('#!') ? 'hljs-meta' : 'hljs-comment', line);
     if (/^\[.*\]\s*(#.*)?$/.test(line)) return lex(line, st, 'attr');
 
@@ -606,11 +351,11 @@
   }
 
   function highlightJust(src) {
-    const st = { inBody: false, open: null, quote: null, heredoc: null };
+    const st = { inBody: false, open: null, sh: null };
     return src
       .replace(/\r\n?/g, '\n')
       .split('\n')
-      .map((line) => highlightLine(line, st))
+      .map((l) => highlightLine(l, st))
       .join('\n');
   }
 
@@ -626,46 +371,63 @@
     try {
       return decodeURIComponent(location.pathname).split('/').pop() || '';
     } catch (_) {
-      return (location.pathname.split('/').pop() || '');
+      return location.pathname.split('/').pop() || '';
     }
   }
 
   // code element -> the innerHTML we last wrote. If Vivify re-renders (live
   // reload) the content changes and we highlight again; otherwise we skip.
   const done = new WeakMap();
+  let shellWaits = 0;
+  let timer = null;
+
+  const schedule = (delay = 30) => {
+    if (timer) return;
+    timer = setTimeout(() => {
+      timer = null;
+      try { scan(); } catch (e) { console.error('[just]', e); }
+    }, delay);
+  };
 
   function apply(code) {
     if (done.has(code) && done.get(code) === code.innerHTML) return;
-    const html = highlightJust(code.textContent);
-    code.innerHTML = html;
+    // shellscript.js may still be loading: wait a little before falling back
+    if (!getShell() && shellWaits < 40) {
+      shellWaits++;
+      schedule(100);
+      return;
+    }
+    code.innerHTML = highlightJust(code.textContent);
     code.classList.add('language-just');
     done.set(code, code.innerHTML);
   }
 
+  let lastLog = '';
   function scan() {
-    const isJustFile = FILE_RE.test(currentFileName());
+    const fileName = currentFileName();
+    const isJustFile = FILE_RE.test(fileName);
+    const stats = { file: fileName, justFile: isJustFile, pre: 0, matched: 0, unmatched: [], shell: Boolean(getShell()) };
     document.querySelectorAll('pre').forEach((pre) => {
+      stats.pre++;
       const code = pre.querySelector('code');
       const cls = `${pre.className || ''} ${(code && code.className) || ''}`;
-      if (!(LANG_RE.test(cls) || isJustFile)) return;
-      if (code) {
-        apply(code);
-      } else if (!pre.children.length) {
-        apply(pre); // bare <pre> with only text
+      if (!(LANG_RE.test(cls) || isJustFile)) {
+        if (stats.unmatched.length < 5) stats.unmatched.push(cls.trim());
+        return;
       }
+      stats.matched++;
+      if (code) apply(code);
+      else if (!pre.children.length) apply(pre); // bare <pre> with only text
     });
+    const sig = JSON.stringify(stats);
+    if (sig !== lastLog) {
+      lastLog = sig;
+      console.info('[just] scan', stats);
+    }
   }
 
-  let timer = null;
-  const schedule = () => {
-    if (timer) return;
-    timer = setTimeout(() => {
-      timer = null;
-      try { scan(); } catch (e) { console.error('[just-highlight]', e); }
-    }, 30);
-  };
-
-  new MutationObserver(schedule).observe(document.documentElement, { childList: true, subtree: true });
-  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', schedule);
+  console.info('[just] loaded');
+  new MutationObserver(() => schedule()).observe(document.documentElement, { childList: true, subtree: true });
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', () => schedule());
   else schedule();
 })();

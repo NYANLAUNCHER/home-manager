@@ -1,28 +1,27 @@
 /*
  * filetypes/just.css
  *
- * Colors for the just / shell highlighting from filetypes/just.js.
- * Scoped to code.language-just, so other code blocks and the site-wide
- * theme (themes/soft-dark.css) are untouched.
+ * Colors for just's own syntax from filetypes/just.js. Scoped to
+ * code.language-just. Shell highlighting inside recipe bodies is styled by
+ * filetypes/shellscript.css (.sh-* classes), not here.
  *
- * Load it AFTER the theme so it wins:
- *   "styles": ["themes/*.css", "filetypes/*.css"]
+ * Load it after the theme:  "styles": ["themes/*.css", "filetypes/*.css"]
  *
  * Colors come from soft-dark.css (GitHub Dark Dimmed) variables, with the
  * same hex values as fallbacks, so it also works if the theme is swapped out.
  */
 
 code.language-just {
-  --j-keyword: var(--syntax-keyword, #f47067);        /* if then for set export alias import */
-  --j-builtin: var(--syntax-constant, #6cb6ff);       /* echo cd exit, just functions: os() */
-  --j-string: var(--syntax-string, #96d0a6);          /* 'a' "b" `cmd` heredoc bodies */
+  --j-keyword: var(--syntax-keyword, #f47067);        /* set export alias import mod if else */
+  --j-builtin: var(--syntax-constant, #6cb6ff);       /* just functions: os(), env() */
+  --j-string: var(--syntax-string, #96d0a6);          /* 'a' "b" `cmd` in assignments/headers */
   --j-escape: var(--ipynb-ansi-brred, #ff938a);       /* \n \t \u{..} */
-  --j-variable: var(--syntax-symbol, #f69d50);        /* $VAR ${VAR} just vars, FOO= */
+  --j-variable: var(--syntax-symbol, #f69d50);        /* just variables */
   --j-interp: var(--syntax-entity, #dcbdfb);          /* {{ }} */
-  --j-number: var(--syntax-constant, #6cb6ff);
-  --j-operator: var(--ipynb-ansi-brred, #ff938a);     /* := | && || > >> 2>&1 ; */
+  --j-number: #b083f0;
+  --j-operator: var(--ipynb-ansi-brred, #ff938a);     /* := == != && || + / */
   --j-meta: var(--ipynb-ansi-bryellow, #ffcc66);      /* [attrs] @ - ? prefixes, #! */
-  --j-setting: var(--ipynb-ansi-cyan, #76e3ea);       /* names after `set` */
+  --j-setting: var(--ipynb-ansi-brmagenta, #e6cfff);  /* names after `set` */
   --j-param: var(--syntax-symbol, #f69d50);           /* recipe parameters (italic) */
   --j-recipe: var(--syntax-entity-tag, #8ddb8c);      /* recipe / dependency / alias names */
   --j-module: var(--ipynb-ansi-brblue, #91cbff);      /* names after `mod` */
@@ -45,9 +44,3 @@ code.language-just .hljs-title.function_ { color: var(--j-recipe); font-weight: 
 code.language-just .hljs-title.class_ { color: var(--j-module); font-weight: 700; }
 code.language-just .hljs-literal { color: var(--j-literal); font-weight: 600; }
 code.language-just .hljs-comment { color: var(--j-comment); font-style: italic; }
-
-/* Variables and {{ }} stay visible inside strings and heredocs. */
-code.language-just .hljs-string .hljs-variable,
-code.language-just .hljs-string .hljs-template-variable {
-  font-weight: 600;
-}

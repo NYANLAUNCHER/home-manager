@@ -1,8 +1,9 @@
 {
     "styles": [
-        "./themes/soft-dark.css"
+        "./themes/soft-dark.css",
+        "./filetypes/*.css"
     ],
     "scripts": [
-        "./filetypes/just.js"
+        "./filetypes/*.js"
     ]
 }
