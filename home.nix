@@ -46,6 +46,7 @@
     tree
     file
     xclip
+    multitail # like GNU `tail` but for multiple files
     libqalculate # advanced calculator
     discordo # tui discord client
 

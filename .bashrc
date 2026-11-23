@@ -24,6 +24,7 @@ else
 fi
 }
 alias e="fn_edit"
+alias a="touch"
 alias sudoe="sudo $EDITOR"
 fn_edit_flake() { # search upwards for flake.nix
   [[ -f "flake.nix" ]] && $EDITOR "$@" -- "flake.nix" && return 0
