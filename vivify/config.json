@@ -1,5 +1,8 @@
 {
     "styles": [
         "./themes/soft-dark.css"
+    ],
+    "scripts": [
+        "./filetypes/just.js"
     ]
 }

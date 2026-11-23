@@ -29,5 +29,7 @@
     # Shell Scripting
     bash-language-server
     checkbashisms
+    # CSS
+    vscode-css-languageserver
   ]);
 }
