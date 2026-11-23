@@ -29,6 +29,7 @@ export PAGER="less"
 export INPUTRC="$HOME/.inputrc"
 export LESSHISTFILE="$XDG_CACHE_HOME/less/history"
 # Integrations
+export CARGO_HOME="${XDG_DATA_HOME:-$HOME/.local/share}/cargo"
 export LUA_PATH="$LUA_PATH;./?.lua;./?/init.lua"
 export LUAROCKS_CONFIG="$XDG_CONFIG_HOME/luarocks/config.lua"
 mkdir -p $(dirname $LUAROCKS_CONFIG) && touch $LUAROCKS_CONFIG
