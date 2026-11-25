@@ -1,9 +1,9 @@
 {
+    "renderHTML": true,
     "styles": [
-        "./themes/soft-dark.css",
-        "./filetypes/*.css"
+        "./themes/soft-dark.css"
     ],
     "scripts": [
-        "./filetypes/*.js"
+        "./scripts/*.js"
     ]
 }
