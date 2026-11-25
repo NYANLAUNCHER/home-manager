@@ -67,6 +67,7 @@
   # Home-manager Configs
   xdg.userDirs = {
     enable = true;
+    createDirectories = true;
     desktop = "$HOME/.desktop";
     download = "$HOME/tmp";
     documents = "$HOME/files";
@@ -80,7 +81,8 @@
   # This value determines the Home Manager release that your configuration is
   # compatible with. This helps avoid breakage when a new Home Manager release
   # introduces backwards incompatible changes.
-  home.stateVersion = "23.11";
+  #home.stateVersion = "23.11";
+  home.stateVersion = "26.05";
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;
 }
