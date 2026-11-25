@@ -10,10 +10,12 @@
   home.file = {
     ".profile".source = ./.profile;
     ".inputrc".source = ./.inputrc;
-    ".bashrc".source = ./.bashrc;
-    ".config/mimeapps.list".source = ./mimeapps.list;
-    ".config/nix/".source = ./nix;
-    ".config/git/".source = ./git;
+    ".bashrc".source =  ./.bashrc;
+    ".config/nix/" = {
+      source = ./nix;
+      force = true;
+    };
+    ".config/git/".source =      ./git;
     ".config/zellij/".source =   ./zellij;
     ".config/ghostty/".source =  ./ghostty;
     ".config/yazi/".source =     ./yazi;
@@ -26,6 +28,7 @@
     ".config/vivify".source =    ./vivify;
     #".config/luakit/".source =   ./luakit;
     #".config/qutebrowser/".source = ./qutebrowser;
+    ".config/mimeapps.list".source = ./mimeapps.list;
   };
 
   # Packages:
