@@ -25,10 +25,6 @@ on   = [ "g", "l" ]
 run  = "cd $HOME/.local"
 desc = "Goto ~/.local"
 [[mgr.prepend_keymap]]
-on   = [ "g", "y" ]
-run  = "cd $XDG_CONFIG_HOME/yazi"
-desc = "Goto yazi config"
-[[mgr.prepend_keymap]]
 on   = [ "g", "n" ]
 run  = "cd $HOME/notes"
 desc = "Goto notes"

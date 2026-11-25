@@ -15,15 +15,6 @@ rules = [
     # Documents
     { mime = "application/{pdf,doc,rtf}", fg = "cyan" },
 
-    # Empty files
-    # { mime = "inode/empty", fg = "red" },
-
-    #############################################
-    # Add the 2 lines below
-    # Hidden files
-    { url = "*", is = "hidden", bg = "cyan" },
-    #############################################
-
     # Special files
     { url = "*", is = "orphan", bg = "red" },
     { url = "*", is = "exec", fg = "green" },
@@ -33,6 +24,5 @@ rules = [
     { url = "*/", is = "dummy", bg = "red" },
 
     # Fallback
-    # { url = "*", fg = "white" },
     { url = "*/", fg = "blue" },
 ]
