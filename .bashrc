@@ -60,10 +60,18 @@ alias cargo-docs="cargo doc --no-deps --open"
 alias nsh="fn_nsh"
 fn_nsh() { # `nix shell` wrapper
     local pkgs=()
+    local passthrough=false
     for i in "$@"; do
-        pkgs+=("nixpkgs#$i")
+        if [[ "$i" == "--" ]]; then # all args after "--" will be ran with --command
+            passthrough=true
+            pkgs+=("--command")
+        elif [[ "$passthrough" == true ]]; then
+            pkgs+=("$i")
+        else
+            pkgs+=("nixpkgs#$i")
+        fi
     done
-    echo "nix shell --impure ${pkgs[@]}"
+    echo "nix shell --impure ${pkgs[*]}"
     nix shell --impure "${pkgs[@]}"
 }
 alias nr="fn_nr"
