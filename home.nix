@@ -22,6 +22,7 @@
     ".config/qutebrowser/".source = ./qutebrowser;
     ".config/nix/" = {
       source = ./nix;
+      recursive = true;
       force = true;
     };
     # Files:
