@@ -94,7 +94,7 @@
         subtree: true
     });
 })();
-
+/*
 (async () => {
 function loadScript(src) {
     return new Promise((resolve, reject) => {
@@ -136,3 +136,4 @@ await loadScript("https://unpkg.com/highlightjs-luau/dist/luau.min.js");
 // Usage
 hljs.highlightAll();
 })()
+*/
