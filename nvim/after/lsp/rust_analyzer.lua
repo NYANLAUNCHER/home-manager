@@ -22,7 +22,6 @@ cnoreabbrev fmt Fmt
 
 ---@type vim.lsp.Config
 return {
-  filetypes = {'rust'},
   settings = {
     ['rust-analyzer'] = {
       diagnostics = {

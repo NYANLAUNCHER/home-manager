@@ -5,50 +5,60 @@ unset __HM_SESS_VARS_SOURCED
 
 # Secrets:
 [ -f "$HOME/.secrets/expose.sh" ] && \
-. "$HOME/.secrets/expose.sh" &>/dev/null || true
+    . "$HOME/.secrets/expose.sh" &>/dev/null || true
 
 # Environment Variables:
 stty -ixon
 # Default prompt
 export PS1="[$USER@$HOSTNAME]$ "
 export HISTFILE="$HOME/.local/state/.sh_history"
-# XDG Base dirs
+
+# XDG Base Directories
 export XDG_CONFIG_HOME="$HOME/.config"
 export XDG_CACHE_HOME="$HOME/.cache"
 export XDG_DATA_HOME="$HOME/.local/share"
 export XDG_STATE_HOME="$HOME/.local/state"
 # source XDG User dirs
-[ -f "$XDG_CONFIG_HOME/user-dirs.dirs" ] && . "$XDG_CONFIG_HOME/user-dirs.dirs"
+[ -f "$XDG_CONFIG_HOME/user-dirs.dirs" ] && . "$XDG_CONFIG_HOME/user-dirs.dirs" \
+  || echo "Couldn't source $XDG_CONFIG_HOME/user-dirs.dirs"
 # add paths in the user home dir
 export PATH="$HOME/.local/bin:$PATH"
-# Set default programs
+
+# Default Programs
 export EDITOR="nvim"
 export OPENER="xdg-open"
 export PAGER="less"
-# Set config dirs
 export INPUTRC="$HOME/.inputrc"
 export LESSHISTFILE="$XDG_CACHE_HOME/less/history"
+
 # Integrations
-export CARGO_HOME="${XDG_DATA_HOME:-$HOME/.local/share}/cargo"
-PATH="$PATH:$CARGO_HOME/bin"
+# NOTE: left these here for systems not using home-manager
+# lua
 export LUA_PATH="$LUA_PATH;./?.lua;./?/init.lua"
 export LUAROCKS_CONFIG="$XDG_CONFIG_HOME/luarocks/config.lua"
 mkdir -p $(dirname $LUAROCKS_CONFIG) && touch $LUAROCKS_CONFIG
+# rust
+export CARGO_HOME="$XDG_CONFIG_HOME/cargo"
+PATH="$PATH:$CARGO_HOME/bin"
+# ollama
 export OLLAMA_DEFAULT_AGENT_MODEL="gemma4:12b" # see: 'alias opencode' in .bashrc
+
 # Directory Shortcuts:
-set -a
-cfg="$XDG_CONFIG_HOME"
-dl="$XDG_DOWNLOAD_DIR"
-hm="$XDG_CONFIG_HOME/home-manager"
+# config
+export cfg="$XDG_CONFIG_HOME"
+export hm="$XDG_CONFIG_HOME/home-manager"
+# downloads
+export dl="$XDG_DOWNLOAD_DIR" # ~/tmp
 # media
-imgs="$HOME/media/imgs"
-vids="$HOME/media/vids"
-audio="$HOME/media/audio"
+export media="$HOME/media"
+export imgs="$media/imgs" #
+export vids="$media/vids"
+export audio="$media/audio"
+export music="$XDG_MUSIC_DIR" # ~/media/audio/music
 # source code
-src="$HOME/src"
+export src="${XDG_PROJECTS_DIR:-$HOME/src}"
 # documents
-files="$XDG_DOCUMENTS_DIR"
+export files="$XDG_DOCUMENTS_DIR"
 # notes
-nt="$HOME/notes"
-todo="$nt/TODO.md"
-set +a
+export nt="$HOME/notes" # links to $XDG_DOCUMENTS_DIR_DIR/.notes
+export todo="$nt/TODO.md"

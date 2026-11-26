@@ -3,18 +3,18 @@
 on   = [ "D" ]
 run  = "noop"
 
-# Directory Shortcuts
+# Directory Shortcuts, requires shortcuts defined in ../.profile
 [[mgr.prepend_keymap]]
-on = ["~"]
-run = "cd $HOME"
+on   = [ "g", "~" ]
+run  = "cd $HOME"
 desc = "Go to home directory."
 [[mgr.prepend_keymap]]
 on   = [ "g", "c" ]
-run  = "cd $XDG_CONFIG_HOME"
-desc = "Goto $XDG_CONFIG_HOME"
+run  = "cd $cfg"
+desc = "Goto config directory"
 [[mgr.prepend_keymap]]
 on   = [ "g", "h" ]
-run  = "cd $XDG_CONFIG_HOME/home-manager"
+run  = "cd $hm"
 desc = "Goto home-manager config"
 [[mgr.prepend_keymap]]
 on   = [ "g", "s" ]
@@ -26,23 +26,23 @@ run  = "cd $HOME/.local"
 desc = "Goto ~/.local"
 [[mgr.prepend_keymap]]
 on   = [ "g", "n" ]
-run  = "cd $HOME/notes"
+run  = "cd $nt"
 desc = "Goto notes"
 [[mgr.prepend_keymap]]
 on   = [ "g", "m" ]
-run  = "cd $HOME/media"
+run  = "cd $media"
 desc = "Goto media"
 [[mgr.prepend_keymap]]
 on   = [ "g", "f" ]
-run  = "cd $XDG_DOCUMENTS_DIR"
+run  = "cd $files"
 desc = "Goto documents"
 [[mgr.prepend_keymap]]
 on   = [ "g", "d" ]
-run  = "cd $XDG_DOWNLOAD_DIR"
+run  = "cd $dl"
 desc = "Goto downloads"
 [[mgr.prepend_keymap]]
 on   = [ "g", "t" ]
-run  = "cd $HOME/.local/share/Trash/files"
+run  = "cd $XDG_DATA_HOME/Trash/files"
 desc = "Goto trash"
 [[mgr.prepend_keymap]]
 on = ["u"]

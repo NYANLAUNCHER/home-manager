@@ -1,7 +1,6 @@
 ---@type vim.lsp.Config
 return {
-  filetypes = {'lua'},
-  on_init = function(client)
+  on_init = function (client)
     local join = vim.fs.joinpath
     local path = client.workspace_folders[1].name -- workspace directory
     -- Don't do anything if there is project local config

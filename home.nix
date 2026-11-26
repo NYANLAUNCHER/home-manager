@@ -8,27 +8,30 @@
   # Config Files:
   # Note: Manage plain text through "filename".text = ''contents''
   home.file = {
-    ".profile".source = ./.profile;
-    ".inputrc".source = ./.inputrc;
-    ".bashrc".source =  ./.bashrc;
-    ".config/nix/" = {
-      source = ./nix;
-      force = true;
-    };
+    # Directories:
     ".config/git/".source =      ./git;
     ".config/zellij/".source =   ./zellij;
     ".config/ghostty/".source =  ./ghostty;
     ".config/yazi/".source =     ./yazi;
     ".config/mpv/".source =      ./mpv;
     ".config/aerc/".source =     ./aerc;
-    ".config/mutt/".source =     ./mutt; # Mutt & Neomutt
     ".config/newsboat/".source = ./newsboat;
     ".config/zathura/".source =  ./zathura;
     ".config/moxide/".source =   ./moxide; # markdown-oxide, see: https://oxide.md/Configuration
     ".config/vivify".source =    ./vivify;
-    #".config/luakit/".source =   ./luakit;
-    #".config/qutebrowser/".source = ./qutebrowser;
-    ".config/mimeapps.list".source = ./mimeapps.list;
+    ".config/qutebrowser/".source = ./qutebrowser;
+    ".config/nix/" = {
+      source = ./nix;
+      force = true;
+    };
+    # Files:
+    ".config/mimeapps/".source = ./mimeapps.list;
+    ".profile".source = ./.profile;
+    ".inputrc".source = ./.inputrc;
+    ".bashrc".source =  ./.bashrc;
+    # Unused:
+    #".config/luakit/".source = ./luakit;
+    #".config/mutt/".source = ./mutt; # Mutt & Neomutt
   };
 
   # Packages:
@@ -64,20 +67,21 @@
   programs.gpg.homedir = "${config.xdg.dataHome}/gnupg";
   programs.zathura.enable = true;
 
-  # Home-manager Configs
   xdg.userDirs = {
     enable = true;
     createDirectories = true;
-    desktop = "$HOME/.desktop";
-    download = "$HOME/tmp";
-    documents = "$HOME/files";
-    music = "$HOME/media/audio/music";
-    pictures = "$HOME/media/imgs";
-    videos = "$HOME/media/vids";
-    templates = "$HOME/.attic/templates";
+    projects    = "$HOME/src";
+    download    = "$HOME/tmp";
+    documents   = "$HOME/files";
+    music       = "$HOME/media/audio/music";
+    pictures    = "$HOME/media/imgs";
+    videos      = "$HOME/media/vids";
+    desktop     = "$HOME/.desktop";
+    templates   = "$HOME/.attic/templates";
     publicShare = "$HOME/.attic/public";
   };
 
+  # Home-manager Configs:
   # This value determines the Home Manager release that your configuration is
   # compatible with. This helps avoid breakage when a new Home Manager release
   # introduces backwards incompatible changes.
