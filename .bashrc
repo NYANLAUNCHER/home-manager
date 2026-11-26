@@ -83,7 +83,15 @@ fn_nr() { # `nix run` wrapper
 alias hm="home-manager"
 alias hms="fn_hms"
 fn_hms() {
-    home-manager switch $@
+    # "$hm" variable is defined in ~/config/home-manager/.profile
+    local hm_dir="${hm:-$HOME/.config/home-manager}"
+    local flake="" # specify the flake configuration to use
+    # home-manager switch to the current $USER configuration
+    [[ -n "$USER" ]] && flake="--flake $hm_dir#$USER" || true
+    # run `USER="" hms` to disable the automatic flake args
+    # or run `USER="<username>" hms` to use a different user configuration
+    echo "home-manager switch $flake $@"
+    home-manager switch $flake $@
     [[ -f ~/.bashrc ]] && source ~/.bashrc || echo "Couldn't find ~/.bashrc"
 }
 
@@ -100,6 +108,7 @@ alias y="fn_yazi"
 bind '"\C-o": "\C-e\C-uy\C-m"' # open yazi with <C-o> keybind
 
 fn_opencode() {
+    # run `OLLAMA_MODEL="<model_name>" opencode` to override the default model
     local model="${OLLAMA_MODEL:-$OLLAMA_DEFAULT_AGENT_MODEL}"
     if [[ -n "$model" ]]; then
         echo "ollama launch --model=$model opencode -- $*"

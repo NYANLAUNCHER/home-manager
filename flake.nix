@@ -16,20 +16,25 @@
       imports = [ inputs.home-manager.flakeModules.home-manager ];
       flake = # See: https://nix-community.github.io/home-manager/nix-flakes/flake-parts.html
         let
-          username = "nixos";
-          homeDirectory = "/home/${username}";
+          system = "x86_64-linux";
+          pkgs = import nixpkgs { inherit system; };
+          mkHome = username: homeDirectory:
+            home-manager.lib.homeManagerConfiguration {
+              inherit pkgs;
+              # Pass arguments to modules
+              extraSpecialArgs = {inherit username homeDirectory;};
+              modules = [
+                ./home.nix
+                ./luakit/home.nix
+                ./nvim/home.nix
+                ./zsh/home.nix
+              ];
+            };
         in {
-          # Home-Manager Config
-          homeConfigurations.${username} = home-manager.lib.homeManagerConfiguration {
-            pkgs = import nixpkgs { system = "x86_64-linux"; };
-            # Pass arguments to modules
-            extraSpecialArgs = {inherit username homeDirectory;};
-            modules = [
-              ./home.nix
-              ./luakit/home.nix
-              ./nvim/home.nix
-              ./zsh/home.nix
-            ];
+          homeConfigurations = {
+            #         mkHome <username> <homeDirectory>
+            markiep = mkHome "markiep"  "/home/markiep";
+            nixos   = mkHome "nixos"    "/home/nixos";
           };
         };
     };
