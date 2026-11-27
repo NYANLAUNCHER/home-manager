@@ -79,6 +79,11 @@ fn_nr() { # `nix run` wrapper
     echo "nix run --impure nixpkgs#$1 -- ${*:2}"
     nix run --impure "nixpkgs#$1" -- "${@:2}"
 }
+alias nixpkgs-desc="fn_nixpkgs_desc"
+fn_nixpkgs_desc() {
+    echo "nix eval \"nixpkgs#${1}.meta\" --json | jq '.description'"
+    nix eval "nixpkgs#${1}.meta" --json | jq '.description'
+}
 
 alias hm="home-manager"
 alias hms="fn_hms"
