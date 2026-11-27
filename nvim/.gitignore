@@ -1,2 +1,6 @@
 # output from require('config.debug').keymap:export()
 keymaps.txt
+
+# Nix
+# output from `nix build`
+result*
