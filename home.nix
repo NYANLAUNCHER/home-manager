@@ -1,4 +1,4 @@
-{ config, pkgs, lib, username, homeDirectory, ... }:
+{ config, pkgs, lib, username, homeDirectory, inputs, ... }:
 {
   home = {inherit username homeDirectory;};
 
@@ -36,7 +36,10 @@
   };
 
   # Packages:
-  home.packages = (with pkgs; [
+  home.packages = [
+    inputs.vis.packages.${pkgs.system}.default # see: ./vis/flake.nix
+  ] ++
+  (with pkgs; [
     # Development
     ghostty
     zellij

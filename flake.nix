@@ -1,11 +1,17 @@
 {
   description = "NYANLAUNCHER's home-manager config.";
 
+  # Enable Git submodules
+  inputs.self.submodules = true;
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
     flake-parts.url = "github:hercules-ci/flake-parts";
     home-manager = {
       url = "github:nix-community/home-manager";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    vis = {
+      url = "path:./vis";
       inputs.nixpkgs.follows = "nixpkgs";
     };
   };
@@ -22,7 +28,7 @@
             home-manager.lib.homeManagerConfiguration {
               inherit pkgs;
               # Pass arguments to modules
-              extraSpecialArgs = {inherit username homeDirectory;};
+              extraSpecialArgs = {inherit username homeDirectory inputs;};
               modules = [
                 ./home.nix
                 ./luakit/home.nix
