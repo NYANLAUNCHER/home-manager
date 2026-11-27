@@ -48,14 +48,14 @@
     devenv
 
     # Utils
-    ripgrep-all
     btop
     tree
     file
     xclip
+    ripgrep-all
     multitail # like GNU `tail` but for multiple files
     libqalculate # advanced calculator
-    discordo # tui discord client
+    jq
 
     # Graphical
     luakit
@@ -88,23 +88,24 @@
   # introduces backwards incompatible changes.
   #home.stateVersion = "23.11";
   home.stateVersion = "26.05";
+  # TODO:
   # make home-manager move any existing configuration to ~/.config/.backup/
-  home.backupCommand = pkgs.writeShellScript "hm-backup" ''
-    target="$1"
-    backup_dir="''${XDG_CONFIG_HOME:-$HOME/.config}/.backup"
+  #home.backupCommand = pkgs.writeShellScript "hm-backup" ''
+  #  target="$1"
+  #  backup_dir="''${XDG_CONFIG_HOME:-$HOME/.config}/.backup"
 
-    mkdir -p "$backup_dir"
+  #  mkdir -p "$backup_dir"
 
-    name="$(basename "$target")"
-    destination="$backup_dir/$name"
+  #  name="$(basename "$target")"
+  #  destination="$backup_dir/$name"
 
-    # Avoid overwriting existing backups.
-    if [ -e "$destination" ] || [ -L "$destination" ]; then
-      destination="$backup_dir/$name.$(date +%Y%m%d-%H%M%S)"
-    fi
+  #  # Avoid overwriting existing backups.
+  #  if [ -e "$destination" ] || [ -L "$destination" ]; then
+  #    destination="$backup_dir/$name.$(date +%Y%m%d-%H%M%S)"
+  #  fi
 
-    mv -- "$target" "$destination"
-  '';
+  #  mv -- "$target" "$destination"
+  #'';
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;
 }

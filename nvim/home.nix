@@ -10,7 +10,7 @@
 
   home.packages = (with pkgs; [
     neovim
-    # Shell Utils
+    # Utils
     xxd tree-sitter
     # Lua
     lua lua-language-server luarocks
