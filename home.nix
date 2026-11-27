@@ -33,6 +33,7 @@
     # Unused:
     #".config/luakit/".source = ./luakit;
     #".config/mutt/".source = ./mutt; # Mutt & Neomutt
+    #".config/vieb/".source = ./vieb;
   };
 
   # Packages:
