@@ -25,9 +25,9 @@ export XDG_STATE_HOME="$HOME/.local/state"
 export PATH="$HOME/.local/bin:$PATH"
 
 # Default Programs
-export EDITOR="vi" # fallback to vi if preferred editor doesnt exist
-if command -v vis >/dev/null 2>&1; then
-    export EDITOR="vis" # use preferred editor if exists
+export EDITOR="nvim"
+if ! command -v $EDITOR >/dev/null 2>&1; then
+    export EDITOR="vi" # fallback to vi if preferred editor doesnt exist
 fi
 export OPENER="xdg-open"
 export PAGER="less"
