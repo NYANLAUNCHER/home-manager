@@ -7,9 +7,3 @@
 [submodule "zsh/themes/powerlevel10k"]
 	path = zsh/themes/powerlevel10k
 	url = https://github.com/romkatv/powerlevel10k
-[submodule "vis/plugins/treeview"]
-	path = vis/plugins/treeview
-	url = https://github.com/stalker57241/treeview
-[submodule "vis/plugins/vis-lspc"]
-	path = vis/plugins/vis-lspc
-	url = https://gitlab.com/muhq/vis-lspc
