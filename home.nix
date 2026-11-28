@@ -72,6 +72,10 @@
   programs.gpg.homedir = "${config.xdg.dataHome}/gnupg";
   programs.zathura.enable = true;
 
+  xdg.enable = true;
+  xdg.systemDirs.data = [
+    "${config.home.profileDirectory}/share"
+  ];
   xdg.userDirs = {
     enable = true;
     createDirectories = true;
@@ -90,26 +94,6 @@
   # This value determines the Home Manager release that your configuration is
   # compatible with. This helps avoid breakage when a new Home Manager release
   # introduces backwards incompatible changes.
-  #home.stateVersion = "23.11";
   home.stateVersion = "26.05";
-  # TODO:
-  # make home-manager move any existing configuration to ~/.config/.backup/
-  #home.backupCommand = pkgs.writeShellScript "hm-backup" ''
-  #  target="$1"
-  #  backup_dir="''${XDG_CONFIG_HOME:-$HOME/.config}/.backup"
-
-  #  mkdir -p "$backup_dir"
-
-  #  name="$(basename "$target")"
-  #  destination="$backup_dir/$name"
-
-  #  # Avoid overwriting existing backups.
-  #  if [ -e "$destination" ] || [ -L "$destination" ]; then
-  #    destination="$backup_dir/$name.$(date +%Y%m%d-%H%M%S)"
-  #  fi
-
-  #  mv -- "$target" "$destination"
-  #'';
-  # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;
 }
