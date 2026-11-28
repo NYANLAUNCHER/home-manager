@@ -4,33 +4,35 @@
 // Run `zellij setup --check` for troubleshooting and inspecting
 // current config locations and features that are enabled.
 theme "nord"
-//layout_dir "/home/markiep/.config/zellij/layouts"
 layout_dir ""
 keybinds {
   normal clear-defaults=true {
     bind "Alt q" { Quit; }
     bind "Alt d" { Detach; }
     bind "Alt p" { SwitchToMode "pane"; }
+    bind "Alt m" { SwitchToMode "move"; }
     bind "Alt r" { SwitchToMode "resize"; }
     bind "Alt t" { SwitchToMode "tab"; }
+    bind "Alt s" { SwitchToMode "scroll"; }// aka search mode
     bind "Alt o" { SwitchToMode "session"; }
-    bind "Alt s" { SwitchToMode "scroll"; }// "scroll" AKA "search" mode
+    // scroll buffer navigation
     bind "Ctrl Shift Up" { ScrollUp; }
     bind "Ctrl Shift Down" { ScrollDown; }
-    bind "Alt m" { SwitchToMode "move"; }
-    bind "Alt n" { NewPane; }
-    // pane movements
-    bind "Alt Left"  { MoveFocus "Left"; }
-    bind "Alt Right" { MoveFocus "Right"; }
-    bind "Alt Up"    { MoveFocus "Up"; }
-    bind "Alt Down"  { MoveFocus "Down"; }
+    // pane navigation
+    bind "Alt h" { MoveFocus "Left"; }
+    bind "Alt j" { MoveFocus "Down"; }
+    bind "Alt k" { MoveFocus "Up"; }
+    bind "Alt l" { MoveFocus "Right"; }
+    bind "Alt f" { ToggleFocusFullscreen; }
     bind "Alt +" { Resize "Increase"; }
     bind "Alt -" { Resize "Decrease"; }
-    // relative movements
-    bind "Alt h" { GoToPreviousTab; }
-    bind "Alt l" { GoToNextTab; }
-    bind "Alt j" { MoveTab "Left"; }
-    bind "Alt k" { MoveTab "Right"; }
+    // spawn panes
+    bind "Alt n"     { NewPane; }
+    bind "Alt x"     { CloseFocus; }
+    bind "Alt Left"  { NewPane "Left"; }
+    bind "Alt Down"  { NewPane "Down"; }
+    bind "Alt Up"    { NewPane "Up"; }
+    bind "Alt Right" { NewPane "Right"; }
     // absolute tab movements
     bind "Alt 1" { GoToTab 1; }
     bind "Alt 2" { GoToTab 2; }
@@ -43,24 +45,56 @@ keybinds {
     bind "Alt 9" { GoToTab 9; }
     bind "Alt 0" { GoToTab 10; }
   }
+  // Pane Mode
   pane clear-defaults=true {
-    bind "Enter" "Esc" "Space" { SwitchToMode "normal"; }
-    bind "h" "Left" { NewPane "Left"; }
-    bind "l" "Right" { NewPane "Right"; }
-    bind "j" "Down" { NewPane "Down"; }
-    bind "k" "Up" { NewPane "Up"; }
-    bind "Alt h" "Left" { MoveFocus "Left"; }
-    bind "Alt l" "Right" { MoveFocus "Right"; }
-    bind "Alt j" "Down" { MoveFocus "Down"; }
-    bind "Alt k" "Up" { MoveFocus "Up"; }
-    bind "p" { SwitchFocus; }
+    bind "Enter" "Esc" { SwitchToMode "normal"; }
+    bind "m" { SwitchToMode "move"; }
+    bind "r" { SwitchToMode "resize"; }
+    bind "Left"  { NewPane "Left"; }
+    bind "Down"  { NewPane "Right"; }
+    bind "Up"    { NewPane "Down"; }
+    bind "Right" { NewPane "Up"; }
+    bind "h" { MoveFocus "Left"; }
+    bind "j" { MoveFocus "Down"; }
+    bind "k" { MoveFocus "Up"; }
+    bind "l" { MoveFocus "Right"; }
     bind "n" { NewPane; }
     bind "x" { CloseFocus; }
     bind "f" { ToggleFocusFullscreen; }
     bind "z" { TogglePaneFrames; }
   }
+  // Move Mode
+  move clear-defaults=true {
+    bind "Enter" "Esc" { SwitchToMode "normal"; }
+    bind "h" "Left"  { MovePane "Left"; }
+    bind "j" "Down"  { MovePane "Down"; }
+    bind "k" "Up"    { MovePane "Up"; }
+    bind "l" "Right" { MovePane "Right"; }
+    bind "Alt n" { NewPane; }
+    bind "Alt h" { MoveFocus "Left"; }
+    bind "Alt l" { MoveFocus "Right"; }
+    bind "Alt j" { MoveFocus "Down"; }
+    bind "Alt k" { MoveFocus "Up"; }
+  }
+  // Resize Mode
+  resize clear-defaults=true {
+    bind "Enter" "Esc" { SwitchToMode "normal"; }
+    bind "h" "Left"  { Resize "Left"; }
+    bind "j" "Down"  { Resize "Down"; }
+    bind "k" "Up"    { Resize "Up"; }
+    bind "l" "Right" { Resize "Right"; }
+    bind "Alt =" { Resize "Increase"; }
+    bind "Alt +" { Resize "Increase"; }
+    bind "Alt -" { Resize "Decrease"; }
+    bind "Alt h" { MoveFocus "Left"; }
+    bind "Alt l" { MoveFocus "Right"; }
+    bind "Alt j" { MoveFocus "Down"; }
+    bind "Alt k" { MoveFocus "Up"; }
+    bind "f" { ToggleFocusFullscreen; }
+  }
+  // Tab Mode
   tab clear-defaults=true {
-    bind "Enter" "Esc" "Space" { SwitchToMode "normal"; }
+    bind "Enter" "Esc" { SwitchToMode "normal"; }
     bind "n" { NewTab; }
     bind "x" { CloseTab; }
     bind "s" { ToggleActiveSyncTab; }
@@ -82,49 +116,10 @@ keybinds {
     bind "0" { GoToTab 10; }
     bind "Tab" { ToggleTab; }
   }
-  session clear-defaults=true {
-    bind "Enter" "Esc" "Space" { SwitchToMode "normal"; }
-    bind "Alt s" { SwitchToMode "Scroll"; }
-    bind "d" { Detach; }
-    bind "w" {
-      LaunchOrFocusPlugin "zellij:session-manager" {
-        floating true
-        move_to_focused_tab true
-      };
-      SwitchToMode "Normal"
-    }
-  }
-  resize clear-defaults=true {
-    bind "Enter" "Esc" "Space" { SwitchToMode "normal"; }
-    bind "h" "Left" { Resize "Left"; }
-    bind "j" "Down" { Resize "Down"; }
-    bind "k" "Up" { Resize "Up"; }
-    bind "l" "Right" { Resize "Right"; }
-    bind "Alt =" { Resize "Increase"; }
-    bind "Alt +" { Resize "Increase"; }
-    bind "Alt -" { Resize "Decrease"; }
-    bind "Alt n" { NewPane; }
-    bind "Alt h" { MoveFocus "Left"; }
-    bind "Alt l" { MoveFocus "Right"; }
-    bind "Alt j" { MoveFocus "Down"; }
-    bind "Alt k" { MoveFocus "Up"; }
-  }
-  move clear-defaults=true {
-    bind "Enter" "Esc" "Space" { SwitchToMode "normal"; }
-    bind "h" "Left" { MovePane "Left"; }
-    bind "j" "Down" { MovePane "Down"; }
-    bind "k" "Up" { MovePane "Up"; }
-    bind "l" "Right" { MovePane "Right"; }
-    bind "Alt n" { NewPane; }
-    bind "Alt h" { MoveFocus "Left"; }
-    bind "Alt l" { MoveFocus "Right"; }
-    bind "Alt j" { MoveFocus "Down"; }
-    bind "Alt k" { MoveFocus "Up"; }
-  }
-  // "scroll" AKA "search" mode
+  // Scroll/Search Mode
   scroll clear-defaults=true {
-    bind "e" { EditScrollback; SwitchToMode "normal"; }
     bind "Enter" "Esc" { SwitchToMode "normal"; }
+    bind "e" { EditScrollback; SwitchToMode "normal"; }
     bind "Alt c" { ScrollToBottom; SwitchToMode "normal"; }
     bind "j" "Down" { ScrollDown; }
     bind "k" "Up" { ScrollUp; }
@@ -133,32 +128,43 @@ keybinds {
     bind "d" { HalfPageScrollDown; }
     bind "u" { HalfPageScrollUp; }
     bind "Alt h" { MoveFocus "Left"; }
-    bind "Alt l" { MoveFocus "Right"; }
     bind "Alt j" { MoveFocus "Down"; }
     bind "Alt k" { MoveFocus "Up"; }
+    bind "Alt l" { MoveFocus "Right"; }
     bind "/" "s" { SwitchToMode "entersearch"; SearchInput 0; }
   }
   search clear-defaults=true {
-    bind "Alt s" "Enter" "Esc" "Space" { SwitchToMode "normal"; }
+    bind "Enter" "Esc" { SwitchToMode "normal"; }
     bind "/" "s" { SwitchToMode "entersearch"; SearchInput 0; }
-    bind "n" { Search "Down"; }
     bind "p" { Search "Up"; }
+    bind "n" { Search "Down"; }
     bind "c" { SearchToggleOption "CaseSensitivity"; }
     bind "w" { SearchToggleOption "Wrap"; }
     bind "o" { SearchToggleOption "WholeWord"; }
-    bind "Alt h" "Alt Left" { MoveFocusOrTab "Left"; }
-    bind "Alt l" "Alt Right" { MoveFocusOrTab "Right"; }
-    bind "Alt j" "Alt Down" { MoveFocus "Down"; }
-    bind "Alt k" "Alt Up" { MoveFocus "Up"; }
+    bind "Alt h" { MoveFocusOrTab "Left"; }
+    bind "Alt j" { MoveFocus "Down"; }
+    bind "Alt l" { MoveFocusOrTab "Right"; }
+    bind "Alt k" { MoveFocus "Up"; }
   }
-
   entersearch clear-defaults=true {
     bind "Enter" { SwitchToMode "search"; }
-    bind "Alt c" "Esc" { SearchInput 27; SwitchToMode "scroll"; }
-    bind "Alt h" "Alt Left" { MoveFocusOrTab "Left"; }
-    bind "Alt l" "Alt Right" { MoveFocusOrTab "Right"; }
-    bind "Alt j" "Alt Down" { MoveFocus "Down"; }
-    bind "Alt k" "Alt Up" { MoveFocus "Up"; }
+    bind "Esc" { SearchInput 27; SwitchToMode "scroll"; }
+    bind "Alt h" { MoveFocusOrTab "Left"; }
+    bind "Alt j" { MoveFocus "Down"; }
+    bind "Alt l" { MoveFocusOrTab "Right"; }
+    bind "Alt k" { MoveFocus "Up"; }
+  }
+  // Session Mode
+  session clear-defaults=true {
+    bind "Enter" "Esc" { SwitchToMode "normal"; }
+    bind "d" { Detach; }
+    bind "w" {
+      LaunchOrFocusPlugin "zellij:session-manager" {
+        floating true
+        move_to_focused_tab true
+      };
+      SwitchToMode "Normal"
+    }
   }
   locked clear-defaults=true {}
   renamepane clear-defaults=true {}
@@ -179,8 +185,6 @@ keybinds {
 on_force_close "quit"
 // Remove stupid pop-ups
 show_startup_tips false
-// Request simplified ui (without arrow fonts) of plugins
-//simplified_ui true
 // Remove pane frame
 pane_frames false
 // On certain configurations, or terminals mouse_mode can interfere with copying text.
